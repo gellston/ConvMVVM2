@@ -11,7 +11,11 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ConvMVVM2.Core\ConvMVVM2.Core.csproj" OutputItemType="Analyzer"/>
+		<ProjectReference Include="..\ConvMVVM2.Core\ConvMVVM2.Core.csproj" OutputItemType="Analyzer" />
 
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="ViewModel\" />
 	</ItemGroup>
 </Project>

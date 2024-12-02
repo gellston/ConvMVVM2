@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 
-namespace ConvMVVM2.WPF
+namespace ConvMVVM2.WPF.Controls
 {
     public class WPFView : ContentControl, IView
     {

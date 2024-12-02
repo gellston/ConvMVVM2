@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace ConvMVVM2.WPF
+namespace ConvMVVM2.WPF.Controls
 {
     public class WPFLayer : ContentControl, ILayer
     {
