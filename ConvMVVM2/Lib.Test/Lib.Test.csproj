@@ -10,12 +10,8 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\ConvMVVM2.Core\ConvMVVM2.Core.csproj" OutputItemType="Analyzer" />
-
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="ViewModel\" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConvMVVM2.Core\ConvMVVM2.Core.csproj" OutputItemType="Analyzer" />
+    <ProjectReference Include="..\ConvMVVM2.WPF\ConvMVVM2.WPF.csproj" />
+  </ItemGroup>
 </Project>

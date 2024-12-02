@@ -17,10 +17,10 @@ namespace ConvMVVM2.Core.MVVM
 
         protected AppBootstrapper()
         {
-            container = new Container();
-            layerManager = new LayerManager();
-            viewModelMapper = new ViewModelMapper();
-
+            container = ContainerProvider.GetContainer();
+            layerManager = container.Resolve<ILayerManager>();
+            viewModelMapper = container.Resolve<IViewModelMapper>();
+          
             ConfigureContainer();
         }
         #endregion
@@ -30,10 +30,7 @@ namespace ConvMVVM2.Core.MVVM
 
         private void ConfigureContainer()
         {
-            container.RegisterInstance(container);
-            container.RegisterInstance(layerManager);
-            container.RegisterInstance(viewModelMapper);
-            container.RegisterSingleton<IViewModelInitializer, DefaultViewModelInitializer>();
+
         }
         #endregion
 
