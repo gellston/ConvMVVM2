@@ -15,8 +15,6 @@ Development Environment
  - **Microsoft .NET 7**
 
 
-> it support to send message between viewmodels
-
 License
 =======================
 
