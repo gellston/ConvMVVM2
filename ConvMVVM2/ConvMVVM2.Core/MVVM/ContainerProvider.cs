@@ -20,16 +20,13 @@ namespace ConvMVVM2.Core.MVVM
             _container.RegisterInstance<ILayerManager>(new LayerManager());
             _container.RegisterInstance<IViewModelMapper>(new ViewModelMapper());
             _container.RegisterSingleton<IViewModelInitializer, DefaultViewModelInitializer>();
+            _container.RegisterSingleton<ILocalizeService, LocalizeService>();
         }
         #endregion
 
 
         #region Public Static Functions
 
-        //public static void SetContainer(IContainer container)
-        //{
-        //    _container = container;
-        //}
 
         public static IContainer GetContainer()
         {

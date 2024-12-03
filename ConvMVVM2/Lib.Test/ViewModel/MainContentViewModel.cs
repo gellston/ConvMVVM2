@@ -8,16 +8,21 @@ using System.Threading.Tasks;
 
 namespace Lib.Test.ViewModel
 {
-    public partial class MainContentViewModel : ViewModelBase, IViewLoadable
+    public partial class MainContentViewModel : ViewModelBase
     {
 
         #region Private Property
         private readonly IContainer container;
+        private readonly ILocalizeService localizeService;
+
+        private bool trigger = false;
         #endregion
 
         #region Constructor
-        public MainContentViewModel(IContainer container) { 
+        public MainContentViewModel(IContainer container,
+                                    ILocalizeService localizeService) { 
             this.container = container;
+            this.localizeService = localizeService;
         }
         #endregion
 
@@ -28,12 +33,42 @@ namespace Lib.Test.ViewModel
 
         #endregion
 
+        #region Command
+
+
+        [RelayCommand]
+        private void Test()
+        {
+            try
+            {
+
+                if (this.trigger)
+                {
+                    this.localizeService.ChangeLocal("kr");
+                }
+                else
+                {
+
+                    this.localizeService.ChangeLocal("en");
+                }
+
+                this.trigger = !this.trigger;
+
+            }catch(Exception ex)
+            {
+
+                Console.WriteLine(ex.ToString());
+            }
+        }
+        #endregion
+
 
         #region Event Handler
         public void Loaded()
         {
 
-            System.Diagnostics.Debug.WriteLine("test");
+            //System.Diagnostics.Debug.WriteLine("test");
+            
         }
         #endregion
     }

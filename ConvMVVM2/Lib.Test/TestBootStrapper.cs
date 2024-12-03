@@ -1,4 +1,5 @@
 ﻿using ConvMVVM2.Core.MVVM;
+using Lib.Test.Properties;
 using Lib.Test.UI.Views;
 using Lib.Test.ViewModel;
 using System;
@@ -29,6 +30,19 @@ namespace Lib.Test
 
 
             layerManager.Mapping("MainContent", mainContent);
+
+
+
+            //language
+            ILocalizeService localService = container.Resolve<ILocalizeService>();
+
+            localService.SetResourceManager(Lib.Test.Properties.Resource.ResourceManager);
+
+            localService.ChangeLocal("kr");
+
+            
+            //localService.SetResourceManager(Properties.Resource);
+
            
         }
 
