@@ -51,6 +51,8 @@ namespace ConvMVVM2.Core.MVVM
         #region Public Functions
         public void Run()
         {
+            RegisterModules();
+
             RegisterViewModels(viewModelMapper);
 
             foreach(var module in modules)
