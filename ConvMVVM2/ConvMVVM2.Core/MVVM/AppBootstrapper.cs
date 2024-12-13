@@ -10,6 +10,7 @@ namespace ConvMVVM2.Core.MVVM
         private readonly IContainer container;
         private readonly ILayerManager layerManager;
         private readonly IViewModelMapper viewModelMapper;
+        private List<IModule> modules;
         #endregion
 
 
@@ -20,32 +21,58 @@ namespace ConvMVVM2.Core.MVVM
             container = ContainerProvider.GetContainer();
             layerManager = container.Resolve<ILayerManager>();
             viewModelMapper = container.Resolve<IViewModelMapper>();
-          
-            ConfigureContainer();
+
+
+            ConfigureModule();
         }
         #endregion
 
 
         #region Private Functions
 
-        private void ConfigureContainer()
+        private void ConfigureModule()
         {
+            modules = new List<IModule>();
 
         }
         #endregion
 
         #region Protected Functions
         protected abstract void RegisterViewModels(IViewModelMapper viewModelMapper);
-        protected abstract void RegisterDependencies(IContainer container, ILayerManager layerManager);
+        protected abstract void RegisterDependencies(IContainer container);
+        protected abstract void ViewMapping(IContainer container, ILayerManager layerManager);
         protected abstract void OnStartUp();
+        protected abstract void RegisterModules();
+        protected void RegisterModule<T>(T module) where T : IModule
+        {
+            this.modules.Add(module);
+        }
         #endregion
 
         #region Public Functions
         public void Run()
         {
+            RegisterModules();
+
             RegisterViewModels(viewModelMapper);
-            RegisterDependencies(container, layerManager);
+
+            foreach(var module in modules)
+                module.RegisterViewModels(viewModelMapper);
+
+            RegisterDependencies(container);
+
+            foreach(var module in modules)
+                module.RegisterDependencies(container);
+
+            ViewMapping(container, layerManager);
+
+            foreach(var module in modules)
+                module.ViewMapping(container, layerManager);
+
             OnStartUp();
+
+            foreach(var module in modules)
+                module.OnStartUp();
         }
         #endregion
     }
