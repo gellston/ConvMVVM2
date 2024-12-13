@@ -39,7 +39,8 @@ namespace ConvMVVM2.Core.MVVM
 
         #region Protected Functions
         protected abstract void RegisterViewModels(IViewModelMapper viewModelMapper);
-        protected abstract void RegisterDependencies(IContainer container, ILayerManager layerManager);
+        protected abstract void RegisterDependencies(IContainer container);
+        protected abstract void ViewMapping(IContainer container, ILayerManager layerManager);
         protected abstract void OnStartUp();
         protected abstract void RegisterModules();
         protected void RegisterModule<T>(T module) where T : IModule
@@ -58,10 +59,15 @@ namespace ConvMVVM2.Core.MVVM
             foreach(var module in modules)
                 module.RegisterViewModels(viewModelMapper);
 
-            RegisterDependencies(container, layerManager);
+            RegisterDependencies(container);
 
             foreach(var module in modules)
-                module.RegisterDependencies(container, layerManager);
+                module.RegisterDependencies(container);
+
+            ViewMapping(container, layerManager);
+
+            foreach(var module in modules)
+                module.ViewMapping(container, layerManager);
 
             OnStartUp();
 

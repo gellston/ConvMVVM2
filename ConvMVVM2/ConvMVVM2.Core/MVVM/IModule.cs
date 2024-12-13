@@ -8,7 +8,8 @@ namespace ConvMVVM2.Core.MVVM
     {
         public void RegisterViewModels(IViewModelMapper viewModelMapper);
 
-        public void RegisterDependencies(IContainer container, ILayerManager layerManager);
+        public void RegisterDependencies(IContainer container);
+        public void ViewMapping(IContainer container, ILayerManager layerManager);
         public void OnStartUp();
     }
 }
