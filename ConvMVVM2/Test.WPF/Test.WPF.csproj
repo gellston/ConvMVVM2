@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ConvMVVM2.Core\ConvMVVM2.Core.csproj" />
+    <ProjectReference Include="..\ConvMVVM2.WPF\ConvMVVM2.WPF.csproj" />
+    <ProjectReference Include="..\Test.WPFModule\Test.WPFModule.csproj" />
+  </ItemGroup>
+
+</Project>
