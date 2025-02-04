@@ -9,15 +9,15 @@ namespace ConvMVVM2.Core.MVVM
     public class DefaultViewModelInitializer : IViewModelInitializer
     {
         #region Private Property
-        private readonly IContainer _container;
+        private readonly IServiceProvider _serviceProvider;
         private readonly IViewModelMapper _viewModelMapper;
         #endregion
 
         #region Constructor
 
-        public DefaultViewModelInitializer(IContainer container, IViewModelMapper viewModelMapper)
+        public DefaultViewModelInitializer(IServiceProvider serviceProvider, IViewModelMapper viewModelMapper)
         {
-            _container = container;
+            _serviceProvider = serviceProvider;
             _viewModelMapper = viewModelMapper;
         }
         #endregion
@@ -40,15 +40,9 @@ namespace ConvMVVM2.Core.MVVM
         {
             try
             {
-                var constructor = viewModelType.GetConstructors()
-                    .OrderByDescending(c => c.GetParameters().Length)
-                    .First();
+                var serviceProvider = _serviceProvider.GetService(viewModelType);
 
-                var parameters = constructor.GetParameters()
-                    .Select(p => _container.Resolve(p.ParameterType))
-                    .ToArray();
-
-                return constructor.Invoke(parameters);
+                return serviceProvider;
             }
             catch (Exception ex)
             {

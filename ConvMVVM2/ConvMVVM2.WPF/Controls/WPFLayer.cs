@@ -86,7 +86,7 @@ namespace ConvMVVM2.WPF.Controls
                 return;
             }
 
-            var layerManager = ContainerProvider.GetContainer().Resolve<ILayerManager>();
+            var layerManager = ServiceLocator.GetServiceProvider().GetService<ILayerManager>();
             if (layerManager != null)
             {
                 layerManager.Register(LayerName, this);

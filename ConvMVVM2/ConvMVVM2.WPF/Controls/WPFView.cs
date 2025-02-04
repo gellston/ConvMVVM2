@@ -30,7 +30,7 @@ namespace ConvMVVM2.WPF.Controls
 
         public void InitializeViewModel()
         {
-            var initializer = ContainerProvider.GetContainer().Resolve<IViewModelInitializer>();
+            var initializer = ServiceLocator.GetServiceProvider().GetService<IViewModelInitializer>();
             initializer.InitializeViewModel(this);
 
             _viewModelInitialized = DataContext != null;

@@ -7,7 +7,7 @@ namespace ConvMVVM2.Core.MVVM
     public abstract class AppBootstrapper
     {
         #region Private Property
-        private readonly IContainer container;
+        private readonly IServiceCollection container;
         private readonly ILayerManager layerManager;
         private readonly IViewModelMapper viewModelMapper;
         private List<IModule> modules;
@@ -18,11 +18,6 @@ namespace ConvMVVM2.Core.MVVM
 
         protected AppBootstrapper()
         {
-            container = ContainerProvider.GetContainer();
-            layerManager = container.Resolve<ILayerManager>();
-            viewModelMapper = container.Resolve<IViewModelMapper>();
-
-
             ConfigureModule();
         }
         #endregion
@@ -39,8 +34,8 @@ namespace ConvMVVM2.Core.MVVM
 
         #region Protected Functions
         protected abstract void RegisterViewModels(IViewModelMapper viewModelMapper);
-        protected abstract void RegisterDependencies(IContainer container);
-        protected abstract void ViewMapping(IContainer container, ILayerManager layerManager);
+        protected abstract void RegisterDependencies(IServiceCollection container);
+        protected abstract void ViewMapping(IServiceCollection container, ILayerManager layerManager);
         protected abstract void OnStartUp();
         protected abstract void RegisterModules();
         protected void RegisterModule<T>(T module) where T : IModule
@@ -52,6 +47,21 @@ namespace ConvMVVM2.Core.MVVM
         #region Public Functions
         public void Run()
         {
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton<ILayerManager, LayerManager>();
+            serviceCollection.AddSingleton<ILocalizeService, LocalizeService>();
+            serviceCollection.AddSingleton<IViewModelInitializer, DefaultViewModelInitializer>();
+
+            ServiceLocator.SetServiceProvider(serviceCollection.CreateContainer());
+
+
+
+            var provider = ServiceLocator.GetServiceProvider();
+            var layerManager = provider.GetService<ILayerManager>();
+            var viewModelMapper = provider.GetService<IViewModelMapper>();
+
+            
             RegisterModules();
 
             RegisterViewModels(viewModelMapper);
