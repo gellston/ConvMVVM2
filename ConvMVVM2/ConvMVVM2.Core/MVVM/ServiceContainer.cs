@@ -156,6 +156,22 @@ namespace ConvMVVM2.Core.MVVM
         }
 
 
+        public object GetService(string typeName)
+        {
+            try
+            {
+                var serviceType = this.KeyType(typeName);
+                return Create(serviceType);
+
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Unknown", ex);
+
+            }
+        }
+
+
         public Type KeyType(string key)
         {
             return this.serviceCollection.KeyType(key);

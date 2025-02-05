@@ -13,8 +13,4 @@
     <ProjectReference Include="..\ConvMVVM2.WPF\ConvMVVM2.WPF.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="View\" />
-  </ItemGroup>
-
 </Project>

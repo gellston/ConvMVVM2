@@ -9,6 +9,16 @@ namespace Test.WPF
     /// </summary>
     public partial class App : Application
     {
+        private readonly BootStrapper bootstrapper = new BootStrapper();
+
+
+        #region Constructor
+        public App()
+        {
+
+            bootstrapper.Run();
+        }
+        #endregion
     }
 
 }

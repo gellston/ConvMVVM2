@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Test.WPF.View;
 using Test.WPF.ViewModel;
 
 namespace Test.WPF
@@ -15,9 +16,10 @@ namespace Test.WPF
  
         }
 
-        protected override void RegisterDependencies(IServiceCollection container)
+        protected override void RegisterServices(IServiceCollection container)
         {
-
+            container.AddSingleton<AView>();
+            container.AddSingleton<AViewModel>();
 
         }
 
@@ -26,14 +28,14 @@ namespace Test.WPF
 
         }
 
-        protected override void RegisterViewModels(IViewModelMapper viewModelMapper)
+        protected override void ViewModelMapping(IViewModelMapper viewModelMapper)
         {
-
+            viewModelMapper.Register<AView, AViewModel>();
         }
 
-        protected override void ViewMapping(IServiceCollection container, ILayerManager layerManager)
+        protected override void RegionMapping(IRegionManager layerManager)
         {
-   
+            layerManager.Mapping("AView", typeof(AView));
         }
     }
 }

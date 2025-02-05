@@ -3,7 +3,7 @@
     public interface IViewLoadable
     {
         #region Public Functions
-        void Loaded();
+        void OnViewLoaded();
         #endregion
     }
 }
