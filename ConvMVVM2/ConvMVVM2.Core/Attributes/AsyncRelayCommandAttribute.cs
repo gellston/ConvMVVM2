@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ConvMVVM.Core.Attributes
+namespace ConvMVVM2.Core.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
     public class AsyncRelayCommandAttribute : Attribute

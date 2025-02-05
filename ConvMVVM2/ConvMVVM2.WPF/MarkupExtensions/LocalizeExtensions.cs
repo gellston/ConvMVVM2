@@ -16,7 +16,7 @@ namespace ConvMVVM2.WPF.MarkupExtensions
         public LocalizeExtension(string path) : base("[" + path + "]")
         { 
             this.Mode = BindingMode.OneWay;
-            this.Source = ContainerProvider.GetContainer().Resolve<ILocalizeService>();
+            this.Source = ServiceLocator.GetServiceProvider().GetService<ILocalizeService>();
         }
         #endregion
     }

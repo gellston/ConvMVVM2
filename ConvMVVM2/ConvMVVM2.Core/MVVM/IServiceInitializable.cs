@@ -4,10 +4,8 @@ using System.Text;
 
 namespace ConvMVVM2.Core.MVVM
 {
-    public interface ILayer
+    public interface IServiceInitializable
     {
-        #region Public Property
-        object Content { get; set; }
-        #endregion
+        void OnServiceInitialized();
     }
 }
