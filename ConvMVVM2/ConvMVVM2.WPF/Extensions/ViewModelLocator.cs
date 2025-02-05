@@ -1,6 +1,7 @@
 ﻿using ConvMVVM2.Core.MVVM;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,6 +88,10 @@ namespace ConvMVVM2.WPF.Extensions
         {
             if (!(sender is FrameworkElement frameworkElement))
                 return;
+
+
+
+            if (DesignerProperties.GetIsInDesignMode(frameworkElement)) return;
 
 
             var useViewModelMapper = GetUseViewModelMapper(frameworkElement);

@@ -12,10 +12,8 @@ namespace ConvMVVM2.Core.MVVM
         private readonly Dictionary<string, Type> _layerViewMappings = new Dictionary<string, Type>();
         #endregion
 
-
-        #region Public Functions
-
-        public void Add(string regionName, Type viewType)
+        #region Private Property
+        private void Add(string regionName, Type viewType)
         {
             if (!_regions.ContainsKey(regionName))
             {
@@ -32,6 +30,12 @@ namespace ConvMVVM2.Core.MVVM
                 _layerViews[regionName].Add(viewType);
             }
         }
+        #endregion
+
+
+        #region Public Functions
+
+
 
         public void Hide(string regionName)
         {
@@ -44,6 +48,11 @@ namespace ConvMVVM2.Core.MVVM
         public void Mapping(string regionName, Type viewType)
         {
             _layerViewMappings[regionName] = viewType;
+        }
+
+        public void Mapping<TView>(string regionName) where TView : class
+        {
+            this.Mapping(regionName, typeof(TView));
         }
 
         public void Register(string regionName, IRegion region)
@@ -61,11 +70,11 @@ namespace ConvMVVM2.Core.MVVM
             }
         }
 
-        public void Show(string layerName, Type viewType)
+        public void Show(string regionName, Type viewType)
         {
-            if (!_regions.TryGetValue(layerName, out var layer))
+            if (!_regions.TryGetValue(regionName, out var layer))
             {
-                throw new InvalidOperationException($"Layer not registered: {layerName}");
+                throw new InvalidOperationException($"Layer not registered: {regionName}");
             }
 
             if (viewType == null)
@@ -74,9 +83,9 @@ namespace ConvMVVM2.Core.MVVM
                 return;
             }
 
-            if (!_layerViews[layerName].Contains(viewType))
+            if (!_layerViews[regionName].Contains(viewType))
             {
-                Add(layerName, viewType);
+                Add(regionName, viewType);
             }
 
             var view = ServiceLocator.GetServiceProvider().GetService(viewType);
@@ -85,8 +94,51 @@ namespace ConvMVVM2.Core.MVVM
             {
                 layer.Content = view;
             }
+        }
 
-            
+        public void Show<TView>(string regionName) where TView : class
+        {
+            try
+            {
+                this.Show(regionName, typeof(TView));
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public void Show(string regionName, string viewName)
+        {
+            if (!_regions.TryGetValue(regionName, out var layer))
+            {
+                throw new InvalidOperationException($"Layer not registered: {regionName}");
+            }
+
+            if (viewName == "")
+            {
+                layer.Content = null;
+                return;
+            }
+
+            var viewType = ServiceLocator.GetServiceProvider().KeyType(viewName);
+            if (viewType == null)
+            {
+                throw new InvalidOperationException($"Can't find view info: {viewName}");
+            }
+
+
+            if (!_layerViews[regionName].Contains(viewType))
+            {
+                Add(regionName, viewType);
+            }
+
+            var view = ServiceLocator.GetServiceProvider().GetService(viewType);
+
+            if (view != null)
+            {
+                layer.Content = view;
+            }
         }
         #endregion
     }
