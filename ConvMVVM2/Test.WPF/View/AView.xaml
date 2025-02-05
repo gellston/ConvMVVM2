@@ -9,10 +9,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              convMVVM:ViewModelLocator.AutoWireViewModel="True"
-             convMVVM:ViewModelLocator.UseViewModelMapper="False"
              convMVVM:ViewModelLocator.UseNamePatternMapper="True">
 
     <Grid Background="Orange">
-        
+        <TextBlock Text="{Binding Name}"></TextBlock>
     </Grid>
 </UserControl>

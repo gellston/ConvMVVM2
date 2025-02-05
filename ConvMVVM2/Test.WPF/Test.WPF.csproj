@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
@@ -10,9 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConvMVVM2.Core\ConvMVVM2.Core.csproj" />
-    <ProjectReference Include="..\ConvMVVM2.WPF\ConvMVVM2.WPF.csproj" />
-    <ProjectReference Include="..\Test.WPFModule\Test.WPFModule.csproj" />
+    <PackageReference Include="ConvMVVM2.WPF" Version="1.3.1.1" />
   </ItemGroup>
 
 </Project>
