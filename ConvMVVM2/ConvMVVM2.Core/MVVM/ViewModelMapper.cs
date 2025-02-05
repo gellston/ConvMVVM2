@@ -13,7 +13,7 @@ namespace ConvMVVM2.Core.MVVM
 
         #region Public Functions
 
-        public void Register<TView, TViewModel>() where TView : IView where TViewModel : class
+        public void Register<TView, TViewModel>() where TView : class where TViewModel : class
         {
             _mappings[typeof(TView)] = typeof(TViewModel);
         }
