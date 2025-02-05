@@ -58,12 +58,12 @@ namespace ConvMVVM2.WPF.Extensions
 
         public static readonly DependencyProperty ViewModelNameProperty = DependencyProperty.RegisterAttached("ViewModelName", typeof(string), typeof(ViewModelLocator), new PropertyMetadata(""));
 
-        public static bool GetViewModelNameMapper(DependencyObject d)
+        public static string GetViewModelName(DependencyObject d)
         {
-            return (bool)d.GetValue(ViewModelNameProperty);
+            return (string)d.GetValue(ViewModelNameProperty);
         }
 
-        public static void SetViewModelNameMapper(DependencyObject d, bool value)
+        public static void SetViewModelName(DependencyObject d, string value)
         {
             d.SetValue(ViewModelNameProperty, value);
         }
@@ -96,6 +96,7 @@ namespace ConvMVVM2.WPF.Extensions
 
             var useViewModelMapper = GetUseViewModelMapper(frameworkElement);
             var useNamePatternMapper = GetUseNamePatternMapper(frameworkElement);
+            var dpViewModelName = GetViewModelName(frameworkElement);
 
 
             if (useViewModelMapper == true)
@@ -114,6 +115,12 @@ namespace ConvMVVM2.WPF.Extensions
                 var viewModelName = viewName.Replace("View", "ViewModel");
 
                 frameworkElement.DataContext = ServiceLocator.GetServiceProvider().GetService(viewModelName);
+            }
+
+
+            if(dpViewModelName != "")
+            {
+                frameworkElement.DataContext = ServiceLocator.GetServiceProvider().GetService(dpViewModelName);
             }
 
 
