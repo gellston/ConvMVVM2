@@ -7,9 +7,6 @@ namespace ConvMVVM2.Core.MVVM
     public abstract class AppBootstrapper
     {
         #region Private Property
-        private readonly IContainer container;
-        private readonly ILayerManager layerManager;
-        private readonly IViewModelMapper viewModelMapper;
         private List<IModule> modules;
         #endregion
 
@@ -18,11 +15,6 @@ namespace ConvMVVM2.Core.MVVM
 
         protected AppBootstrapper()
         {
-            container = ContainerProvider.GetContainer();
-            layerManager = container.Resolve<ILayerManager>();
-            viewModelMapper = container.Resolve<IViewModelMapper>();
-
-
             ConfigureModule();
         }
         #endregion
@@ -38,9 +30,9 @@ namespace ConvMVVM2.Core.MVVM
         #endregion
 
         #region Protected Functions
-        protected abstract void RegisterViewModels(IViewModelMapper viewModelMapper);
-        protected abstract void RegisterDependencies(IContainer container);
-        protected abstract void ViewMapping(IContainer container, ILayerManager layerManager);
+        protected abstract void ViewModelMapping(IViewModelMapper viewModelMapper);
+        protected abstract void RegisterServices(IServiceCollection serviceCollection);
+        protected abstract void RegionMapping(IRegionManager layerManager);
         protected abstract void OnStartUp();
         protected abstract void RegisterModules();
         protected void RegisterModule<T>(T module) where T : IModule
@@ -52,22 +44,37 @@ namespace ConvMVVM2.Core.MVVM
         #region Public Functions
         public void Run()
         {
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton<IRegionManager, RegionManager>();
+            serviceCollection.AddSingleton<ILocalizeService, LocalizeService>();
+            serviceCollection.AddSingleton<IViewModelMapper, ViewModelMapper>();
+
+
+            var container = serviceCollection.CreateContainer();
+            ServiceLocator.SetServiceProvider(container);
+            var regionManager = container.GetService<IRegionManager>();
+            var viewModelMapper = container.GetService<IViewModelMapper>();
+
+            
             RegisterModules();
 
-            RegisterViewModels(viewModelMapper);
+            ViewModelMapping(viewModelMapper);
 
             foreach(var module in modules)
-                module.RegisterViewModels(viewModelMapper);
+                module.ViewModelMapping(viewModelMapper);
 
-            RegisterDependencies(container);
-
-            foreach(var module in modules)
-                module.RegisterDependencies(container);
-
-            ViewMapping(container, layerManager);
+            RegisterServices(serviceCollection);
 
             foreach(var module in modules)
-                module.ViewMapping(container, layerManager);
+                module.RegisterServices(serviceCollection);
+
+            RegionMapping(regionManager);
+
+            foreach(var module in modules)
+                module.RegionMapping(regionManager);
+
+
 
             OnStartUp();
 

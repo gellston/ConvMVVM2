@@ -11,10 +11,11 @@ namespace Test.WPF
     {
         private BootStrapper bootStrapper = new BootStrapper();
 
+
         #region Constructor
         public App()
         {
-            
+
             bootStrapper.Run();
             
 

@@ -6,10 +6,10 @@ namespace ConvMVVM2.Core.MVVM
 {
     public interface IModule
     {
-        public void RegisterViewModels(IViewModelMapper viewModelMapper);
+        public void ViewModelMapping(IViewModelMapper viewModelMapper);
 
-        public void RegisterDependencies(IContainer container);
-        public void ViewMapping(IContainer container, ILayerManager layerManager);
+        public void RegisterServices(IServiceCollection container);
+        public void RegionMapping(IRegionManager layerManager);
         public void OnStartUp();
     }
 }

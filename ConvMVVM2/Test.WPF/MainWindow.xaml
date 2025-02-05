@@ -6,9 +6,8 @@
         xmlns:local="clr-namespace:Test.WPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        xmlns:convMVVM2="https://github.com/gellston/ConvMVVM2">
+        xmlns:convMVVM="https://github.com/gellston/ConvMVVM2">
     <Grid>
-        <convMVVM2:WPFLayer LayerName="MainView"
-                            ></convMVVM2:WPFLayer>
+        <convMVVM:WPFRegion RegionName="AView"></convMVVM:WPFRegion>
     </Grid>
 </Window>
