@@ -57,50 +57,93 @@ namespace ConvMVVM2.Core.MVVM
 
         public void Register(string regionName, IRegion region)
         {
-            System.Diagnostics.Debug.WriteLine($"RegionManager.Register called with RegionName: {regionName}");
-
-            if (!_regions.ContainsKey(regionName))
+            try
             {
-                _regions[regionName] = region;
-                _layerViews[regionName] = new List<Type>();
-                if (_layerViewMappings.TryGetValue(regionName, out var view))
+                System.Diagnostics.Debug.WriteLine($"RegionManager.Register called with RegionName: {regionName}");
+
+                if (!_regions.ContainsKey(regionName))
                 {
-                    Show(regionName, view);
+                    _regions[regionName] = region;
+                    _layerViews[regionName] = new List<Type>();
+                    if (_layerViewMappings.TryGetValue(regionName, out var view))
+                    {
+                        Navigate(regionName, view);
+                    }
                 }
+
             }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
         }
 
-        public void Show(string regionName, Type viewType)
-        {
-            if (!_regions.TryGetValue(regionName, out var layer))
-            {
-                throw new InvalidOperationException($"Layer not registered: {regionName}");
-            }
-
-            if (viewType == null)
-            {
-                layer.Content = null;
-                return;
-            }
-
-            if (!_layerViews[regionName].Contains(viewType))
-            {
-                Add(regionName, viewType);
-            }
-
-            var view = ServiceLocator.GetServiceProvider().GetService(viewType);
-
-            if (view != null)
-            {
-                layer.Content = view;
-            }
-        }
-
-        public void Show<TView>(string regionName) where TView : class
+        public void Navigate(string regionName, Type viewType)
         {
             try
             {
-                this.Show(regionName, typeof(TView));
+                if (!_regions.TryGetValue(regionName, out var layer))
+                {
+                    throw new InvalidOperationException($"Layer not registered: {regionName}");
+                }
+
+                if (viewType == null)
+                {
+                    layer.Content = null;
+                    return;
+                }
+
+                if (!_layerViews[regionName].Contains(viewType))
+                {
+                    Add(regionName, viewType);
+                }
+
+
+                var next = ServiceLocator.GetServiceProvider().GetService(viewType);
+                if (next == null) return;
+
+                var prev = layer.Content;
+                object prevDataContext = null;
+                object nextDataContext = null;
+
+                if (prev != null)
+                {
+                    prevDataContext = prev.GetType().GetProperty("DataContext").GetValue(prev);
+                }
+
+                nextDataContext = next.GetType().GetProperty("DataContext").GetValue(next);
+                var navigationContext = new NavigationContext(prevDataContext, nextDataContext);
+
+                if (prevDataContext is INavigateAware prevNavigationAware)
+                {
+                    prevNavigationAware.OnNavigatedFrom(navigationContext);
+                }
+
+                if (nextDataContext is INavigateAware nextNavigationAware)
+                {
+                    if (!nextNavigationAware.CanNavigate(navigationContext)) return;
+
+                    nextNavigationAware.OnNavigatedTo(navigationContext);
+                    layer.Content = next;
+                }
+                else
+                {
+                    layer.Content = next;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            
+        }
+
+        public void Navigate<TView>(string regionName) where TView : class
+        {
+            try
+            {
+                this.Navigate(regionName, typeof(TView));
             }
             catch (Exception ex)
             {
@@ -108,36 +151,21 @@ namespace ConvMVVM2.Core.MVVM
             }
         }
 
-        public void Show(string regionName, string viewName)
+        public void Navigate(string regionName, string viewName)
         {
-            if (!_regions.TryGetValue(regionName, out var layer))
+            try
             {
-                throw new InvalidOperationException($"Layer not registered: {regionName}");
+                var viewType = ServiceLocator.GetServiceProvider().KeyType(viewName);
+                if (viewType == null)
+                {
+                    throw new InvalidOperationException($"Can't find view info: {viewName}");
+                }
+
+                this.Navigate(regionName, viewType);
             }
-
-            if (viewName == "")
+            catch (Exception ex)
             {
-                layer.Content = null;
-                return;
-            }
-
-            var viewType = ServiceLocator.GetServiceProvider().KeyType(viewName);
-            if (viewType == null)
-            {
-                throw new InvalidOperationException($"Can't find view info: {viewName}");
-            }
-
-
-            if (!_layerViews[regionName].Contains(viewType))
-            {
-                Add(regionName, viewType);
-            }
-
-            var view = ServiceLocator.GetServiceProvider().GetService(viewType);
-
-            if (view != null)
-            {
-                layer.Content = view;
+                throw;
             }
         }
         #endregion

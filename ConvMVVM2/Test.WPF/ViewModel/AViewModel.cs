@@ -8,25 +8,40 @@ using System.Threading.Tasks;
 
 namespace Test.WPF.ViewModel
 {
-    public partial class AViewModel : ViewModelBase
+    public partial class AViewModel : ViewModelBase, IViewLoadable, IServiceInitializable, INavigateAware
     {
+        #region Private Property
+        private readonly IRegionManager regionManager;
+        #endregion
 
         #region Constructor
-        public AViewModel()
+        public AViewModel(IRegionManager regionManager)
         {
             System.Diagnostics.Debug.WriteLine("test");
+            this.regionManager = regionManager;
 
 
-            this.Name = "there is no cow level";
-
+            
+            
         }
 
 
         #endregion
 
-        #region Public Property
-        [Property]
-        private string _Name = "";
+        #region Command
+        [RelayCommand]
+        public void Test()
+        {
+            try
+            {
+                this.regionManager.Navigate("AView", "BView");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write(ex.ToString());
+            }
+
+        }
         #endregion
 
         #region Event Handler
@@ -38,6 +53,21 @@ namespace Test.WPF.ViewModel
         public void OnServiceInitialized()
         {
 
+        }
+
+        public bool CanNavigate(NavigationContext context)
+        {
+            return true;
+        }
+
+        public void OnNavigatedTo(NavigationContext context)
+        {
+            System.Diagnostics.Debug.WriteLine("test");
+        }
+
+        public void OnNavigatedFrom(NavigationContext context)
+        {
+            System.Diagnostics.Debug.WriteLine("test");
         }
         #endregion
     }

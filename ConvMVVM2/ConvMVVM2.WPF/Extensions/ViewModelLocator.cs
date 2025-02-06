@@ -77,14 +77,14 @@ namespace ConvMVVM2.WPF.Extensions
         {
             if (d is FrameworkElement frameworkElement && (bool)e.NewValue)
             {
-                
-                frameworkElement.Loaded += FrameworkElementOnLoaded;
+
+                //frameworkElement.sat += FrameworkElementOnLoaded;
+                frameworkElement.Initialized += FrameworkElement_Initialized;
             }
       
         }
 
-
-        private static void FrameworkElementOnLoaded(object sender, RoutedEventArgs e)
+        private static void FrameworkElement_Initialized(object sender, EventArgs e)
         {
             if (!(sender is FrameworkElement frameworkElement))
                 return;
@@ -118,7 +118,7 @@ namespace ConvMVVM2.WPF.Extensions
             }
 
 
-            if(dpViewModelName != "")
+            if (dpViewModelName != "")
             {
                 frameworkElement.DataContext = ServiceLocator.GetServiceProvider().GetService(dpViewModelName);
             }
@@ -129,8 +129,9 @@ namespace ConvMVVM2.WPF.Extensions
                 loadable.OnViewLoaded();
             }
 
-            frameworkElement.Loaded -= FrameworkElementOnLoaded;
+            frameworkElement.Initialized -= FrameworkElement_Initialized;
         }
+
 
         #endregion
 
