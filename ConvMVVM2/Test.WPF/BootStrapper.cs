@@ -19,7 +19,9 @@ namespace Test.WPF
         protected override void RegisterServices(IServiceCollection container)
         {
             container.AddSingleton<AView>();
+            container.AddSingleton<BView>();
             container.AddSingleton<AViewModel>();
+            container.AddSingleton<BViewModel>();
 
         }
 
@@ -31,6 +33,7 @@ namespace Test.WPF
         protected override void ViewModelMapping(IViewModelMapper viewModelMapper)
         {
             viewModelMapper.Register<AView, AViewModel>();
+
         }
 
         protected override void RegionMapping(IRegionManager layerManager)
