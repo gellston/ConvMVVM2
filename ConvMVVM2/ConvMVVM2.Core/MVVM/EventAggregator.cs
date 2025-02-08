@@ -13,18 +13,18 @@ namespace ConvMVVM2.Core.MVVM
         #endregion
 
 
-        public TDataType GetEvent<TDataType>() where TDataType : EventBase
+        public PubSubEvent<TDataType> GetEvent<TDataType>()
         {
-            if(this._eventCollection.Where(data => data is TDataType).Count() == 0)
+            if(this._eventCollection.Where(data => data is PubSubEvent<TDataType>).Count() == 0)
             {
-                var eventHandler = (TDataType)Activator.CreateInstance(typeof(TDataType));
+                var eventHandler = (PubSubEvent<TDataType>)Activator.CreateInstance(typeof(PubSubEvent<TDataType>));
                 this._eventCollection.Add(eventHandler);
             }
 
             foreach(var eventHandler in this._eventCollection)
             {
-                if (eventHandler is TDataType)
-                    return (TDataType)eventHandler;
+                if (eventHandler is PubSubEvent<TDataType>)
+                    return (PubSubEvent<TDataType>)eventHandler;
             }
 
             throw new Exception("Invalid Event Handler");

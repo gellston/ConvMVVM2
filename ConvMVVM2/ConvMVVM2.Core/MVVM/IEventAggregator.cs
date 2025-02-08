@@ -7,6 +7,6 @@ namespace ConvMVVM2.Core.MVVM
 {
     public interface IEventAggregator
     {
-        public TDataType GetEvent<TDataType>() where TDataType : EventBase;
+        public PubSubEvent<TDataType> GetEvent<TDataType>();
     }
 }

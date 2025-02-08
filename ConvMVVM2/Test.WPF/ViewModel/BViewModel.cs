@@ -20,7 +20,7 @@ namespace Test.WPF.ViewModel
         {
             this.eventAggregator = eventAggregator;
 
-            this.eventAggregator.GetEvent<PubSubEvent<string>>().Subscribe(this.Test, ThreadOption.Background);
+            this.eventAggregator.GetEvent<string>().Subscribe(this.Test, ThreadOption.Background);
         }
 
 
@@ -31,7 +31,7 @@ namespace Test.WPF.ViewModel
         {
             try
             {
-                this.eventAggregator.GetEvent<PubSubEvent<string>>().Publish("there is no cow level");
+                this.eventAggregator.GetEvent<string>().Publish("there is no cow level");
 
             }
             catch (Exception ex)
