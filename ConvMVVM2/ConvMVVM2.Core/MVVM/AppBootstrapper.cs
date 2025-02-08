@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ConvMVVM2.Core.MVVM
 {
@@ -15,9 +16,12 @@ namespace ConvMVVM2.Core.MVVM
 
         protected AppBootstrapper()
         {
+
+
             ConfigureModule();
         }
         #endregion
+
 
 
         #region Private Functions
@@ -49,6 +53,7 @@ namespace ConvMVVM2.Core.MVVM
             serviceCollection.AddSingleton<IRegionManager, RegionManager>();
             serviceCollection.AddSingleton<ILocalizeService, LocalizeService>();
             serviceCollection.AddSingleton<IViewModelMapper, ViewModelMapper>();
+            serviceCollection.AddSingleton<IEventAggregator, EventAggregator>();
 
 
             var container = serviceCollection.CreateContainer();

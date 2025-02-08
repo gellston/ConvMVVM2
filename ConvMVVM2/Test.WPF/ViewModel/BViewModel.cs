@@ -1,4 +1,5 @@
-﻿using ConvMVVM2.Core.MVVM;
+﻿using ConvMVVM2.Core.Attributes;
+using ConvMVVM2.Core.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,51 @@ using System.Threading.Tasks;
 
 namespace Test.WPF.ViewModel
 {
-    public class BViewModel : ViewModelBase, INavigateAware
+    public partial class BViewModel : ViewModelBase, INavigateAware
     {
+
+        #region Private Property
+        private readonly IEventAggregator eventAggregator;
+        #endregion
+
         #region Constructor
-        public BViewModel() { }
+        public BViewModel(IEventAggregator eventAggregator)
+        {
+            this.eventAggregator = eventAggregator;
+
+            this.eventAggregator.GetEvent<PubSubEvent<string>>().Subscribe(this.Test, ThreadOption.Background);
+        }
 
 
         #endregion
 
+        [RelayCommand]
+        public void Test()
+        {
+            try
+            {
+                this.eventAggregator.GetEvent<PubSubEvent<string>>().Publish("there is no cow level");
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void Test(string data)
+        {
+
+
+            System.Diagnostics.Debug.WriteLine($"Test {data}");
+        }
+
+
         public bool CanNavigate(NavigationContext context)
         {
+
+
+            
             return true;
         }
 

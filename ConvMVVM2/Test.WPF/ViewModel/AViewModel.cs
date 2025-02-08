@@ -12,15 +12,19 @@ namespace Test.WPF.ViewModel
     {
         #region Private Property
         private readonly IRegionManager regionManager;
+        private readonly IEventAggregator eventAggregator;
         #endregion
 
         #region Constructor
-        public AViewModel(IRegionManager regionManager)
+        public AViewModel(IRegionManager regionManager,
+                          IEventAggregator eventAggregator)
         {
             System.Diagnostics.Debug.WriteLine("test");
             this.regionManager = regionManager;
+            this.eventAggregator = eventAggregator;
 
 
+            this.eventAggregator.GetEvent<PubSubEvent<string>>().Subscribe(this.Test, ThreadOption.Background);
             
             
         }
@@ -45,6 +49,14 @@ namespace Test.WPF.ViewModel
         #endregion
 
         #region Event Handler
+
+        public void Test(string data)
+        {
+
+
+            System.Diagnostics.Debug.WriteLine($"Test {data}");
+        }
+
         public void OnViewLoaded()
         {
 

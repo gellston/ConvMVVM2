@@ -10,6 +10,8 @@
              convMVVM:ViewModelLocator.AutoWireViewModel="True"
              convMVVM:ViewModelLocator.UseNamePatternMapper="True">
     <Grid Background="Green">
-            
+        <Button Content="Event TEST"
+                Margin="50"
+                Command="{Binding TestCommand}"></Button>
     </Grid>
 </UserControl>
