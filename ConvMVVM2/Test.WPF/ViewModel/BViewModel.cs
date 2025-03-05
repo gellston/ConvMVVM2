@@ -13,14 +13,17 @@ namespace Test.WPF.ViewModel
 
         #region Private Property
         private readonly IEventAggregator eventAggregator;
+        private readonly IRegionManager regionManager;
         #endregion
 
         #region Constructor
-        public BViewModel(IEventAggregator eventAggregator)
+        public BViewModel(IEventAggregator eventAggregator, IRegionManager regionManager)
         {
             this.eventAggregator = eventAggregator;
+            this.regionManager = regionManager;
 
             this.eventAggregator.GetEvent<string>().Subscribe(this.Test, ThreadOption.Background);
+            
         }
 
 
@@ -32,7 +35,7 @@ namespace Test.WPF.ViewModel
             try
             {
                 this.eventAggregator.GetEvent<string>().Publish("there is no cow level");
-
+                this.regionManager.Navigate("AView", "AView");
             }
             catch (Exception ex)
             {

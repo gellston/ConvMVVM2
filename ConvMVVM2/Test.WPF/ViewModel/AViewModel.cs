@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Test.WPF.ViewModel
 {
-    public partial class AViewModel : ViewModelBase, IViewLoadable, IServiceInitializable, INavigateAware
+    public partial class AViewModel : ViewModelBase, IViewLoadable, IServiceInitializable, INavigateAware, IRenderer, IViewInitializable
     {
         #region Private Property
         private readonly IRegionManager regionManager;
@@ -59,13 +59,24 @@ namespace Test.WPF.ViewModel
 
         public void OnViewLoaded()
         {
+            System.Diagnostics.Debug.WriteLine("test");
+        }
 
+        public void OnRendering()
+        {
+            System.Diagnostics.Debug.WriteLine("test");
         }
 
         public void OnServiceInitialized()
         {
-
+            System.Diagnostics.Debug.WriteLine("test");
         }
+
+        public void OnViewInitialized()
+        {
+            System.Diagnostics.Debug.WriteLine("test");
+        }
+
 
         public bool CanNavigate(NavigationContext context)
         {
@@ -75,12 +86,16 @@ namespace Test.WPF.ViewModel
         public void OnNavigatedTo(NavigationContext context)
         {
             System.Diagnostics.Debug.WriteLine("test");
+
         }
 
         public void OnNavigatedFrom(NavigationContext context)
         {
             System.Diagnostics.Debug.WriteLine("test");
         }
+
+
+
         #endregion
     }
 }

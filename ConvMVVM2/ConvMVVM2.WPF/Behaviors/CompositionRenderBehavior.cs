@@ -20,6 +20,7 @@ namespace ConvMVVM2.WPF.Behaviors
         {
             base.OnAttached();
 
+            CompositionTarget.Rendering -= CompositionTarget_Rendering;
             CompositionTarget.Rendering += CompositionTarget_Rendering;
            
         }
@@ -46,7 +47,7 @@ namespace ConvMVVM2.WPF.Behaviors
         #region Event Handler
         private void CompositionTarget_Rendering(object sender, EventArgs e)
         {
-            if (!(sender is Behavior<FrameworkElement> behavior)) return;
+            if (!(AssociatedObject is FrameworkElement)) return;
            
             try
             {
