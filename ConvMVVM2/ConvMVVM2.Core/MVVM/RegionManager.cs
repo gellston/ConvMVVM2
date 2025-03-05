@@ -55,6 +55,26 @@ namespace ConvMVVM2.Core.MVVM
             this.Mapping(regionName, typeof(TView));
         }
 
+        public void Cleanup(string regionName)
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine($"RegionManager.Cleanup called with RegionName: {regionName}");
+
+                if (_regions.ContainsKey(regionName))
+                {
+                    _regions.Remove(regionName);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+
         public void Register(string regionName, IRegion region)
         {
             try
@@ -64,11 +84,16 @@ namespace ConvMVVM2.Core.MVVM
                 if (!_regions.ContainsKey(regionName))
                 {
                     _regions[regionName] = region;
+                }
+
+                if (!_layerViews.ContainsKey(regionName))
+                {
                     _layerViews[regionName] = new List<Type>();
-                    if (_layerViewMappings.TryGetValue(regionName, out var view))
-                    {
-                        Navigate(regionName, view);
-                    }
+                }
+
+                if (_layerViewMappings.TryGetValue(regionName, out var view))
+                {
+                    Navigate(regionName, view);
                 }
 
             }
@@ -126,10 +151,20 @@ namespace ConvMVVM2.Core.MVVM
 
                     nextNavigationAware.OnNavigatedTo(navigationContext);
                     layer.Content = next;
+
+                    if (_layerViewMappings.ContainsKey(regionName))
+                    {
+                        _layerViewMappings[regionName] = viewType;
+                    }
                 }
                 else
                 {
                     layer.Content = next;
+
+                    if (_layerViewMappings.ContainsKey(regionName))
+                    {
+                        _layerViewMappings[regionName] = viewType;
+                    }
                 }
             }
             catch (Exception ex)

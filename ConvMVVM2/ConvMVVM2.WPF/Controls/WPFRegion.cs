@@ -42,6 +42,7 @@ namespace ConvMVVM2.WPF.Controls
         {
             Loaded += WPFLayer_Loaded;
         }
+
         #endregion
 
 
@@ -89,10 +90,12 @@ namespace ConvMVVM2.WPF.Controls
             var layerManager = ServiceLocator.GetServiceProvider().GetService<IRegionManager>();
             if (layerManager != null)
             {
+                layerManager.Cleanup(RegionName);
                 layerManager.Register(RegionName, this);
                 _isRegistered = true;
             }
         }
+
         #endregion
 
     }

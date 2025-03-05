@@ -22,7 +22,7 @@ namespace Test.WPF
             container.AddSingleton<BView>();
             container.AddSingleton<AViewModel>();
             container.AddSingleton<BViewModel>();
-
+            container.AddInstance<MainWindowView>();
         }
 
         protected override void RegisterModules()

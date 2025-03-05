@@ -39,7 +39,7 @@ namespace Test.WPF.ViewModel
             }
             catch (Exception ex)
             {
-
+               
             }
         }
 

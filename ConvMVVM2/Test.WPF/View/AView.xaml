@@ -14,7 +14,7 @@
              convMVVM:ViewModelLocator.ViewModelName="AViewModel">
 
     <i:Interaction.Behaviors>
-        <convMVVM:CompositionRenderBehavior Render></convMVVM:CompositionRenderBehavior>
+        <convMVVM:CompositionRenderBehavior></convMVVM:CompositionRenderBehavior>
     </i:Interaction.Behaviors>
     <Grid Background="Orange">
         <Button Margin="100"

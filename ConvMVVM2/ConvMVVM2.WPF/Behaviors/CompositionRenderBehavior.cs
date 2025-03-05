@@ -64,7 +64,7 @@ namespace ConvMVVM2.WPF.Behaviors
             }
             catch (Exception ex)
             {
-
+                System.Diagnostics.Debug.WriteLine(ex);
             }
         }
         #endregion

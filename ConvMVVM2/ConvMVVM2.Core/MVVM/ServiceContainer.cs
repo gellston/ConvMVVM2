@@ -139,7 +139,7 @@ namespace ConvMVVM2.Core.MVVM
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("Unknown", ex);
+                throw new InvalidOperationException(String.Format("Can't instantiate {0}", typeof(TInterface)), ex);
             }
         }
 
@@ -151,7 +151,7 @@ namespace ConvMVVM2.Core.MVVM
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("Unknown", ex);
+                throw new InvalidOperationException(String.Format("Can't instantiate {0}", serviceType), ex);
             }
         }
 
@@ -166,7 +166,7 @@ namespace ConvMVVM2.Core.MVVM
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("Unknown", ex);
+                throw new InvalidOperationException(String.Format("Can't instantiate {0}", typeName), ex);
 
             }
         }
