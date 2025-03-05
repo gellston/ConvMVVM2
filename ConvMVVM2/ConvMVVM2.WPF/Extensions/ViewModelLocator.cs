@@ -78,10 +78,28 @@ namespace ConvMVVM2.WPF.Extensions
             if (d is FrameworkElement frameworkElement && (bool)e.NewValue)
             {
 
-                //frameworkElement.sat += FrameworkElementOnLoaded;
+                frameworkElement.Initialized -= FrameworkElement_Initialized;
                 frameworkElement.Initialized += FrameworkElement_Initialized;
+
+                frameworkElement.Loaded -= FrameworkElement_Loaded;
+                frameworkElement.Loaded += FrameworkElement_Loaded;
             }
       
+        }
+
+        private static void FrameworkElement_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is FrameworkElement frameworkElement))
+                return;
+
+            if (DesignerProperties.GetIsInDesignMode(frameworkElement)) return;
+
+            if (frameworkElement.DataContext == null) return;
+
+            if (frameworkElement.DataContext is IViewLoadable loadable)
+            {
+                loadable.OnViewLoaded();
+            }
         }
 
         private static void FrameworkElement_Initialized(object sender, EventArgs e)
@@ -124,9 +142,9 @@ namespace ConvMVVM2.WPF.Extensions
             }
 
 
-            if (frameworkElement.DataContext is IViewLoadable loadable)
+            if (frameworkElement.DataContext is IViewInitializable initializer)
             {
-                loadable.OnViewLoaded();
+                initializer.OnViewInitialized();
             }
 
             frameworkElement.Initialized -= FrameworkElement_Initialized;
