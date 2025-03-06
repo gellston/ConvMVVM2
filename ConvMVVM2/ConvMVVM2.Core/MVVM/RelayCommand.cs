@@ -24,6 +24,10 @@ namespace ConvMVVM2.Core.MVVM
         public event EventHandler CanExecuteChanged;
         #endregion
 
+        #region Public Functions
+        public void InvalidateCommand() => this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        #endregion
+
 
         #region Evnet Handler
         public bool CanExecute(object parameter)
@@ -67,6 +71,10 @@ namespace ConvMVVM2.Core.MVVM
 
         #region Event 
         public event EventHandler CanExecuteChanged;
+        #endregion
+
+        #region Public Functions
+        public void InvalidateCommand() => this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         #endregion
 
         #region Event Handler

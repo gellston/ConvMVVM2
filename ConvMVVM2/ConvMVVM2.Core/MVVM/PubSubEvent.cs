@@ -57,7 +57,7 @@ namespace ConvMVVM2.Core.MVVM
                                     {
                                         this.OnPublishEvent(data);
                                     }
-                                    catch (Exception ex)
+                                    catch
                                     {
                                     }
                                 });
@@ -71,7 +71,7 @@ namespace ConvMVVM2.Core.MVVM
                             }
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     throw;
                 }

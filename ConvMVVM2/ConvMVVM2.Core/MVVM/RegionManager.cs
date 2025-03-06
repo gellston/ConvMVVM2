@@ -68,7 +68,7 @@ namespace ConvMVVM2.Core.MVVM
 
 
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -97,7 +97,7 @@ namespace ConvMVVM2.Core.MVVM
                 }
 
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -167,7 +167,7 @@ namespace ConvMVVM2.Core.MVVM
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -180,7 +180,7 @@ namespace ConvMVVM2.Core.MVVM
             {
                 this.Navigate(regionName, typeof(TView));
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -198,7 +198,7 @@ namespace ConvMVVM2.Core.MVVM
 
                 this.Navigate(regionName, viewType);
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
