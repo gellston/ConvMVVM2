@@ -22,7 +22,7 @@ namespace ConvMVVM2.WPF.Host
 
 
         #region Extension Functions
-        public static AppBootstrapper CreateStrapper<BOOTSTRAP>(ShutdownMode shutdownMode = ShutdownMode.OnMainWindowClose) where BOOTSTRAP : AppBootstrapper
+        public static AppBootstrapper CreateStrapper<BOOTSTRAP, APP>(ShutdownMode shutdownMode = ShutdownMode.OnMainWindowClose) where BOOTSTRAP : AppBootstrapper where APP : Application
         {
             try
             {
@@ -32,7 +32,7 @@ namespace ConvMVVM2.WPF.Host
                 }
 
                 var bootStrapper = Activator.CreateInstance(typeof(BOOTSTRAP)) as BOOTSTRAP;
-                bootStrapper.ServiceCollection.AddSingleton<Application>();
+                bootStrapper.ServiceCollection.AddSingleton<Application, APP>();
                 bootStrapper.Run();
 
 
