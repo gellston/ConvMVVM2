@@ -13,7 +13,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ConvMVVM2.Core\ConvMVVM2.Core.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\ConvMVVM2.WPF\ConvMVVM2.WPF.csproj" />
-    <ProjectReference Include="..\Test.ModuleA\Test.ModuleA.csproj" />
   </ItemGroup>
 
 </Project>

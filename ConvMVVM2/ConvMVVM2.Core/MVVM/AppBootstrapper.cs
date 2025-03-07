@@ -165,10 +165,25 @@ namespace ConvMVVM2.Core.MVVM
             }
         }
 
+        protected void AddModuleCurrentPath()
+        {
+            try
+            {
+                var currentPath = AppDomain.CurrentDomain.BaseDirectory;
+                this.moduleLoadPaths.Add(currentPath);
+            }
+            catch
+            {
+                throw;
+            }
+
+        }
+
         protected void EnableAutoModuleSearch(bool enable)
         {
             this.enableAutoModuleSearch = enable;
         }
+
         #endregion
 
 
