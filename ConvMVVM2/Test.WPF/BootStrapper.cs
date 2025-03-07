@@ -28,6 +28,12 @@ namespace Test.WPF
         protected override void RegisterModules()
         {
 
+            this.EnableAutoModuleSearch(true);
+            this.AddModulePath("C:\\github\\ConvMVVM2\\ConvMVVM2\\Test.ModuleA\\bin\\x64\\Debug\\net8.0-windows");
+            this.AddModuleRelativePath("Modules");
+
+            this.RegisterModule<ModuleA.Module>();
+            
         }
 
         protected override void ViewModelMapping(IViewModelMapper viewModelMapper)
@@ -38,7 +44,6 @@ namespace Test.WPF
 
         protected override void RegionMapping(IRegionManager layerManager)
         {
-            layerManager.Mapping("AView", typeof(AView));
         }
     }
 }

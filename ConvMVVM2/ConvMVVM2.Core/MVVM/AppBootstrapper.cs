@@ -12,9 +12,9 @@ namespace ConvMVVM2.Core.MVVM
     public abstract class AppBootstrapper
     {
         #region Private Property
-        private List<IModule> modules;
+        private HashSet<IModule> modules = new HashSet<IModule>();
         private ServiceCollection serviceCollection = new ServiceCollection();
-        private HashSet<string> moduleLoadPaths = new HashSet<string>();
+        private List<string> moduleLoadPaths = new List<string>();
         private bool enableAutoModuleSearch = false;
         #endregion
 
@@ -23,7 +23,7 @@ namespace ConvMVVM2.Core.MVVM
 
         protected AppBootstrapper()
         {
-            ConfigureModule();
+
         }
         #endregion
 
@@ -37,11 +37,7 @@ namespace ConvMVVM2.Core.MVVM
 
         #region Private Functions
 
-        private void ConfigureModule()
-        {
-            modules = new List<IModule>();
-
-        }
+ 
 
 
         private void LoadAssemblyStart()
@@ -66,7 +62,7 @@ namespace ConvMVVM2.Core.MVVM
                             foreach (var pluginType in pluginTypes)
                             {
                                 var plugin = (IModule)Activator.CreateInstance(pluginType);
-
+                                if (this.modules.Count(module => module.ModuleName == plugin.ModuleName) > 0) continue;
                                 this.modules.Add(plugin);
                             }
                         }
@@ -100,7 +96,7 @@ namespace ConvMVVM2.Core.MVVM
                             foreach (var pluginType in pluginTypes)
                             {
                                 var plugin = (IModule)Activator.CreateInstance(pluginType);
-
+                                if (this.modules.Count(module => module.ModuleName == plugin.ModuleName) > 0) continue;
                                 this.modules.Add(plugin);
                             }
                         }
@@ -126,18 +122,38 @@ namespace ConvMVVM2.Core.MVVM
         protected abstract void RegisterModules();
         protected void RegisterModule<T>(T module) where T : IModule
         {
+            if (this.modules.Count(module => module.ModuleName == module.ModuleName) > 0) return;
             this.modules.Add(module);
         }
 
         protected void RegisterModule<T>() where T : IModule
         {
-            this.modules.Add((IModule)Activator.CreateInstance(typeof(T)));
+            var module = (IModule)Activator.CreateInstance(typeof(T));
+            this.RegisterModule(module);
         }
 
         protected void AddModulePath(string path)
         {
             try
             {
+                if (!Directory.Exists(path))
+                    throw new InvalidOperationException("Path is not exists");
+
+                this.moduleLoadPaths.Add(path);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        protected void AddModuleRelativePath(string folder)
+        {
+            try
+            {
+                var currentPath = AppDomain.CurrentDomain.BaseDirectory;
+                var path = Path.Combine(currentPath, folder);
+
                 if (!Directory.Exists(path))
                     throw new InvalidOperationException("Path is not exists");
 

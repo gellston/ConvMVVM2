@@ -8,6 +8,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConvMVVM2.WPF", "ConvMVVM2.WPF\ConvMVVM2.WPF.csproj", "{73B948BE-3CB0-46EC-A38F-B53C6C1932ED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.WPF", "Test.WPF\Test.WPF.csproj", "{49E3E55F-F419-43A2-9FFC-01310673F0A8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0658B222-82DF-4C3D-9F6A-CE7EA47454F5} = {0658B222-82DF-4C3D-9F6A-CE7EA47454F5}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ModuleA", "Test.ModuleA\Test.ModuleA.csproj", "{0658B222-82DF-4C3D-9F6A-CE7EA47454F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,13 +46,17 @@ Global
 		{49E3E55F-F419-43A2-9FFC-01310673F0A8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{49E3E55F-F419-43A2-9FFC-01310673F0A8}.Release|x64.ActiveCfg = Release|x64
 		{49E3E55F-F419-43A2-9FFC-01310673F0A8}.Release|x64.Build.0 = Release|x64
+		{0658B222-82DF-4C3D-9F6A-CE7EA47454F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0658B222-82DF-4C3D-9F6A-CE7EA47454F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0658B222-82DF-4C3D-9F6A-CE7EA47454F5}.Debug|x64.ActiveCfg = Debug|x64
+		{0658B222-82DF-4C3D-9F6A-CE7EA47454F5}.Debug|x64.Build.0 = Debug|x64
+		{0658B222-82DF-4C3D-9F6A-CE7EA47454F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0658B222-82DF-4C3D-9F6A-CE7EA47454F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0658B222-82DF-4C3D-9F6A-CE7EA47454F5}.Release|x64.ActiveCfg = Release|x64
+		{0658B222-82DF-4C3D-9F6A-CE7EA47454F5}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{5F1669F6-0785-4601-89BB-902D21803BCE} = {D3DE9D7F-9141-4A45-932D-E34D93D9533D}
-		{5619320F-AD81-46EE-ADC9-9A2CFC9C646E} = {D3DE9D7F-9141-4A45-932D-E34D93D9533D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5147EE5D-C35E-4A24-B8A8-971864072F90}
