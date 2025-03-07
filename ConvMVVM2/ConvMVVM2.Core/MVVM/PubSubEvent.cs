@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -12,31 +13,44 @@ namespace ConvMVVM2.Core.MVVM
     {
         #region Private Property
         private Object lockObject = new Object();
+        private HashSet<CallbackDelegate> callbackHash = new HashSet<CallbackDelegate>();
+        private Hashtable callbackOptionTable = new Hashtable();
         #endregion
 
         #region Consturctor
-        public PubSubEvent() { }
+        public PubSubEvent() { 
+            
+        }
+        #endregion
+
+        #region Public Property
+        public delegate void CallbackDelegate(TDataType arg);
         #endregion
 
         #region Public Functions
-        public void Subscribe(Action<TDataType> action, ThreadOption option = ThreadOption.Publisher) {
+        public void Subscribe(CallbackDelegate callback, ThreadOption option = ThreadOption.Publisher) {
             lock (this.lockObject)
             {
-                if (option == ThreadOption.None) return;
-                this.ThreadOption = option;
+                if (callback == null)
+                    throw new NullReferenceException("Callback null!");
 
-                OnPublishEvent -= action;
-                OnPublishEvent += action;
+                if (callbackHash.Add(callback))
+                {
+                    callbackOptionTable.Add(callback, option);
+                }
             }
         }
 
-        public void Unsubscribe(Action<TDataType> action)
+        public void Unsubscribe(CallbackDelegate callback)
         {
             lock (this.lockObject)
             {
-                OnPublishEvent -= action;
-            }
+                if (callback == null)
+                    throw new NullReferenceException("Callback null!");
 
+                this.callbackHash.Remove(callback);
+                this.callbackOptionTable.Remove(callback);
+            }
         }
 
         public void Publish(TDataType data)
@@ -45,30 +59,41 @@ namespace ConvMVVM2.Core.MVVM
             {
                 try
                 {
-                    switch (this.ThreadOption)
+
+                    foreach(var callback in this.callbackHash)
                     {
-                        case ThreadOption.None:
-                            break;
-                        case ThreadOption.Background:
-                            {
-                                Task.Run(() =>
+                        ThreadOption option = (ThreadOption)this.callbackOptionTable[callback];
+                        switch (option)
+                        {
+                            case ThreadOption.Background:
+                                {
+                                    Task.Run(() =>
+                                    {
+                                        try
+                                        {
+                                            callback(data);
+                                        }
+                                        catch
+                                        {
+
+                                        }
+                                    });
+                                    break;
+                                }
+
+                            case ThreadOption.Publisher:
                                 {
                                     try
                                     {
-                                        this.OnPublishEvent(data);
+                                        callback(data);
                                     }
                                     catch
                                     {
-                                    }
-                                });
-                                break;
-                            }
 
-                        case ThreadOption.Publisher:
-                            {
-                                this.OnPublishEvent(data);
-                                break;
-                            }
+                                    }
+                                    break;
+                                }
+                        }
                     }
                 }
                 catch
@@ -80,8 +105,5 @@ namespace ConvMVVM2.Core.MVVM
         }
         #endregion
 
-        #region Event
-        private event Action<TDataType> OnPublishEvent;
-        #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,25 +10,31 @@ namespace ConvMVVM2.Core.MVVM
     {
 
         #region Private Property
-        private List<object> _eventCollection = new List<object>();
+  
+        private Hashtable _observerCollection = new Hashtable();
         #endregion
 
 
+        #region Public Functions
         public PubSubEvent<TDataType> GetEvent<TDataType>()
         {
-            if(this._eventCollection.Where(data => data is PubSubEvent<TDataType>).Count() == 0)
+            if (!_observerCollection.ContainsKey(typeof(TDataType)))
             {
                 var eventHandler = (PubSubEvent<TDataType>)Activator.CreateInstance(typeof(PubSubEvent<TDataType>));
-                this._eventCollection.Add(eventHandler);
+                this._observerCollection.Add(typeof(TDataType), eventHandler);
             }
-
-            foreach(var eventHandler in this._eventCollection)
-            {
-                if (eventHandler is PubSubEvent<TDataType>)
-                    return (PubSubEvent<TDataType>)eventHandler;
-            }
-
-            throw new Exception("Invalid Event Handler");
+            return (PubSubEvent<TDataType>)this._observerCollection[typeof(TDataType)];
         }
+
+        public void Cleanup()
+        {
+            _observerCollection.Clear();
+        }
+        public void Cleanup<TDataType>()
+        {
+            this._observerCollection.Remove(typeof(TDataType));
+        }
+
+        #endregion
     }
 }

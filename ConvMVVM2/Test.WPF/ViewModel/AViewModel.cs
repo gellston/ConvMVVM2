@@ -25,8 +25,12 @@ namespace Test.WPF.ViewModel
 
 
             this.eventAggregator.GetEvent<string>().Subscribe(this.Test, ThreadOption.Background);
+            this.eventAggregator.GetEvent<string>().Subscribe(this.Test, ThreadOption.Background);
+            this.eventAggregator.GetEvent<string>().Subscribe(this.Test, ThreadOption.Background);
 
-            
+
+
+            this.eventAggregator.GetEvent<string>().Unsubscribe(this.Test);
         }
 
 
@@ -64,7 +68,6 @@ namespace Test.WPF.ViewModel
 
         public void OnRendering()
         {
-            System.Diagnostics.Debug.WriteLine("test");
         }
 
         public void OnServiceInitialized()

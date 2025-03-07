@@ -9,9 +9,9 @@
 		<Version>1.7.0</Version>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<RepositoryUrl>https://github.com/gellston</RepositoryUrl>
-		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
-		<IncludePackageReferencesDuringMarkupCompilation>true</IncludePackageReferencesDuringMarkupCompilation>
-		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<EnforceExtendedAnalyzerRules>True</EnforceExtendedAnalyzerRules>
+		<IncludePackageReferencesDuringMarkupCompilation>True</IncludePackageReferencesDuringMarkupCompilation>
+		<CopyLocalLockFileAssemblies>True</CopyLocalLockFileAssemblies>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -14,6 +14,7 @@ namespace Test.WPF.ViewModel
         #region Private Property
         private readonly IEventAggregator eventAggregator;
         private readonly IRegionManager regionManager;
+        private int counting = 0;
         #endregion
 
         #region Constructor
@@ -34,7 +35,7 @@ namespace Test.WPF.ViewModel
         {
             try
             {
-                this.eventAggregator.GetEvent<string>().Publish("there is no cow level");
+                this.eventAggregator.GetEvent<string>().Publish("there is no cow level : " + this.counting++);
                 this.regionManager.Navigate("AView", "AView");
             }
             catch (Exception ex)

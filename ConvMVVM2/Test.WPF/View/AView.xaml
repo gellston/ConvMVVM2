@@ -13,9 +13,9 @@
              convMVVM:ViewModelLocator.UseNamePatternMapper="False"
              convMVVM:ViewModelLocator.ViewModelName="AViewModel">
 
-    <i:Interaction.Behaviors>
-        <convMVVM:CompositionRenderBehavior></convMVVM:CompositionRenderBehavior>
-    </i:Interaction.Behaviors>
+
+
+
     <Grid Background="Orange">
         <Button Margin="100"
                 Command="{Binding TestCommand}"></Button>

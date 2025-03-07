@@ -4,10 +4,11 @@ using System.Text;
 
 namespace ConvMVVM2.Core.MVVM
 {
-    public interface IServiceInitializable
+    public interface ICleanup
     {
+
         #region Public Functions
-        void OnServiceInitialized();
+        public void Cleanup();  
         #endregion
     }
 }

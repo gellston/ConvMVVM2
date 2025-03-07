@@ -7,6 +7,7 @@ namespace ConvMVVM2.Core.MVVM
 {
     public interface IServiceCollection
     {
+        #region Public Functions
         public void AddSingleton<TInterface, TImplementation>() where TImplementation : TInterface;
         public void AddInstance<TInterface, TImplementation>() where TImplementation : TInterface;
 
@@ -29,5 +30,6 @@ namespace ConvMVVM2.Core.MVVM
         public Tuple<Type, bool, object, object> GetType(Type type);
 
         public IServiceContainer CreateContainer();
+        #endregion
     }
 }

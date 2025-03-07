@@ -6,6 +6,8 @@ namespace ConvMVVM2.Core.MVVM
 {
     public interface IRenderer
     {
+        #region Public Functions
         void OnRendering();
+        #endregion
     }
 }
