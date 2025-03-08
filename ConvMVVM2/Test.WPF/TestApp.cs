@@ -18,10 +18,21 @@ namespace Test.WPF
         {
             try
             {
-
+                var test = Application.Current;
                 //일반 싱글 메인 윈도우 앱
-                var bootStrapper = ConvMVVM2Host.CreateStrapper<BootStrapper, Application>();
-                bootStrapper.Run("MainWindowView");
+                var host1 = ConvMVVM2Host.CreateHost<BootStrapper, Application>(args, "App");
+                host1.Build()
+                     .ShutdownMode(ShutdownMode.OnExplicitShutdown)
+                     .Popup("CWindowView", dialog:false)
+                     .Popup("CWindowView")
+                     .Popup("CWindowView");
+                host1.Shutdown();
+
+               
+
+
+
+                System.Diagnostics.Debug.WriteLine("test");
 
             }
             catch (Exception ex)

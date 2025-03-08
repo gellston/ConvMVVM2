@@ -22,6 +22,9 @@ namespace Test.ModuleA.View
         public CWindowView()
         {
             InitializeComponent();
+
+            var test = Application.Current;
+            System.Diagnostics.Debug.WriteLine("test");
         }
     }
 }
