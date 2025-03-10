@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Test.WPF.ViewModel
 {
-    public partial class AViewModel : ViewModelBase, IViewLoadable, IServiceInitializable, INavigateAware, IRenderer, IViewInitializable, IDialogViewModel
+    public partial class AViewModel : ViewModelBase, IViewLoadable, IServiceInitializable, INavigateAware, IRenderer, IViewInitializable, IDialogViewModel<DialogResult>
     {
         #region Private Property
         private readonly IRegionManager regionManager;
@@ -44,7 +44,11 @@ namespace Test.WPF.ViewModel
         {
             try
             {
-                this.CloseEvent(DialogResult.Cancel);
+                var result = new DialogResult()
+                {
+                    Result = "OK"
+                };
+                this.CloseEvent(result);
             }
             catch (Exception ex)
             {
@@ -69,7 +73,7 @@ namespace Test.WPF.ViewModel
 
         public void OnViewLoaded()
         {
-            System.Diagnostics.Debug.WriteLine("test");
+
         }
 
         public void OnRendering()

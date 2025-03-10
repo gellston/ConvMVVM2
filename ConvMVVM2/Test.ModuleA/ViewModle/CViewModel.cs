@@ -37,7 +37,7 @@ namespace Test.ModuleA.ViewModle
                 this.TestC = "There is no cow level";
 
 
-                var result = this.dialogService.ShowDialog("AView", 100, 100);
+                var result = this.dialogService.ShowDialog<DialogResult>("AView", 100, 100);
 
                 System.Diagnostics.Debug.WriteLine("test");
             }

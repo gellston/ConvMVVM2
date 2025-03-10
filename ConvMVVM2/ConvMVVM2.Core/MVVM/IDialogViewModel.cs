@@ -4,10 +4,10 @@ using System.Text;
 
 namespace ConvMVVM2.Core.MVVM
 {
-    public interface IDialogViewModel
+    public interface IDialogViewModel<RType>  where RType : class
     {
         #region Public Functions
-        public event Action<DialogResult> CloseEvent;
+        public event Action<RType> CloseEvent;
         #endregion
     }
 }

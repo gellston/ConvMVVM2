@@ -49,12 +49,12 @@ namespace ConvMVVM2.WPF.Service
             }
         }
 
-        public DialogResult ShowDialog(string viewName, double width, double height, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize)
+        public ResultTYPE ShowDialog<ResultTYPE>(string viewName, double width, double height, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize) where ResultTYPE : class
         {
             try
             {
                 var view = (FrameworkElement)serviceContainer.GetService(viewName);
-                var vm = view.DataContext as IDialogViewModel;
+                var vm = view.DataContext as IDialogViewModel<ResultTYPE>;
                 if (vm == null)
                 {
                     throw new Exception("Invalid Dialog ViewModel Interface");
@@ -67,8 +67,8 @@ namespace ConvMVVM2.WPF.Service
                 window.ResizeMode = (System.Windows.ResizeMode)resizeMode;
                 window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-                var dialogResult = DialogResult.Cancel;
-                Action<DialogResult> closeEventHandler = (arg) =>
+                ResultTYPE dialogResult = null;
+                Action<ResultTYPE> closeEventHandler = (arg) =>
                 {
                     try
                     {
@@ -96,6 +96,8 @@ namespace ConvMVVM2.WPF.Service
                 throw;
             }
         }
+
+
 
 
         public string OpenFileDialog(string defaultPath, string title, string filter, bool multiselect = true)
