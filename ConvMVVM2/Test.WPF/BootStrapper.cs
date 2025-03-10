@@ -35,7 +35,7 @@ namespace Test.WPF
             this.AddModulePath("C:\\github\\ConvMVVM2\\ConvMVVM2\\Test.ModuleA\\bin\\x64\\Debug\\net8.0-windows");
 
             // 프로그램 실행 경로기준 모듈 서치할 경로 상대경로 추가
-            this.AddModuleRelativePath("Modules");
+            //this.AddModuleRelativePath("Modules");
 
             // 프로그램 실행경로를 모듈 서치 경로로 추가 
             this.AddModuleCurrentPath();

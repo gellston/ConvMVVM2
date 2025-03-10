@@ -11,13 +11,13 @@ namespace Test.ModuleA.ViewModle
     public partial class CViewModel : ViewModelBase
     {
         #region Private Property
-        private readonly IRegionManager regionManager;
-
+        private readonly IDialogService dialogService;
         #endregion
 
         #region Constructor
-        public CViewModel() { 
+        public CViewModel(IDialogService dialogService) { 
         
+            this.dialogService = dialogService;
         }
         #endregion
 
@@ -36,6 +36,10 @@ namespace Test.ModuleA.ViewModle
             {
                 this.TestC = "There is no cow level";
 
+
+                var result = this.dialogService.ShowDialog("AView", 100, 100);
+
+                System.Diagnostics.Debug.WriteLine("test");
             }
             catch (Exception ex)
             {

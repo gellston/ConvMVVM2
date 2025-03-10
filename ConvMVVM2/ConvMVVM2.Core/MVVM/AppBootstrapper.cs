@@ -74,7 +74,7 @@ namespace ConvMVVM2.Core.MVVM
                     }
 
                 }
-                catch(Exception ex)
+                catch
                 {
 
                 }
@@ -191,14 +191,15 @@ namespace ConvMVVM2.Core.MVVM
         #region Public Functions
         public void Run()
         {
-            
+
+            var container = serviceCollection.CreateContainer();
+            ServiceLocator.SetServiceProvider(container);
             serviceCollection.AddSingleton<IRegionManager, RegionManager>();
             serviceCollection.AddSingleton<ILocalizeService, LocalizeService>();
             serviceCollection.AddSingleton<IViewModelMapper, ViewModelMapper>();
             serviceCollection.AddSingleton<IEventAggregator, EventAggregator>();
+            serviceCollection.AddSingleton<IServiceContainer>(container);
 
-            var container = serviceCollection.CreateContainer();
-            ServiceLocator.SetServiceProvider(container);
             var regionManager = container.GetService<IRegionManager>();
             var viewModelMapper = container.GetService<IViewModelMapper>();
 

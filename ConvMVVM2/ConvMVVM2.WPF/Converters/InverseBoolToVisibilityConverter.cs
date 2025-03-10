@@ -9,7 +9,7 @@ using System.Windows.Data;
 
 namespace ConvMVVM2.WPF.Converters
 {
-    public class BoolToInverseVisibilityConverter : IValueConverter
+    public class InverseBoolToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

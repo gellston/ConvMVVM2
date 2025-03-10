@@ -38,8 +38,6 @@ namespace ConvMVVM2.WPF.Host
         {
             try
             {
-
-
                 var bootStrapper = Activator.CreateInstance(typeof(BOOTSTRAP)) as BOOTSTRAP;
                 bootStrapper.ServiceCollection.AddSingleton<Application, APP>();
                 var host = new ConvMVVM2Host(arg, hostName, bootStrapper);

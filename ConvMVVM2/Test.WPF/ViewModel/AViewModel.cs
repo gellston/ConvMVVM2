@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace Test.WPF.ViewModel
 {
-    public partial class AViewModel : ViewModelBase, IViewLoadable, IServiceInitializable, INavigateAware, IRenderer, IViewInitializable
+    public partial class AViewModel : ViewModelBase, IViewLoadable, IServiceInitializable, INavigateAware, IRenderer, IViewInitializable, IDialogViewModel
     {
         #region Private Property
         private readonly IRegionManager regionManager;
         private readonly IEventAggregator eventAggregator;
+
+
         #endregion
 
         #region Constructor
@@ -42,7 +44,7 @@ namespace Test.WPF.ViewModel
         {
             try
             {
-                this.regionManager.Navigate("AView", "BView");
+                this.CloseEvent(DialogResult.Cancel);
             }
             catch (Exception ex)
             {
@@ -50,6 +52,10 @@ namespace Test.WPF.ViewModel
             }
 
         }
+        #endregion
+
+        #region Event
+        public event Action<DialogResult> CloseEvent;
         #endregion
 
         #region Event Handler
