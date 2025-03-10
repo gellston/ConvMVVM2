@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 
-namespace ConvMVVM2.WPF.Service
+namespace ConvMVVM2.WPF.Services
 {
     public class DialogService : IDialogService
     {

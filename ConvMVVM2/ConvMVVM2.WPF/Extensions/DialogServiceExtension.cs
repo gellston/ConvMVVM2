@@ -1,6 +1,6 @@
 ﻿using ConvMVVM2.Core.MVVM;
 using ConvMVVM2.WPF.Host;
-using ConvMVVM2.WPF.Service;
+using ConvMVVM2.WPF.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
