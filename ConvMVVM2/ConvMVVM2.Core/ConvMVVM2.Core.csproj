@@ -6,7 +6,7 @@
 		<Nullable>disable</Nullable>
 		<Platforms>AnyCPU;x64;x86</Platforms>
 		<PackageIcon>convergence.png</PackageIcon>
-		<Version>1.11.2</Version>
+		<Version>1.11.3</Version>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<RepositoryUrl>https://github.com/gellston</RepositoryUrl>
 		<EnforceExtendedAnalyzerRules>True</EnforceExtendedAnalyzerRules>
@@ -59,7 +59,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.12.0" />
-		<None Remove="bin\x64\Release\netstandard2.0\\ConvMVVM2.Core.dll" />
+		<None Remove="bin\Release\netstandard2.0\\ConvMVVM2.Core.dll" />
 		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 	</ItemGroup>
 
