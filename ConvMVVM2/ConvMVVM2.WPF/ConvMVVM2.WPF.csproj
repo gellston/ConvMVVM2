@@ -7,9 +7,16 @@
     <PackageIcon>convergence.png</PackageIcon>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Platforms>AnyCPU;x64</Platforms>
+    <PackageProjectUrl>https://github.com/gellston/ConvMVVM2</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>mvvm,wpf,ioc,convmvvm</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="..\Icon\convergence.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>

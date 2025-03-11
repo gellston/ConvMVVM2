@@ -12,6 +12,9 @@
 		<EnforceExtendedAnalyzerRules>True</EnforceExtendedAnalyzerRules>
 		<IncludePackageReferencesDuringMarkupCompilation>True</IncludePackageReferencesDuringMarkupCompilation>
 		<CopyLocalLockFileAssemblies>True</CopyLocalLockFileAssemblies>
+		<PackageProjectUrl>https://github.com/gellston/ConvMVVM2</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageTags>mvvm,wpf,ioc,convmvvm</PackageTags>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -39,6 +42,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Include="..\..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	  <None Include="..\Icon\convergence.png">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>
