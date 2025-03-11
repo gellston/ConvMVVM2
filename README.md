@@ -44,61 +44,136 @@ public static void Main(string[] args)
 
 }
 ```
->It support host object creation with generic template and also popup window selectively
+> It support host object creation with generic template and also popup window selectively
 
 
 BootStrapper
 =======================
 ```csharp
+public class BootStrapper : AppBootstrapper
+{
+    protected override void OnStartUp()
+    {
+      
+    }
 
+    protected override void RegionMapping(IRegionManager layerManager)
+    {
+        layerManager.Mapping<MainView>("MainView");
+    }
+
+    protected override void RegisterModules()
+    {
+    
+    }
+
+    protected override void RegisterServices(IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddSingleton<MainWindow>();
+
+        serviceCollection.AddSingleton<MainViewModel>();
+        serviceCollection.AddSingleton<SubViewModel>();
+
+        serviceCollection.AddSingleton<MainView>();
+        serviceCollection.AddSingleton<SubView>();
+    }
+
+    protected override void ViewModelMapping(IViewModelMapper viewModelMapper)
+    {
+        
+    }
+}
 ```
-
+> Bootstrapper support ioc, module, viewmodel mapping and region mapping.
 
 
 RelayCommand
 =======================
 ```csharp
-partial class MainWindowViewModel : NotifyObject
+[RelayCommand]
+private void Test()
 {
-    public MainWindowViewModel() { 
-    }
-
-    [RelayCommand]
-    private void Test()
+    try
     {
-        System.Diagnostics.Debug.WriteLine("no delay!!");
-    }
-    
-    [AsyncRelayCommand]
-    private async Task AsyncTest()
-    {
-        await Task.Delay(10000);
-        System.Diagnostics.Debug.WriteLine("delay!!");
-    }
 
+    }
+    catch (Exception ex)
+    {
+        System.Diagnostics.Debug.WriteLine(ex.ToString());
+    }
+}
+
+[AsyncRelayCommand]
+private async Task Test2()
+{
+    try
+    {
+
+    }
+    catch (Exception ex)
+    {
+        System.Diagnostics.Debug.WriteLine(ex.ToString());
+    }
 }
 ```
-> it support RelayCommand and AsyncRelayCommand also support source generator for them
+> It support RelayCommand and AsyncRelayCommand also support source generator for them
 
 
 ViewModelLocator
 =======================
 ```xml
-<Window x:Class="RelayCommandExample.View.MainWindowView"
+<UserControl x:Class="BootStrapperApp.Views.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BootStrapperApp.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             xmlns:convMVVM2="https://github.com/gellston/ConvMVVM2"
+             convMVVM2:ViewModelLocator.AutoWireViewModel="True"
+             convMVVM2:ViewModelLocator.UseNamePatternMapper="True"
+             convMVVM2:ViewModelLocator.UseViewModelMapper="False">
+    
+</UserControl>
+```
+> ViewModelLocator support autowire viewmodel with using name pattern mapping and manual mapping
+
+
+RegionManager
+=======================
+```xml
+<Window x:Class="BootStrapperApp.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RelayCommandExample"
+        xmlns:local="clr-namespace:BootStrapperApp.Windows"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        xmlns:convMVVM="https://github.com/gellston/ConvMVVM"
-        convMVVM:ViewModelLocator.AutoWireViewModel="True"> 
-        //Auto Wire ViewModel//
+        xmlns:convMVVM2="https://github.com/gellston/ConvMVVM2"
+        >
+
+    <convMVVM2:WPFRegion RegionName="MainView"></convMVVM2:WPFRegion>
 </Window>
 ```
 
+```csharp
+[RelayCommand]
+private void Test()
+{
+    try
+    {
+        this.regionManager.Navigate("MainView", "SubView");
+    }
+    catch (Exception ex)
+    {
+        System.Diagnostics.Debug.WriteLine(ex.ToString());
+    }
+}
+```
 
+> To use regionManager, it need to place RegionControl on somewhere
 
 License
 =======================
