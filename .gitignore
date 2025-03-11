@@ -36,3 +36,5 @@
 /ExampleSolution/BootStrapperApp/obj
 /ExampleSolution/HostTemplate/bin/x64/Debug/net9.0-windows
 /ExampleSolution/HostTemplate/obj
+/ExampleSolution/.vs/ExampleSolution
+/ExampleSolution/BootStrapperApp/bin/Debug/net9.0-windows
