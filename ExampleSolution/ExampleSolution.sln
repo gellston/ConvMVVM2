@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HostTemplate", "HostTemplate", "{CADD8B0D-F572-4082-A518-D1425E5BA332}"
 EndProject
@@ -10,6 +10,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BootStrapper", "BootStrapper", "{F3A27B4D-6701-4228-A145-56BF1E5E52F7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootStrapperApp", "BootStrapperApp\BootStrapperApp.csproj", "{9CB7241F-3040-4D74-816A-4ADF70227BD6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Localize", "Localize", "{3172B872-E01E-4FC4-9B3A-02F4E22B268E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalizeApp", "LocalizeApp\LocalizeApp.csproj", "{332B6B5B-E707-4E17-A29D-B0573A3D51A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +39,14 @@ Global
 		{9CB7241F-3040-4D74-816A-4ADF70227BD6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9CB7241F-3040-4D74-816A-4ADF70227BD6}.Release|x64.ActiveCfg = Release|Any CPU
 		{9CB7241F-3040-4D74-816A-4ADF70227BD6}.Release|x64.Build.0 = Release|Any CPU
+		{332B6B5B-E707-4E17-A29D-B0573A3D51A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{332B6B5B-E707-4E17-A29D-B0573A3D51A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{332B6B5B-E707-4E17-A29D-B0573A3D51A9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{332B6B5B-E707-4E17-A29D-B0573A3D51A9}.Debug|x64.Build.0 = Debug|Any CPU
+		{332B6B5B-E707-4E17-A29D-B0573A3D51A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{332B6B5B-E707-4E17-A29D-B0573A3D51A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{332B6B5B-E707-4E17-A29D-B0573A3D51A9}.Release|x64.ActiveCfg = Release|Any CPU
+		{332B6B5B-E707-4E17-A29D-B0573A3D51A9}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,5 +54,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{07954325-9BE9-4AED-9CFD-A79FF3FC56E6} = {CADD8B0D-F572-4082-A518-D1425E5BA332}
 		{9CB7241F-3040-4D74-816A-4ADF70227BD6} = {F3A27B4D-6701-4228-A145-56BF1E5E52F7}
+		{332B6B5B-E707-4E17-A29D-B0573A3D51A9} = {3172B872-E01E-4FC4-9B3A-02F4E22B268E}
 	EndGlobalSection
 EndGlobal

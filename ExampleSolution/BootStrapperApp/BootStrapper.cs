@@ -13,7 +13,7 @@ namespace BootStrapperApp
 {
     public class BootStrapper : AppBootstrapper
     {
-        protected override void OnStartUp()
+        protected override void OnStartUp(IServiceContainer container)
         {
           
         }

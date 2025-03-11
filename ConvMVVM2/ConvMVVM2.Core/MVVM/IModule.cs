@@ -12,7 +12,7 @@ namespace ConvMVVM2.Core.MVVM
 
         public void RegisterServices(IServiceCollection container);
         public void RegionMapping(IRegionManager layerManager);
-        public void OnStartUp();
+        public void OnStartUp(IServiceContainer container);
 
         public string ModuleName { get; }
         public string ModuleVersion { get; }

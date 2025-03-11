@@ -1,4 +1,4 @@
-﻿using HostTemplate.View;
+﻿using HostTemplate.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;

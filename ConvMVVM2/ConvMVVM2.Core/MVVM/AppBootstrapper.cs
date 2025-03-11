@@ -118,7 +118,7 @@ namespace ConvMVVM2.Core.MVVM
         protected abstract void ViewModelMapping(IViewModelMapper viewModelMapper);
         protected abstract void RegisterServices(IServiceCollection serviceCollection);
         protected abstract void RegionMapping(IRegionManager layerManager);
-        protected abstract void OnStartUp();
+        protected abstract void OnStartUp(IServiceContainer container);
         protected abstract void RegisterModules();
         protected void RegisterModule<T>(T module) where T : IModule
         {
@@ -225,10 +225,10 @@ namespace ConvMVVM2.Core.MVVM
             foreach(var module in modules)
                 module.RegionMapping(regionManager);
 
-            OnStartUp();
+            OnStartUp(container);
 
             foreach(var module in modules)
-                module.OnStartUp();
+                module.OnStartUp(container);
         }
         #endregion
 
