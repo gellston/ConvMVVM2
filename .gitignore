@@ -29,3 +29,6 @@
 /Examples/ExampleSolution/HostTemplate/bin/x64/Debug/net9.0-windows
 *.bak
 /Examples/ExampleSolution/BootStrapperApp/obj/Debug/net9.0-windows
+/Examples/ExampleSolution/BootStrapperApp/bin/x64/Debug/net9.0-windows
+/Examples/ExampleSolution/BootStrapperApp/obj
+/Examples/ExampleSolution/.vs/ProjectEvaluation
