@@ -28,3 +28,4 @@
 /ExampleSolution/.vs/ExampleSolution/v17
 /Examples/ExampleSolution/HostTemplate/bin/x64/Debug/net9.0-windows
 *.bak
+/Examples/ExampleSolution/BootStrapperApp/obj/Debug/net9.0-windows
