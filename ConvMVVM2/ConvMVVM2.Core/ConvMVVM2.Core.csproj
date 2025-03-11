@@ -4,9 +4,9 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<LangVersion>11</LangVersion>
 		<Nullable>disable</Nullable>
-		<Platforms>AnyCPU;x64</Platforms>
+		<Platforms>AnyCPU;x64;x86</Platforms>
 		<PackageIcon>convergence.png</PackageIcon>
-		<Version>1.11.1</Version>
+		<Version>1.11.2</Version>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<RepositoryUrl>https://github.com/gellston</RepositoryUrl>
 		<EnforceExtendedAnalyzerRules>True</EnforceExtendedAnalyzerRules>
@@ -18,11 +18,19 @@
 	  <NoWarn>1701;1702</NoWarn>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+	  <NoWarn>1701;1702</NoWarn>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
 	  <NoWarn>1701;1702</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <NoWarn>1701;1702</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
 	  <NoWarn>1701;1702</NoWarn>
 	</PropertyGroup>
 

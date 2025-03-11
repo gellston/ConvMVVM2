@@ -1,18 +1,129 @@
 
+**ConvMVVM2.Core**
+[![latest version](https://img.shields.io/nuget/v/ConvMVVM2.Core)](https://www.nuget.org/packages/ConvMVVM2.Core)
+[![downloads](https://img.shields.io/nuget/dt/ConvMVVM2.Core)](https://www.nuget.org/packages/ConvMVVM2.Core)
+
+**ConvMVVM2.WPF**
+[![latest version](https://img.shields.io/nuget/v/ConvMVVM2.WPF)](https://www.nuget.org/packages/ConvMVVM2.WPF)
+[![downloads](https://img.shields.io/nuget/dt/ConvMVVM2.WPF)](https://www.nuget.org/packages/ConvMVVM2.WPF)
+
 <center> 
-<img src="https://github.com/gellston/ConvMVVM/blob/development/Icon/convergence.png?raw=true" width=200 /> </center> 
+<img src="https://github.com/gellston/ConvMVVM2/blob/main/ConvMVVM2/Icon/convergence.png?raw=true?raw=true" width=200 /> </center> 
 
 ConvMVVM2
 =======================
-ConvMVVM2 (Convergence MVVM) is free MVVM library for WPF inspired by Community Toolkit library and Prism frameworks.
+ConvMVVM2 (Convergence MVVM2) is free MVVM library inspired by Community Toolkit library and Prism frameworks.
 
 
-
-
-Development Environment
+Supported .NET Runtime
 =======================
- - **Visual Studio 2022**
- - **Microsoft .NET 7**
+ - **.NET Framework 4.8**
+ - **.NET Framework 4.8.1**
+ - **.NET 6**
+ - **.NET 7**
+ - **.NET 8**
+ - **.NET 9**
+ 
+
+Overview
+=======================
+
+Host Template
+=======================
+
+```csharp
+var collection = ConvMVVM.Core.DI.ServiceCollection.Create();
+//it suport constructor injection 
+collection.RegisterCache<AModel>();
+collection.RegisterCache<IBModel, BModel>();
+
+//it support lambda creation 
+collection.RegisterCache<CModel>((container) =>{
+    var aModel = container.GetService<AModel>();
+    var bModel = container.GetService<IBModel>();
+    var model = CModel(aModel, bModel);
+    return model;
+})
+
+collection.RegisterCache<DModel>(new DModel());
+
+//ioc container creation
+var container = collection.CreateContainer();
+var aModel1 = container.GetService<AModel>();
+var bModel1 = container.GetService<IBModel>();
+var dModel = container.GetService<DModel>();
+```
+
+> it support constructor injection and lambda creation routine
+
+
+Property 
+=======================
+```csharp
+
+partial class AViewModel : NotifyObject
+{
+    public AViewModel() { 
+    }
+
+    //it support code generator
+    [Property]
+    private string _Test1 = "";
+
+    private string _Test2 = "";
+    public string Test2
+    {
+        get => _Test2;
+        set => Property(ref _Test2, value);
+    }
+}
+```
+> it support property changed notification and source generator for property
+
+
+RelayCommand
+=======================
+```csharp
+partial class MainWindowViewModel : NotifyObject
+{
+    public MainWindowViewModel() { 
+    }
+
+    [RelayCommand]
+    private void Test()
+    {
+        System.Diagnostics.Debug.WriteLine("no delay!!");
+    }
+    
+    [AsyncRelayCommand]
+    private async Task AsyncTest()
+    {
+        await Task.Delay(10000);
+        System.Diagnostics.Debug.WriteLine("delay!!");
+    }
+
+}
+```
+> it support RelayCommand and AsyncRelayCommand also support source generator for them
+
+
+ViewModelLocator
+=======================
+```xml
+<Window x:Class="RelayCommandExample.View.MainWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RelayCommandExample"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        xmlns:convMVVM="https://github.com/gellston/ConvMVVM"
+        convMVVM:ViewModelLocator.AutoWireViewModel="True"> 
+        //Auto Wire ViewModel//
+</Window>
+```
+
 
 
 License
