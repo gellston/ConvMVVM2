@@ -32,53 +32,27 @@ Host Template
 =======================
 
 ```csharp
-var collection = ConvMVVM.Core.DI.ServiceCollection.Create();
-//it suport constructor injection 
-collection.RegisterCache<AModel>();
-collection.RegisterCache<IBModel, BModel>();
+[STAThread]
+public static void Main(string[] args)
+{
+    var host = ConvMVVM2.WPF.Host.ConvMVVM2Host.CreateHost<BootStrapper, Application>(args, "HostTemplate");
+    host.Build()
+        .ShutdownMode(ShutdownMode.OnMainWindowClose)
+        .Popup<MainWindow>(dialog: true)
+        //.Popup("MainWindow")
+        .RunApp();
 
-//it support lambda creation 
-collection.RegisterCache<CModel>((container) =>{
-    var aModel = container.GetService<AModel>();
-    var bModel = container.GetService<IBModel>();
-    var model = CModel(aModel, bModel);
-    return model;
-})
-
-collection.RegisterCache<DModel>(new DModel());
-
-//ioc container creation
-var container = collection.CreateContainer();
-var aModel1 = container.GetService<AModel>();
-var bModel1 = container.GetService<IBModel>();
-var dModel = container.GetService<DModel>();
+}
 ```
+>It support host object creation with generic template and also popup window selectively
 
-> it support constructor injection and lambda creation routine
 
-
-Property 
+BootStrapper
 =======================
 ```csharp
 
-partial class AViewModel : NotifyObject
-{
-    public AViewModel() { 
-    }
-
-    //it support code generator
-    [Property]
-    private string _Test1 = "";
-
-    private string _Test2 = "";
-    public string Test2
-    {
-        get => _Test2;
-        set => Property(ref _Test2, value);
-    }
-}
 ```
-> it support property changed notification and source generator for property
+
 
 
 RelayCommand

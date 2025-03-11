@@ -9,4 +9,8 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ConvMVVM2.WPF" Version="1.11.2" />
+  </ItemGroup>
+
 </Project>
