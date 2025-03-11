@@ -41,3 +41,4 @@
 /.vs
 /ExampleSolution/.vs/ProjectEvaluation
 /ExampleSolution/LocalizeApp/obj
+/ExampleSolution/LocalizeApp/bin/Debug/net9.0-windows
