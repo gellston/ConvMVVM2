@@ -1,14 +1,14 @@
 ﻿using ConvMVVM2.Core.MVVM;
-using HostTemplate.Views;
+using ModuleApp.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HostTemplate
+namespace ModuleApp
 {
-    public class BootStrapper : ConvMVVM2.Core.MVVM.AppBootstrapper
+    public class BootStrapper : AppBootstrapper
     {
         protected override void OnStartUp(IServiceContainer container)
         {
@@ -22,7 +22,8 @@ namespace HostTemplate
 
         protected override void RegisterModules()
         {
-
+            this.EnableAutoModuleSearch(true);
+            this.AddModuleRelativePath("Modules");
         }
 
         protected override void RegisterServices(IServiceCollection serviceCollection)
@@ -32,7 +33,6 @@ namespace HostTemplate
 
         protected override void ViewModelMapping(IViewModelMapper viewModelMapper)
         {
-
         }
     }
 }

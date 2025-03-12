@@ -239,6 +239,78 @@ protected override void OnStartUp(IServiceContainer container)
 
 > it can change local setting easily from resource manager
 
+
+
+Module
+=======================
+
+```csharp
+//BootStrapper
+public class BootStrapper : AppBootstrapper
+{
+    protected override void OnStartUp(IServiceContainer container)
+    {
+
+    }
+
+    protected override void RegionMapping(IRegionManager layerManager)
+    {
+
+    }
+
+    protected override void RegisterModules()
+    {
+        this.EnableAutoModuleSearch(true);
+        this.AddModuleRelativePath("Modules");
+    }
+
+    protected override void RegisterServices(IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddSingleton<MainWindow>();
+    }
+
+    protected override void ViewModelMapping(IViewModelMapper viewModelMapper)
+    {
+    }
+}
+```
+
+```csharp
+//AModule
+public class Module : IModule
+{
+    public string ModuleName => "AModule";
+    public string ModuleVersion => "1.0";
+    public void OnStartUp(IServiceContainer container)
+    {
+    }
+    public void RegionMapping(IRegionManager layerManager)
+    {
+        layerManager.Mapping<AView>("ContentView");
+    }
+    public void RegisterServices(IServiceCollection container)
+    {
+        container.AddSingleton<AView>();
+
+        container.AddSingleton<AViewModel>();
+    }
+    public void ViewModelMapping(IViewModelMapper viewModelMapper)
+    {
+    }
+}
+```
+
+```batch
+# Post Build Script to move module dll in Modules folder
+if not exist "$(SolutionDir)\\ModuleApp\\bin\\$(ConfigurationName)\\net9.0-windows\\Modules" mkdir "$(SolutionDir)\\ModuleApp\\bin\\$(ConfigurationName)\\net9.0-windows\\Modules"
+xcopy "$(SolutionDir)\\AModule\\bin\\$(ConfigurationName)\\net9.0-windows\\" "$(SolutionDir)\\ModuleApp\\bin\\$(ConfigurationName)\\net9.0-windows\\Modules\\" /c /i /e /h /y
+xcopy "$(SolutionDir)\\BModule\\bin\\$(ConfigurationName)\\net9.0-windows\\" "$(SolutionDir)\\ModuleApp\\bin\\$(ConfigurationName)\\net9.0-windows\\Modules\\" /c /i /e /h /y
+xcopy "$(SolutionDir)\\CModule\\bin\\$(ConfigurationName)\\net9.0-windows\\" "$(SolutionDir)\\ModuleApp\\bin\\$(ConfigurationName)\\net9.0-windows\\Modules\\" /c /i /e /h /y
+xcopy "$(SolutionDir)\\MainModule\\bin\\$(ConfigurationName)\\net9.0-windows\\" "$(SolutionDir)\\ModuleApp\\bin\\$(ConfigurationName)\\net9.0-windows\\Modules\\" /c /i /e /h /y
+
+```
+> ConvMVVM2 also support modulus development
+
 License
 =======================
 

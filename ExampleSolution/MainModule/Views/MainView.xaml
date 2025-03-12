@@ -1,30 +1,27 @@
-﻿<UserControl x:Class="BootStrapperApp.Views.MainView"
+﻿<UserControl x:Class="MainModule.Views.MainView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BootStrapperApp.Views"
+             xmlns:local="clr-namespace:MainModule.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              xmlns:convMVVM2="https://github.com/gellston/ConvMVVM2"
              convMVVM2:ViewModelLocator.AutoWireViewModel="True"
              convMVVM2:ViewModelLocator.UseNamePatternMapper="True"
-             convMVVM2:ViewModelLocator.UseViewModelMapper="False">
-    <DockPanel Background="Orange">
+             convMVVM2:ViewModelLocator.UseViewModelMapper="False"
+             >
+    <DockPanel>
         <UniformGrid Height="50"
                      DockPanel.Dock="Bottom"
                      Rows="1">
-            <Button Command="{Binding TestCommand}"
-                    Content="Test"
-                    FontSize="35"></Button>
-            <Button Command="{Binding ChangeCommand}"
-                    Content="Test"
-                    FontSize="35"></Button>
+            <Button Content="AView"
+                    Command="{Binding AViewCommand}"></Button>
+            <Button Content="BView"
+                    Command="{Binding BViewCommand}"></Button>
+            <Button Content="CView"
+                    Command="{Binding CViewCommand}"></Button>
         </UniformGrid>
-
-        <TextBlock Text="MainView"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="45"></TextBlock>
+        <convMVVM2:WPFRegion RegionName="ContentView"></convMVVM2:WPFRegion>
     </DockPanel>
 </UserControl>

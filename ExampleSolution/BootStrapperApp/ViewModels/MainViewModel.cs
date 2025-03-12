@@ -18,6 +18,32 @@ namespace BootStrapperApp.ViewModel
         public MainViewModel(IRegionManager regionManager) { 
 
             this.regionManager = regionManager;
+
+            
+        }
+        #endregion
+
+        #region Public Property
+        [Property]
+        private string _TestText = "test";
+        #endregion
+
+        #region Event Handler
+        partial void OnTestTextChanged(string oldValue, string newValue)
+        {
+            
+        }
+        partial void OnTestTextChanged(string value)
+        {
+           
+        }
+        partial void OnTestTextChanging(string oldValue, string newValue)
+        {
+  
+        }
+        partial void OnTestTextChanging(string value)
+        {
+
         }
         #endregion
 
@@ -36,6 +62,11 @@ namespace BootStrapperApp.ViewModel
             }
         }
 
+        [RelayCommand]
+        private void Change()
+        {
+            this.TestText = "there is no cow level";
+        }
         #endregion
     }
 }

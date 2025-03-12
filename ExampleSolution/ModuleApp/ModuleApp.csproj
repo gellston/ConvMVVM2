@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="ConvMVVM2.WPF" Version="1.12.0-alpha" />
+	</ItemGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="if not exist &quot;$(SolutionDir)\\ModuleApp\\bin\\$(ConfigurationName)\\net9.0-windows\\Modules&quot; mkdir &quot;$(SolutionDir)\\ModuleApp\\bin\\$(ConfigurationName)\\net9.0-windows\\Modules&quot;&#xD;&#xA;xcopy &quot;$(SolutionDir)\\AModule\\bin\\$(ConfigurationName)\\net9.0-windows\\&quot; &quot;$(SolutionDir)\\ModuleApp\\bin\\$(ConfigurationName)\\net9.0-windows\\Modules\\&quot; /c /i /e /h /y&#xD;&#xA;xcopy &quot;$(SolutionDir)\\BModule\\bin\\$(ConfigurationName)\\net9.0-windows\\&quot; &quot;$(SolutionDir)\\ModuleApp\\bin\\$(ConfigurationName)\\net9.0-windows\\Modules\\&quot; /c /i /e /h /y&#xD;&#xA;xcopy &quot;$(SolutionDir)\\CModule\\bin\\$(ConfigurationName)\\net9.0-windows\\&quot; &quot;$(SolutionDir)\\ModuleApp\\bin\\$(ConfigurationName)\\net9.0-windows\\Modules\\&quot; /c /i /e /h /y&#xD;&#xA;xcopy &quot;$(SolutionDir)\\MainModule\\bin\\$(ConfigurationName)\\net9.0-windows\\&quot; &quot;$(SolutionDir)\\ModuleApp\\bin\\$(ConfigurationName)\\net9.0-windows\\Modules\\&quot; /c /i /e /h /y&#xD;&#xA;&#xD;&#xA;" />
+	</Target>
+</Project>
