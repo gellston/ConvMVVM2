@@ -9,7 +9,7 @@
 
 <center>
 
-![convergence][image_ref_q20jjqt0]
+<img src="https://github.com/gellston/ConvMVVM2/blob/main/ConvMVVM2/Icon/convergence.png?raw=true"/>
 
 
 </center>
