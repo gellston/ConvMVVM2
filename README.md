@@ -91,6 +91,34 @@ public class BootStrapper : AppBootstrapper
 > Bootstrapper support ioc, module, viewmodel mapping and region mapping.
 
 
+Property
+=======================
+```csharp
+#region Public Property
+[Property]
+private string _TestText = "test";
+#endregion
+
+#region Event Handler
+partial void OnTestTextChanged(string oldValue, string newValue)
+{
+    
+}
+partial void OnTestTextChanged(string value)
+{
+   
+}
+partial void OnTestTextChanging(string oldValue, string newValue)
+{
+
+}
+partial void OnTestTextChanging(string value)
+{
+
+}
+#endregion
+```
+
 RelayCommand
 =======================
 ```csharp
