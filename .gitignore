@@ -42,3 +42,14 @@
 /ExampleSolution/.vs/ProjectEvaluation
 /ExampleSolution/LocalizeApp/obj
 /ExampleSolution/LocalizeApp/bin/Debug/net9.0-windows
+/ExampleSolution/AModule/bin/Debug/net9.0-windows
+/ExampleSolution/AModule/obj
+/ExampleSolution/BModule/bin/Debug/net9.0-windows
+/ExampleSolution/BModule/obj
+/ExampleSolution/CModule/obj
+/ExampleSolution/CModule/bin/Debug/net9.0-windows
+/ExampleSolution/HostTemplate/bin/Debug/net9.0-windows
+/ExampleSolution/MainModule/bin/Debug/net9.0-windows
+/ExampleSolution/MainModule/obj
+/ExampleSolution/ModuleApp/bin/Debug/net9.0-windows
+/ExampleSolution/ModuleApp/obj
