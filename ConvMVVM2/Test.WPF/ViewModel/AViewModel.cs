@@ -38,6 +38,14 @@ namespace Test.WPF.ViewModel
 
         #endregion
 
+        #region Public Property
+
+
+        [Property]
+        [PropertyChangedFor("test")]
+        private string _Name = "";
+        #endregion
+
         #region Command
         [RelayCommand]
         public void Test()

@@ -11,10 +11,7 @@ namespace Test.WPF
 {
     public class BootStrapper : ConvMVVM2.Core.MVVM.AppBootstrapper
     {
-        protected override void OnStartUp()
-        {
- 
-        }
+
 
         protected override void RegisterServices(IServiceCollection container)
         {
@@ -23,6 +20,7 @@ namespace Test.WPF
             container.AddSingleton<AViewModel>();
             container.AddSingleton<BViewModel>();
             container.AddInstance<MainWindowView>();
+            container.AddInstance<MainWindowViewModel>();
         }
 
         protected override void RegisterModules()
@@ -31,8 +29,15 @@ namespace Test.WPF
             // 모듈 자동서치 기능 on
             this.EnableAutoModuleSearch(true);
 
+
+            // 특정 모듈을 로드하지 안도록 벤
+            //this.RejectModule("CModule");
+
+
+            this.AddModuleCurrentPath();
+
             // 모듈 서치할 경로 절대경로 추가 
-            this.AddModulePath("C:\\github\\ConvMVVM2\\ConvMVVM2\\Test.ModuleA\\bin\\x64\\Debug\\net8.0-windows");
+            this.AddModulePath("C:\\github\\ConvMVVM2\\ConvMVVM2\\Test.ModuleA\\bin\\Debug\\net8.0-windows");
 
             // 프로그램 실행 경로기준 모듈 서치할 경로 상대경로 추가
             //this.AddModuleRelativePath("Modules");
@@ -50,6 +55,11 @@ namespace Test.WPF
 
         protected override void RegionMapping(IRegionManager layerManager)
         {
+        }
+
+        protected override void OnStartUp(IServiceContainer container)
+        {
+
         }
     }
 }

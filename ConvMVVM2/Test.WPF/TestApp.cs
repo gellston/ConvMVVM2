@@ -19,13 +19,15 @@ namespace Test.WPF
         {
             try
             {
-                var test = Application.Current;
+
+
                 //일반 싱글 메인 윈도우 앱
                 var host1 = ConvMVVM2Host.CreateHost<BootStrapper, Application>(args, "App");
+                host1.OnModuleAddEvent += Host1_OnModuleAddEvent;
                 host1.AddWPFDialogService()
                      .Build()
                      .ShutdownMode(ShutdownMode.OnExplicitShutdown)
-                     .Popup("CWindowView");
+                     .Popup("MainWindowView");
                 host1.Shutdown();
 
                
@@ -41,6 +43,11 @@ namespace Test.WPF
             }
 
                 
+        }
+
+        private static void Host1_OnModuleAddEvent(string version, string name)
+        {
+            System.Diagnostics.Debug.WriteLine("name = " + name + ",  version=" + version);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace ConvMVVM2.Core.MVVM
         private ServiceCollection serviceCollection = new ServiceCollection();
         private List<string> moduleLoadPaths = new List<string>();
         private bool enableAutoModuleSearch = false;
+        private List<string> moduleRejectNames = new List<string>();
         #endregion
 
 
@@ -45,41 +47,6 @@ namespace ConvMVVM2.Core.MVVM
             try
             {
 
-                try
-                {
-
-                    // 현재 경로에서 플러그인 찾기
-                    var modulePath = AppDomain.CurrentDomain.BaseDirectory;
-                    var moduleFiles = Directory.GetFiles(modulePath, "*.dll");
-
-                    foreach (var moduleFile in moduleFiles)
-                    {
-                        try
-                        {
-                            var assembly = Assembly.LoadFrom(moduleFile);
-                            var pluginTypes = assembly.GetTypes().Where(t => typeof(IModule).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract);
-
-                            foreach (var pluginType in pluginTypes)
-                            {
-                                var plugin = (IModule)Activator.CreateInstance(pluginType);
-                                if (this.modules.Count(module => module.ModuleName == plugin.ModuleName) > 0) continue;
-                                this.modules.Add(plugin);
-                            }
-                        }
-                        catch
-                        {
-
-                        }
-
-                    }
-
-                }
-                catch
-                {
-
-                }
-
-
 
                 foreach(var modulePath in this.moduleLoadPaths)
                 {
@@ -97,7 +64,11 @@ namespace ConvMVVM2.Core.MVVM
                             {
                                 var plugin = (IModule)Activator.CreateInstance(pluginType);
                                 if (this.modules.Count(module => module.ModuleName == plugin.ModuleName) > 0) continue;
+                                if (this.moduleRejectNames.Contains(plugin.ModuleName)  == true) continue;
+
                                 this.modules.Add(plugin);
+
+                                this.OnModuleAddEvent?.Invoke(plugin.ModuleVersion, plugin.ModuleName);
                             }
                         }
                         catch
@@ -179,6 +150,18 @@ namespace ConvMVVM2.Core.MVVM
 
         }
 
+        protected void RejectModule(string name)
+        {
+            try
+            {
+                this.moduleRejectNames.Add(name);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         protected void EnableAutoModuleSearch(bool enable)
         {
             this.enableAutoModuleSearch = enable;
@@ -233,9 +216,8 @@ namespace ConvMVVM2.Core.MVVM
         #endregion
 
 
-        #region Event Handler
-
-
+        #region Event
+        public event Action<string, string> OnModuleAddEvent;
         #endregion
 
 

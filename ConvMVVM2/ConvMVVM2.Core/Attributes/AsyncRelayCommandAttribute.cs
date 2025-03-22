@@ -2,7 +2,7 @@
 
 namespace ConvMVVM2.Core.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     public class AsyncRelayCommandAttribute : Attribute
     {
 

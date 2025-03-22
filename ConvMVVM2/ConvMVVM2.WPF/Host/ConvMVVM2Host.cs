@@ -30,7 +30,11 @@ namespace ConvMVVM2.WPF.Host
             this.hostName = hostName;
 
 
+            this.bootStrapper.OnModuleAddEvent += BootStrapper_OnModuleAddEvent;
+
         }
+
+
         #endregion
 
         #region Create Host
@@ -217,6 +221,18 @@ namespace ConvMVVM2.WPF.Host
             {
                 throw;
             }
+        }
+        #endregion
+
+        #region Event
+        public event Action<string, string> OnModuleAddEvent;
+        #endregion
+
+        #region Event Handler
+        private void BootStrapper_OnModuleAddEvent(string arg1, string arg2)
+        {
+
+            this.OnModuleAddEvent?.Invoke(arg1, arg2);
         }
         #endregion
     }

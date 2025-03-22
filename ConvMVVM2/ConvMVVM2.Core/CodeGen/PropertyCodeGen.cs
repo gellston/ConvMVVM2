@@ -94,6 +94,7 @@ namespace ConvMVVM2.Core.CodeGen
         {
             List<AutoFieldInfo> fieldList = new List<AutoFieldInfo>();
 
+
             var model = compilation.GetSemanticModel(cls.SyntaxTree);
 
             foreach (FieldDeclarationSyntax field in cls.DescendantNodes().OfType<FieldDeclarationSyntax>())
@@ -121,13 +122,43 @@ namespace ConvMVVM2.Core.CodeGen
 
                 if (found == false) continue;
 
+
+
+
+                List<string> targetNames = new List<string>();
+                foreach (AttributeListSyntax attributeListSyntax in field.AttributeLists)
+                {
+                    foreach (AttributeSyntax attributeSyntax in attributeListSyntax.Attributes)
+                    {
+                        if (model.GetSymbolInfo(attributeSyntax).Symbol is not IMethodSymbol attributeSymbol)
+                        {
+                            continue;
+                        }
+                        INamedTypeSymbol attributeContainingTypeSymbol = attributeSymbol.ContainingType;
+                        string fullName = attributeContainingTypeSymbol.ToDisplayString();
+                        if (fullName == "ConvMVVM2.Core.Attributes.PropertyChangedForAttribute")
+                        {
+
+
+                            foreach(var argument in attributeSyntax.ArgumentList.Arguments)
+                            {
+                                targetNames.Add(argument.ToString());
+                            }
+                        }
+                    }
+
+                }
+
+
+
                 foreach (var item in field.Declaration.Variables)
                 {
                     
                     AutoFieldInfo info = new AutoFieldInfo
                     {
                         Identifier = item.Identifier.ValueText,
-                        TypeName = field.Declaration.Type.ToString()
+                        TypeName = field.Declaration.Type.ToString(),
+                        TargetNames = targetNames,
                     };
 
                     fieldList.Add(info);
@@ -191,7 +222,7 @@ namespace ConvMVVM2.Core.CodeGen
                     context.ReportDiagnostic(Diagnostic.Create(description, Location.None));
                     return;
                 }
-                List<AutoFieldInfo> fieldList = GetFieldList(compilation, cls);
+                var fieldList = GetFieldList(compilation, cls);
                 if (fieldList.Count == 0) continue;
                 
 
@@ -228,8 +259,10 @@ namespace ConvMVVM2.Core.CodeGen
                 var propertyCodeGroup = "";
                 foreach(var field in fieldList)
                 {
-                   
-                    string propertyCode = """
+
+
+
+                    string propertyCode1 = """
 
                                 public {typeName} {fieldName}{
                                     get => {_fieldName};
@@ -245,24 +278,44 @@ namespace ConvMVVM2.Core.CodeGen
                                             On{fieldName}Changed(value);
                                             On{fieldName}Changed(oldValue, value);
                                             OnPropertyChanged();
+
+                    """;
+
+                    string targetComplete = "";
+                    foreach(var targetName in field.TargetNames)
+                    {
+                        string targetUpdateCode = """
+                                                OnPropertyChanged({targetName});
+                        """;
+                        targetUpdateCode = targetUpdateCode.Replace("{targetName}", targetName);
+                        targetComplete += targetUpdateCode;
+                    }
+
+
+
+                    string propertyCode2 = """
+
                                         }
                                     }
                                 }
-
-
+                    
+                    
                                 partial void On{fieldName}Changing({typeName} value);
                                 partial void On{fieldName}Changing({typeName} oldValue, {typeName} newValue);
                                 partial void On{fieldName}Changed({typeName} value);
                                 partial void On{fieldName}Changed({typeName} oldValue, {typeName} newValue);
+
                     """;
 
-                    propertyCode = propertyCode.Replace("{typeName}", field.TypeName);
-                    propertyCode = propertyCode.Replace("{_fieldName}", field.Identifier);
+                    string propertyCodeCombine = propertyCode1 + targetComplete + propertyCode2;
+
+                    propertyCodeCombine = propertyCodeCombine.Replace("{typeName}", field.TypeName);
+                    propertyCodeCombine = propertyCodeCombine.Replace("{_fieldName}", field.Identifier);
 
                     var fieldName = field.Identifier;
                     fieldName = fieldName.Remove(0, 1);
-                    propertyCode = propertyCode.Replace("{fieldName}", fieldName);
-                    propertyCodeGroup += propertyCode;
+                    propertyCodeCombine = propertyCodeCombine.Replace("{fieldName}", fieldName);
+                    propertyCodeGroup += propertyCodeCombine;
                 }
 
                 source = source.Replace("{using}", usingDeclaration.ToString());

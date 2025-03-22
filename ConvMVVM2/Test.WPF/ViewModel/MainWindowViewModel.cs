@@ -21,6 +21,20 @@ namespace Test.WPF.ViewModel
         }
         #endregion
 
+        #region Public Property
+
+        [Property]
+        [PropertyChangedFor("Test2")]
+        [PropertyChangedFor("Test3")]
+        private string _Test = "test";
+
+        [Property]
+        private string _Test2 = "test";
+
+        public string Test3 { get; set; } = "";
+
+        #endregion
+
 
         #region Command
         [RelayCommand]
@@ -44,6 +58,10 @@ namespace Test.WPF.ViewModel
         {
             try
             {
+
+                this._Test2 = "there is no cow level!@#!#@";
+                this.Test3 = "there is no cow level";
+                this.Test = "there is no cow  level";
 
             }
             catch (Exception ex)

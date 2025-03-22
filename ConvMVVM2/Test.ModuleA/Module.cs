@@ -14,9 +14,10 @@ namespace Test.ModuleA
         public string ModuleName => "CModule";
         public string ModuleVersion => "1.0";
 
-        public void OnStartUp()
+
+        public void OnStartUp(IServiceContainer container)
         {
-          
+
         }
 
         public void RegionMapping(IRegionManager layerManager)
