@@ -18,6 +18,8 @@ namespace ConvMVVM2.Core.MVVM
         private List<string> moduleLoadPaths = new List<string>();
         private bool enableAutoModuleSearch = false;
         private List<string> moduleRejectNames = new List<string>();
+        private HashSet<string> assemblyNames = new HashSet<string>();
+        private HashSet<string> loadedAssemblyNames = new HashSet<string>();
         #endregion
 
 
@@ -38,10 +40,6 @@ namespace ConvMVVM2.Core.MVVM
 
 
         #region Private Functions
-
- 
-
-
         private void LoadAssemblyStart()
         {
             try
@@ -55,11 +53,15 @@ namespace ConvMVVM2.Core.MVVM
                     foreach (var moduleFile in moduleFiles)
                     {
 
+                        var assemblyName = Path.GetFileNameWithoutExtension(moduleFile);
+
+                        if (this.assemblyNames.Count(name => name == assemblyName) == 0) continue;
+                        if (this.loadedAssemblyNames.Count(name => name == assemblyName) == 0) continue;
+
                         try
                         {
                             var assembly = Assembly.LoadFrom(moduleFile);
                             var pluginTypes = assembly.GetTypes().Where(t => typeof(IModule).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract);
-
                             foreach (var pluginType in pluginTypes)
                             {
                                 var plugin = (IModule)Activator.CreateInstance(pluginType);
@@ -67,9 +69,10 @@ namespace ConvMVVM2.Core.MVVM
                                 if (this.moduleRejectNames.Contains(plugin.ModuleName)  == true) continue;
 
                                 this.modules.Add(plugin);
-
                                 this.OnModuleAddEvent?.Invoke(plugin.ModuleVersion, plugin.ModuleName);
                             }
+
+                            loadedAssemblyNames.Add(assemblyName);
                         }
                         catch
                         {
@@ -101,6 +104,14 @@ namespace ConvMVVM2.Core.MVVM
         {
             var module = (IModule)Activator.CreateInstance(typeof(T));
             this.RegisterModule(module);
+        }
+
+        protected void AddAssemblyName(string assemblyName)
+        {
+            if (this.assemblyNames.Count(name => name == assemblyName) > 0) return;
+
+            this.assemblyNames.Add(assemblyName);
+
         }
 
         protected void AddModulePath(string path)
@@ -168,7 +179,6 @@ namespace ConvMVVM2.Core.MVVM
         }
 
         #endregion
-
 
 
         #region Public Functions
