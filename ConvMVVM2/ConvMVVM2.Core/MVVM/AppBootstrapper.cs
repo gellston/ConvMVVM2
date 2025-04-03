@@ -56,7 +56,7 @@ namespace ConvMVVM2.Core.MVVM
                         var assemblyName = Path.GetFileNameWithoutExtension(moduleFile);
 
                         if (this.assemblyNames.Count(name => name == assemblyName) == 0) continue;
-                        if (this.loadedAssemblyNames.Count(name => name == assemblyName) == 0) continue;
+                        if (this.loadedAssemblyNames.Count(name => name == assemblyName) > 0) continue;
 
                         try
                         {
