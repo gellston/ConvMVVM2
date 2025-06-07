@@ -12,9 +12,16 @@ namespace ConvMVVM2.Core.MVVM
 
         public void Show(string viewName, double width, double height, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize);
 
-        public string OpenFileDialog(string defaultPath, string title, string filter, bool multiselect = true);
+        public string[] OpenFileDialog(string defaultPath, string title, string filter, bool multiselect = true);
 
         public bool SaveFileDialog(string defaultPath, string title, string filter);
+
+
+#if NET8_0 || NET9_0
+        public string[] OpenFolderDialog(string defaultPath, string title);
+#endif
+
+
         #endregion
 
     }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Xml.Linq;
 
 namespace ConvMVVM2.WPF.Services
@@ -98,25 +99,51 @@ namespace ConvMVVM2.WPF.Services
         }
 
 
-
-
-        public string OpenFileDialog(string defaultPath, string title, string filter, bool multiselect = true)
+#if NET8_0 || NET9_0
+        public string[] OpenFolderDialog(string defaultPath, string title)
         {
             try
             {
+                var dialog = new Microsoft.Win32.OpenFolderDialog();
+                dialog.InitialDirectory = defaultPath;
+                dialog.Title = title;
+                
+
+                bool? result = dialog.ShowDialog();
+                if (result == false)
+                {
+                    throw new InvalidOperationException("Folder is not selected");
+                }
+
+                return dialog.FolderNames;
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+#endif
+
+        public string[] OpenFileDialog(string defaultPath, string title, string filter, bool multiselect = true)
+        {
+            try
+            {
+              
 
                 var dialog = new Microsoft.Win32.OpenFileDialog();
                 dialog.InitialDirectory = defaultPath;
                 dialog.Filter = filter;
                 dialog.Multiselect = multiselect;
                 dialog.Title = title;
+
                 bool? result = dialog.ShowDialog();
                 if(result == false)
                 {
                     throw new InvalidOperationException("File is not selected");
                 }
 
-                return dialog.FileName;
+                return dialog.FileNames;
 
             }
             catch
@@ -145,7 +172,7 @@ namespace ConvMVVM2.WPF.Services
 
 
   
-        #endregion
+#endregion
 
 
     }
