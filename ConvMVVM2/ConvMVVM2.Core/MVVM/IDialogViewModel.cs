@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConvMVVM2.Core.MVVM
 {
-    public interface IDialogViewModel<RType>  where RType : class
+    public interface IDialogViewModel<RType>
     {
         #region Public Functions
         public event Action<RType> CloseEvent;

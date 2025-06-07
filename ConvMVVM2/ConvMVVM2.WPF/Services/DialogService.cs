@@ -143,7 +143,7 @@ namespace ConvMVVM2.WPF.Services
 
 
 
-        public ResultTYPE ShowDialog<ResultTYPE>(string windowName, string viewName, double width, double height, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "") where ResultTYPE : class
+        public ResultTYPE ShowDialog<ResultTYPE>(string windowName, string viewName, double width, double height, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "")
         {
             try
             {
@@ -167,7 +167,7 @@ namespace ConvMVVM2.WPF.Services
                 window.Title = title;
 
 
-                ResultTYPE dialogResult = null;
+                ResultTYPE dialogResult = default;
                 Action<ResultTYPE> closeEventHandler = (arg) =>
                 {
                     try
@@ -197,7 +197,7 @@ namespace ConvMVVM2.WPF.Services
             }
         }
 
-        public ResultTYPE ShowDialog<ResultTYPE>(string viewName, double width, double height, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "") where ResultTYPE : class
+        public ResultTYPE ShowDialog<ResultTYPE>(string viewName, double width, double height, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "")
         {
             try
             {
@@ -216,7 +216,7 @@ namespace ConvMVVM2.WPF.Services
                 window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 window.Title = title;
 
-                ResultTYPE dialogResult = null;
+                ResultTYPE dialogResult = default;
                 Action<ResultTYPE> closeEventHandler = (arg) =>
                 {
                     try
@@ -248,7 +248,7 @@ namespace ConvMVVM2.WPF.Services
 
 
 
-        public ResultTYPE ShowDialog<ResultTYPE, ParamType>(string windowName, string viewName, double width, double height, ParamType param, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "") where ResultTYPE : class
+        public ResultTYPE ShowDialog<ResultTYPE, ParamType>(string windowName, string viewName, double width, double height, ParamType param, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "")
         {
             try
             {
@@ -278,7 +278,7 @@ namespace ConvMVVM2.WPF.Services
                 window.Title = title;
 
 
-                ResultTYPE dialogResult = null;
+                ResultTYPE dialogResult = default;
                 Action<ResultTYPE> closeEventHandler = (arg) =>
                 {
                     try
@@ -308,7 +308,7 @@ namespace ConvMVVM2.WPF.Services
             }
         }
 
-        public ResultTYPE ShowDialog<ResultTYPE, ParamType>(string viewName, double width, double height, ParamType param, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "") where ResultTYPE : class
+        public ResultTYPE ShowDialog<ResultTYPE, ParamType>(string viewName, double width, double height, ParamType param, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "")
         {
             try
             {
@@ -332,7 +332,7 @@ namespace ConvMVVM2.WPF.Services
                 window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 window.Title = title;
 
-                ResultTYPE dialogResult = null;
+                ResultTYPE dialogResult = default;
                 Action<ResultTYPE> closeEventHandler = (arg) =>
                 {
                     try
