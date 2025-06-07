@@ -99,9 +99,10 @@ namespace ConvMVVM2.WPF.Services
         }
 
 
-#if NET8_0_WINDOWS || NET9_0_WINDOWS
+
         public string[] OpenFolderDialog(string defaultPath, string title)
         {
+#if NET8_0_WINDOWS || NET9_0_WINDOWS
             try
             {
                 var dialog = new Microsoft.Win32.OpenFolderDialog();
@@ -122,8 +123,12 @@ namespace ConvMVVM2.WPF.Services
             {
                 throw;
             }
-        }
+#else
+            throw new PlatformNotSupportedException("Its not supported in this platform.");
+
 #endif
+        }
+
 
         public string[] OpenFileDialog(string defaultPath, string title, string filter, bool multiselect = true)
         {

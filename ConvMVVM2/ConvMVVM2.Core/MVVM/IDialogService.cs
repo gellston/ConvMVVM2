@@ -17,9 +17,9 @@ namespace ConvMVVM2.Core.MVVM
         public bool SaveFileDialog(string defaultPath, string title, string filter);
 
 
-#if NET8_0_WINDOWS || NET9_0_WINDOWS
+
         public string[] OpenFolderDialog(string defaultPath, string title);
-#endif
+
 
 
         #endregion
