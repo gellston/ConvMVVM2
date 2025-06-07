@@ -99,7 +99,7 @@ namespace ConvMVVM2.WPF.Services
         }
 
 
-#if NET8_0 || NET9_0
+#if NET8_0_WINDOWS || NET9_0_WINDOWS
         public string[] OpenFolderDialog(string defaultPath, string title)
         {
             try
