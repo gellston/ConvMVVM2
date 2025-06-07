@@ -28,7 +28,10 @@ namespace ConvMVVM2.WPF.Services
         #endregion
 
         #region Public Functions
-        public void Show(string viewName, double width, double height, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize)
+
+
+
+        public void Show(string viewName, double width, double height, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "")
         {
             try
             {
@@ -38,6 +41,7 @@ namespace ConvMVVM2.WPF.Services
                 window.Height = height;
                 window.ResizeMode = (System.Windows.ResizeMode)resizeMode;
                 window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.Title = title;
 
                 window.Content = view;
                 window.Activate();
@@ -50,7 +54,150 @@ namespace ConvMVVM2.WPF.Services
             }
         }
 
-        public ResultTYPE ShowDialog<ResultTYPE>(string viewName, double width, double height, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize) where ResultTYPE : class
+        public void Show(string windowName, string viewName, double width, double height, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "")
+        {
+            try
+            {
+                var view = (FrameworkElement)serviceContainer.GetService(viewName);
+                var window = serviceContainer.GetService(windowName) as Window;
+                if(window == null)
+                {
+                    throw new InvalidOperationException("Invalid window type");
+                }
+                window.Width = width;
+                window.Height = height;
+                window.ResizeMode = (System.Windows.ResizeMode)resizeMode;
+                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.Title = title;
+
+                window.Content = view;
+                window.Activate();
+                window.Show();
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public void Show<ParamType>(string viewName, double width, double height, ParamType param, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "")
+        {
+            try
+            {
+                var view = (FrameworkElement)serviceContainer.GetService(viewName);
+                if(view.DataContext is IDialogInitializable<ParamType> init)
+                {
+                    init.OnDialogInitialized(param);
+                }
+
+                var window = new Window();
+                window.Width = width;
+                window.Height = height;
+                window.ResizeMode = (System.Windows.ResizeMode)resizeMode;
+                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.Title = title;
+
+                window.Content = view;
+                window.Activate();
+                window.Show();
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public void Show<ParamType>(string windowName, string viewName, double width, double height, ParamType param, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "")
+        {
+            try
+            {
+                var view = (FrameworkElement)serviceContainer.GetService(viewName);
+                if (view.DataContext is IDialogInitializable<ParamType> init)
+                {
+                    init.OnDialogInitialized(param);
+                }
+
+                var window = serviceContainer.GetService(windowName) as Window;
+                if (window == null)
+                {
+                    throw new InvalidOperationException("Invalid window type");
+                }
+                window.Width = width;
+                window.Height = height;
+                window.ResizeMode = (System.Windows.ResizeMode)resizeMode;
+                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.Title = title;
+
+                window.Content = view;
+                window.Activate();
+                window.Show();
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+
+        public ResultTYPE ShowDialog<ResultTYPE>(string windowName, string viewName, double width, double height, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "") where ResultTYPE : class
+        {
+            try
+            {
+                var view = (FrameworkElement)serviceContainer.GetService(viewName);
+                var vm = view.DataContext as IDialogViewModel<ResultTYPE>;
+                if (vm == null)
+                {
+                    throw new Exception("Invalid Dialog ViewModel Interface");
+                }
+
+                var window = serviceContainer.GetService(windowName) as Window;
+                if (window == null)
+                {
+                    throw new InvalidOperationException("Invalid window type");
+                }
+
+                window.Width = width;
+                window.Height = height;
+                window.ResizeMode = (System.Windows.ResizeMode)resizeMode;
+                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.Title = title;
+
+
+                ResultTYPE dialogResult = null;
+                Action<ResultTYPE> closeEventHandler = (arg) =>
+                {
+                    try
+                    {
+                        window.Close();
+                    }
+                    catch
+                    {
+
+                    }
+
+                    dialogResult = arg;
+                };
+
+                vm.CloseEvent += closeEventHandler;
+                window.Content = view;
+                window.Activate();
+                var result = (bool)window.ShowDialog();
+                window.Content = null;
+                vm.CloseEvent -= closeEventHandler;
+
+                return dialogResult;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public ResultTYPE ShowDialog<ResultTYPE>(string viewName, double width, double height, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "") where ResultTYPE : class
         {
             try
             {
@@ -67,6 +214,7 @@ namespace ConvMVVM2.WPF.Services
                 window.Height = height;
                 window.ResizeMode = (System.Windows.ResizeMode)resizeMode;
                 window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.Title = title;
 
                 ResultTYPE dialogResult = null;
                 Action<ResultTYPE> closeEventHandler = (arg) =>
@@ -100,15 +248,133 @@ namespace ConvMVVM2.WPF.Services
 
 
 
-        public string[] OpenFolderDialog(string defaultPath, string title)
+        public ResultTYPE ShowDialog<ResultTYPE, ParamType>(string windowName, string viewName, double width, double height, ParamType param, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "") where ResultTYPE : class
         {
+            try
+            {
+                var view = (FrameworkElement)serviceContainer.GetService(viewName);
+                if (view.DataContext is IDialogInitializable<ParamType> init)
+                {
+                    init.OnDialogInitialized(param);
+                }
+
+
+                var vm = view.DataContext as IDialogViewModel<ResultTYPE>;
+                if (vm == null)
+                {
+                    throw new Exception("Invalid Dialog ViewModel Interface");
+                }
+
+                var window = serviceContainer.GetService(windowName) as Window;
+                if (window == null)
+                {
+                    throw new InvalidOperationException("Invalid window type");
+                }
+
+                window.Width = width;
+                window.Height = height;
+                window.ResizeMode = (System.Windows.ResizeMode)resizeMode;
+                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.Title = title;
+
+
+                ResultTYPE dialogResult = null;
+                Action<ResultTYPE> closeEventHandler = (arg) =>
+                {
+                    try
+                    {
+                        window.Close();
+                    }
+                    catch
+                    {
+
+                    }
+
+                    dialogResult = arg;
+                };
+
+                vm.CloseEvent += closeEventHandler;
+                window.Content = view;
+                window.Activate();
+                var result = (bool)window.ShowDialog();
+                window.Content = null;
+                vm.CloseEvent -= closeEventHandler;
+
+                return dialogResult;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public ResultTYPE ShowDialog<ResultTYPE, ParamType>(string viewName, double width, double height, ParamType param, Core.MVVM.ResizeMode resizeMode = Core.MVVM.ResizeMode.CanResize, string title = "") where ResultTYPE : class
+        {
+            try
+            {
+                var view = (FrameworkElement)serviceContainer.GetService(viewName);
+                if (view.DataContext is IDialogInitializable<ParamType> init)
+                {
+                    init.OnDialogInitialized(param);
+                }
+
+                var vm = view.DataContext as IDialogViewModel<ResultTYPE>;
+                if (vm == null)
+                {
+                    throw new Exception("Invalid Dialog ViewModel Interface");
+                }
+
+                var window = new Window();
+
+                window.Width = width;
+                window.Height = height;
+                window.ResizeMode = (System.Windows.ResizeMode)resizeMode;
+                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.Title = title;
+
+                ResultTYPE dialogResult = null;
+                Action<ResultTYPE> closeEventHandler = (arg) =>
+                {
+                    try
+                    {
+                        window.Close();
+                    }
+                    catch
+                    {
+
+                    }
+
+                    dialogResult = arg;
+                };
+
+                vm.CloseEvent += closeEventHandler;
+                window.Content = view;
+                window.Activate();
+                var result = (bool)window.ShowDialog();
+                window.Content = null;
+                vm.CloseEvent -= closeEventHandler;
+
+                return dialogResult;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+        public string[] OpenFolderDialog(string defaultPath, string title, bool multiselect = false)
+        {
+
+
 #if NET8_0_WINDOWS || NET9_0_WINDOWS
             try
             {
                 var dialog = new Microsoft.Win32.OpenFolderDialog();
                 dialog.InitialDirectory = defaultPath;
                 dialog.Title = title;
-                
+                dialog.Multiselect = multiselect;
+
 
                 bool? result = dialog.ShowDialog();
                 if (result == false)
