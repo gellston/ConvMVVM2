@@ -1,5 +1,6 @@
 ﻿using ConvMVVM2.Core.MVVM;
 using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -367,54 +368,68 @@ namespace ConvMVVM2.WPF.Services
         {
 
 
-#if NET8_0_WINDOWS || NET9_0_WINDOWS
             try
             {
-                var dialog = new Microsoft.Win32.OpenFolderDialog();
-                dialog.InitialDirectory = defaultPath;
-                dialog.Title = title;
-                dialog.Multiselect = multiselect;
+                var dlg = new CommonOpenFileDialog
+                {
+                    IsFolderPicker = true,
+                    Title = title,
+                    InitialDirectory = defaultPath,
+                    Multiselect = multiselect
+                };
 
 
-                bool? result = dialog.ShowDialog();
-                if (result == false)
+                var result = dlg.ShowDialog();
+                if (result != CommonFileDialogResult.Ok)
                 {
                     throw new InvalidOperationException("Folder is not selected");
                 }
 
-                return dialog.FolderNames;
+                return dlg.FileNames.ToArray();
 
             }
             catch
             {
                 throw;
             }
-#else
-            throw new PlatformNotSupportedException("Its not supported in this platform.");
-
-#endif
         }
 
+
+        private static void AddFilterFromString(CommonOpenFileDialog dialog, string filterString)
+        {
+            var parts = filterString.Split('|');
+            for (int i = 0; i + 1 < parts.Length; i += 2)
+            {
+                string displayName = parts[i];
+                string pattern = parts[i + 1];
+                dialog.Filters.Add(new CommonFileDialogFilter(displayName, pattern));
+            }
+        }
 
         public string[] OpenFileDialog(string defaultPath, string title, string filter, bool multiselect = true)
         {
             try
             {
-              
 
-                var dialog = new Microsoft.Win32.OpenFileDialog();
-                dialog.InitialDirectory = defaultPath;
-                dialog.Filter = filter;
-                dialog.Multiselect = multiselect;
-                dialog.Title = title;
 
-                bool? result = dialog.ShowDialog();
-                if(result == false)
+                var dlg = new CommonOpenFileDialog
+                {
+                    IsFolderPicker = false,
+                    Title = title,
+                    InitialDirectory = defaultPath,
+                    Multiselect = multiselect,
+                };
+
+                AddFilterFromString(dlg, filter);
+
+
+                var result = dlg.ShowDialog();
+                if (result != CommonFileDialogResult.Ok)
                 {
                     throw new InvalidOperationException("File is not selected");
                 }
 
-                return dialog.FileNames;
+                return dlg.FileNames.ToArray();
 
             }
             catch
