@@ -8,6 +8,15 @@ namespace ConvMVVM2.Core.MVVM
 {
     public interface IAsyncRelayCommand : ICommand
     {
+        #region Public Property
         bool IsRunning { get; }
+        #endregion
+
+
+        #region Public Functions
+
+        public void InvalidateCommand();
+
+        #endregion
     }
 }
