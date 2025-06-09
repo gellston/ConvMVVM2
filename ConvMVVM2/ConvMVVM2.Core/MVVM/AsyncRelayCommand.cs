@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace ConvMVVM2.Core.MVVM
 {
-    public class AsyncRelayCommand : ICommand
+    public class AsyncRelayCommand : IAsyncRelayCommand
     {
         #region Private Property
         private readonly Func<Task> _execute = null;
@@ -63,7 +63,7 @@ namespace ConvMVVM2.Core.MVVM
     }
 
 
-    public class AsyncRelayCommand<T> : ICommand
+    public class AsyncRelayCommand<T> : IAsyncRelayCommand
     {
         #region Private Property
         private readonly Func<T, Task> _execute = null;
@@ -86,6 +86,7 @@ namespace ConvMVVM2.Core.MVVM
 
             _execute = execute;
             _canExecute = canExecute;
+
         }
         #endregion
 

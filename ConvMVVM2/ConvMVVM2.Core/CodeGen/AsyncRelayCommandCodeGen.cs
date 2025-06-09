@@ -214,8 +214,8 @@ namespace ConvMVVM2.Core.CodeGen
                     {
                         string propertyCode = """
 
-                                public ICommand _{methodName}Command = null;
-                                public ICommand {methodName}Command{
+                                public IAsyncRelayCommand _{methodName}Command = null;
+                                public IAsyncRelayCommand {methodName}Command{
                                     get{
                                         _{methodName}Command = new AsyncRelayCommand(()=> this.{methodName}());
                                         return _{methodName}Command;
@@ -231,8 +231,8 @@ namespace ConvMVVM2.Core.CodeGen
                     {
                         string propertyCode = """
 
-                                public ICommand _{methodName}Command = null;
-                                public ICommand {methodName}Command{
+                                public IAsyncRelayCommand _{methodName}Command = null;
+                                public IAsyncRelayCommand {methodName}Command{
                                     get{
                                         _{methodName}Command = new AsyncRelayCommand<{arg}>((arg)=> this.{methodName}(arg));
                                         return _{methodName}Command;
