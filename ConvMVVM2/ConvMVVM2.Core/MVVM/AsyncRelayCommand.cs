@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ConvMVVM2.Core.MVVM
 {
-    public class AsyncRelayCommand : IAsyncRelayCommand
+    public class AsyncRelayCommand : IAsyncRelayCommand, INotifyPropertyChanged
     {
         #region Private Property
         private readonly Func<Task> _execute = null;
@@ -24,6 +26,7 @@ namespace ConvMVVM2.Core.MVVM
 
         #region Event 
         public event EventHandler CanExecuteChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
 
@@ -34,6 +37,17 @@ namespace ConvMVVM2.Core.MVVM
             private set
             {
                 _IsRunning = value;
+                this.OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Private Functions
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName)); 
             }
         }
         #endregion
@@ -46,24 +60,34 @@ namespace ConvMVVM2.Core.MVVM
         #region Evnet Handler
         public bool CanExecute(object parameter)
         {
-            return true;
+            return this._IsRunning;
         }
 
         public async void Execute(object parameter)
         {
+            if (!this.CanExecute(parameter)) return;
+
             if (_execute != null)
             {
                 var task = _execute();
-                IsRunning = true;
-                await task;
-                IsRunning = false;
+                try
+                {
+                    IsRunning = true;
+                    this.InvalidateCommand();
+                    await task;
+                }
+                finally
+                {
+                    IsRunning = false;
+                    this.InvalidateCommand();
+                }
             }
         }
         #endregion
     }
 
 
-    public class AsyncRelayCommand<T> : IAsyncRelayCommand
+    public class AsyncRelayCommand<T> : IAsyncRelayCommand, INotifyPropertyChanged
     {
         #region Private Property
         private readonly Func<T, Task> _execute = null;
@@ -92,6 +116,17 @@ namespace ConvMVVM2.Core.MVVM
 
         #region Event 
         public event EventHandler CanExecuteChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+
+        #region Private Functions
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
         #endregion
 
         #region Public Property
@@ -101,6 +136,7 @@ namespace ConvMVVM2.Core.MVVM
             private set
             {
                 _IsRunning = value;
+                this.OnPropertyChanged();
             }
         }
         #endregion
@@ -112,20 +148,34 @@ namespace ConvMVVM2.Core.MVVM
         #region Event Handler
         public bool CanExecute(object parameter)
         {
-            if (_canExecute == null)
+
+            if (_canExecute == null && !this._IsRunning)
                 return true;
 
-            return _canExecute.Invoke((T)parameter);
+
+            return !this._IsRunning && _canExecute.Invoke((T)parameter);
         }
 
         public async void Execute(object parameter)
         {
+
+            if (!this.CanExecute(parameter)) return;
+
             if (_execute != null)
             {
                 var task = _execute((T)parameter);
-                IsRunning = true;
-                await task;
-                IsRunning = false;
+
+                try
+                {
+                    IsRunning = true;
+                    this.InvalidateCommand();
+                    await task;
+                }
+                finally
+                {
+                    IsRunning = false;
+                    this.InvalidateCommand();
+                }
             }
 
         }
