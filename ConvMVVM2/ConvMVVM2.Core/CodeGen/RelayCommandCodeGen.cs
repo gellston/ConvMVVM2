@@ -118,6 +118,8 @@ namespace ConvMVVM2.Core.CodeGen
                             detection = true;
                             break;
                         }
+                        
+
                     }
                 }
 
