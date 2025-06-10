@@ -29,7 +29,7 @@ namespace ConvMVVM2.Core.MVVM
 
         public string[] OpenFileDialog(string defaultPath, string title, string filter, bool multiselect = true);
 
-        public bool SaveFileDialog(string defaultPath, string title, string filter);
+        public string SaveFileDialog(string defaultPath, string title, string filter);
 
 
 

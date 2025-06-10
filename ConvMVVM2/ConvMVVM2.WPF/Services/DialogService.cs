@@ -406,6 +406,17 @@ namespace ConvMVVM2.WPF.Services
             }
         }
 
+        private static void AddFilterFromString(CommonSaveFileDialog dialog, string filterString)
+        {
+            var parts = filterString.Split('|');
+            for (int i = 0; i + 1 < parts.Length; i += 2)
+            {
+                string displayName = parts[i];
+                string pattern = parts[i + 1];
+                dialog.Filters.Add(new CommonFileDialogFilter(displayName, pattern));
+            }
+        }
+
         public string[] OpenFileDialog(string defaultPath, string title, string filter, bool multiselect = true)
         {
             try
@@ -438,17 +449,31 @@ namespace ConvMVVM2.WPF.Services
             }
         }
 
-        public bool SaveFileDialog(string defaultPath, string title, string filter)
+        public string SaveFileDialog(string defaultPath, string title, string filter)
         {
             try
             {
 
-                var dialog = new Microsoft.Win32.SaveFileDialog();
+                var dialog = new CommonSaveFileDialog
+                {
+                    Title = title,
+                    InitialDirectory = defaultPath,
+                };
                 dialog.InitialDirectory = defaultPath;
-                dialog.Filter = filter;
                 dialog.Title= title;
-                bool? result = dialog.ShowDialog();
-                return (bool)result;
+
+                AddFilterFromString(dialog, filter);
+
+
+                var result = dialog.ShowDialog();
+                if (result != CommonFileDialogResult.Ok)
+                {
+                    throw new InvalidOperationException("Dialog closed");
+                }
+
+
+
+                return dialog.FileName;
             }
             catch
             {
