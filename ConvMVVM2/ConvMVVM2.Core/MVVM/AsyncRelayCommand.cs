@@ -60,7 +60,7 @@ namespace ConvMVVM2.Core.MVVM
         #region Evnet Handler
         public bool CanExecute(object parameter)
         {
-            return this._IsRunning;
+            return !this._IsRunning;
         }
 
         public async void Execute(object parameter)
@@ -149,8 +149,8 @@ namespace ConvMVVM2.Core.MVVM
         public bool CanExecute(object parameter)
         {
 
-            if (_canExecute == null && !this._IsRunning)
-                return true;
+            if (_canExecute == null)
+                return !this._IsRunning;
 
 
             return !this._IsRunning && _canExecute.Invoke((T)parameter);
