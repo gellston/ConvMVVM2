@@ -9,7 +9,6 @@ namespace ConvMVVM2.Core.MVVM
         void Register(string regionName, IRegion region);
 
 
-        void Navigate(string regionName, Type viewType);
         void Navigate(string regionName, string viewName);
         void Navigate<TView>(string regionName) where TView : class;
         void Navigate<TView>(string regionName, NavigationContext context) where TView : class;
