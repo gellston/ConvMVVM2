@@ -104,7 +104,7 @@ namespace ConvMVVM2.Core.MVVM
 
         }
 
-        public void Navigate(string regionName, Type viewType)
+        public void Navigate(string regionName, Type viewType, NavigationContext navigationContext = null)
         {
             try
             {
@@ -138,7 +138,11 @@ namespace ConvMVVM2.Core.MVVM
                 }
 
                 nextDataContext = next.GetType().GetProperty("DataContext").GetValue(next);
-                var navigationContext = new NavigationContext(prevDataContext, nextDataContext);
+
+
+                if(navigationContext == null)
+                    navigationContext = new NavigationContext();
+                
 
                 if (prevDataContext is INavigateAware prevNavigationAware)
                 {
@@ -171,7 +175,6 @@ namespace ConvMVVM2.Core.MVVM
             {
                 throw;
             }
-            
         }
 
         public void Navigate<TView>(string regionName) where TView : class
@@ -197,6 +200,36 @@ namespace ConvMVVM2.Core.MVVM
                 }
 
                 this.Navigate(regionName, viewType);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public void Navigate(string regionName, string viewName, NavigationContext context)
+        {
+            try
+            {
+                var viewType = ServiceLocator.GetServiceProvider().KeyType(viewName);
+                if (viewType == null)
+                {
+                    throw new InvalidOperationException($"Can't find view info: {viewName}");
+                }
+
+                this.Navigate(regionName, viewType, context);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public void Navigate<TView>(string regionName, NavigationContext context) where TView : class
+        {
+            try
+            {
+                this.Navigate(regionName, typeof(TView), context);
             }
             catch
             {
