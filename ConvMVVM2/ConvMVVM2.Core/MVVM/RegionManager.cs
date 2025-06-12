@@ -146,14 +146,15 @@ namespace ConvMVVM2.Core.MVVM
 
                 if (prevDataContext is INavigateAware prevNavigationAware)
                 {
-                    prevNavigationAware.OnNavigatedFrom(navigationContext);
+                    if(prevNavigationAware.CanNavigate(navigationContext))
+                        prevNavigationAware.OnNavigatedFrom(navigationContext);
                 }
 
                 if (nextDataContext is INavigateAware nextNavigationAware)
                 {
-                    if (!nextNavigationAware.CanNavigate(navigationContext)) return;
+                    if (nextNavigationAware.CanNavigate(navigationContext))
+                        nextNavigationAware.OnNavigatedTo(navigationContext);
 
-                    nextNavigationAware.OnNavigatedTo(navigationContext);
                     layer.Content = next;
 
                     if (_layerViewMappings.ContainsKey(regionName))
