@@ -6,7 +6,7 @@
 		<Nullable>disable</Nullable>
 		<Platforms>AnyCPU;x64;x86</Platforms>
 		<PackageIcon>convergence.png</PackageIcon>
-		<Version>1.20.1</Version>
+		<Version>1.20.2</Version>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<RepositoryUrl>https://github.com/gellston</RepositoryUrl>
 		<EnforceExtendedAnalyzerRules>True</EnforceExtendedAnalyzerRules>
