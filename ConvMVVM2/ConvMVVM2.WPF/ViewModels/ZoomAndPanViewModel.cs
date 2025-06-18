@@ -135,6 +135,8 @@ namespace ConvMVVM2.WPF.ViewModels
             this.TransformMatrix = newMatrix;
 
             //this.UpdateTransform?.Invoke(this.TransformMatrix);
+
+            this.OnPropertyChanged("TransformMatrix");
         }
 
         public void Zoom(double centerX, double centerY, bool isUp)
@@ -152,6 +154,7 @@ namespace ConvMVVM2.WPF.ViewModels
 
                 this.Scale = nextScale;
                 this.OnPropertyChanged("Scale");
+                this.OnPropertyChanged("TransformMatrix");
             }
         }
 
@@ -179,7 +182,10 @@ namespace ConvMVVM2.WPF.ViewModels
             this.Scale = scale;
             this.OffsetX = offsetX;
             this.OffsetY = offsetY;
- 
+
+
+            this.OnPropertyChanged("TransformMatrix");
+
         }
         #endregion
     }
