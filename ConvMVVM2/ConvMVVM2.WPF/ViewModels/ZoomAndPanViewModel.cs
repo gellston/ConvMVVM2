@@ -21,8 +21,6 @@ namespace ConvMVVM2.WPF.ViewModels
         private double _MinZoom = 0.2;
         private double _ZoomStep = 1.1;
 
-        private double _OffsetX = 0.0;
-        private double _OffsetY = 0.0;
         #endregion
 
         #region Event
@@ -92,25 +90,6 @@ namespace ConvMVVM2.WPF.ViewModels
             }
         }
 
-        public double OffsetX
-        {
-            get => _OffsetX;
-            private set
-            {
-                _OffsetX = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public double OffsetY
-        {
-            get => _OffsetY;
-            private set
-            {
-                _OffsetY = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
 
 
@@ -122,10 +101,6 @@ namespace ConvMVVM2.WPF.ViewModels
 
             this.Scale = 1.0;
 
-            this.OffsetX = 0.0;
-            this.OffsetY = 0.0;
-          
-            
         }
 
 
@@ -134,8 +109,6 @@ namespace ConvMVVM2.WPF.ViewModels
             Matrix newMatrix = this.TransformMatrix;
             newMatrix.TranslatePrepend(offsetX, offsetY);
 
-            this.OffsetX += offsetX;
-            this.OffsetY += offsetY;
 
             this.TransformMatrix = newMatrix;
         }
@@ -182,9 +155,6 @@ namespace ConvMVVM2.WPF.ViewModels
 
             this.TransformMatrix = matrix;
             this.Scale = scale;
-            this.OffsetX = offsetX;
-            this.OffsetY = offsetY;
-
 
             this.OnPropertyChanged("TransformMatrix");
 
