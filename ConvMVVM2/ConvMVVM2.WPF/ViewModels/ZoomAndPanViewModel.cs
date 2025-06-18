@@ -125,18 +125,19 @@ namespace ConvMVVM2.WPF.ViewModels
             this.OffsetX = 0.0;
             this.OffsetY = 0.0;
           
+            
         }
 
 
-        public void Pan(Point target)
+        public void Pan(double offsetX, double offsetY)
         {
             Matrix newMatrix = this.TransformMatrix;
-            newMatrix.TranslatePrepend(target.X, target.Y);
+            newMatrix.TranslatePrepend(offsetX, offsetY);
+
+            this.OffsetX += offsetX;
+            this.OffsetY += offsetY;
+
             this.TransformMatrix = newMatrix;
-
-            //this.UpdateTransform?.Invoke(this.TransformMatrix);
-
-            this.OnPropertyChanged("TransformMatrix");
         }
 
         public void Zoom(double centerX, double centerY, bool isUp)
@@ -154,7 +155,8 @@ namespace ConvMVVM2.WPF.ViewModels
 
                 this.Scale = nextScale;
                 this.OnPropertyChanged("Scale");
-                this.OnPropertyChanged("TransformMatrix");
+
+                this.TransformMatrix = newMatrix;
             }
         }
 
