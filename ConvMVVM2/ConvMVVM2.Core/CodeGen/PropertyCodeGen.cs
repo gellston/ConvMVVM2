@@ -285,6 +285,7 @@ namespace ConvMVVM2.Core.CodeGen
                     foreach(var targetName in field.TargetNames)
                     {
                         string targetUpdateCode = """
+
                                                 OnPropertyChanged({targetName});
                         """;
                         targetUpdateCode = targetUpdateCode.Replace("{targetName}", targetName);
