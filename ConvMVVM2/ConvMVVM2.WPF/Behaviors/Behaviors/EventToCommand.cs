@@ -7,9 +7,17 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows;
-using Microsoft.Xaml.Behaviors;
+using ConvMVVM2.WPF.Behaviors.Base;
 
-namespace ConvMVVM2.WPF.Behaviors
+/* 'ConvMVVM2.WPF (net9.0-windows)' 프로젝트에서 병합되지 않은 변경 내용
+추가됨:
+using ConvMVVM2;
+using ConvMVVM2.WPF;
+using ConvMVVM2.WPF.Behaviors;
+using ConvMVVM2.WPF.Behaviors.Behaviors;
+*/
+
+namespace ConvMVVM2.WPF.Behaviors.Behaviors
 {
     public class EventToCommand : Behavior<FrameworkElement>
     {

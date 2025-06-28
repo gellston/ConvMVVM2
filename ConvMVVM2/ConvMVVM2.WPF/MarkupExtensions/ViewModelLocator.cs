@@ -7,12 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ConvMVVM2.WPF.Extensions
+namespace ConvMVVM2.WPF.MarkupExtensions
 {
     public class ViewModelLocator
     {
         #region Dependency Property
-        public static readonly DependencyProperty AutoWireViewModelProperty = DependencyProperty.RegisterAttached("AutoWireViewModel",typeof(bool),typeof(ViewModelLocator), new PropertyMetadata(false, OnAutoWireViewModelChanged));
+        public static readonly DependencyProperty AutoWireViewModelProperty = DependencyProperty.RegisterAttached("AutoWireViewModel", typeof(bool), typeof(ViewModelLocator), new PropertyMetadata(false, OnAutoWireViewModelChanged));
 
         public static bool GetAutoWireViewModel(DependencyObject d)
         {
@@ -84,7 +84,7 @@ namespace ConvMVVM2.WPF.Extensions
                 frameworkElement.Loaded -= FrameworkElement_Loaded;
                 frameworkElement.Loaded += FrameworkElement_Loaded;
             }
-      
+
         }
 
         private static void FrameworkElement_Loaded(object sender, RoutedEventArgs e)

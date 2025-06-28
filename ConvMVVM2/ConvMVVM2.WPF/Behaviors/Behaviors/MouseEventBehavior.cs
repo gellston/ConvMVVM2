@@ -1,5 +1,4 @@
-﻿using Microsoft.Xaml.Behaviors;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,17 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using ConvMVVM2.WPF.ViewModels;
+using ConvMVVM2.WPF.Behaviors.Base;
 
-namespace ConvMVVM2.WPF.Behaviors
+/* 'ConvMVVM2.WPF (net9.0-windows)' 프로젝트에서 병합되지 않은 변경 내용
+추가됨:
+using ConvMVVM2;
+using ConvMVVM2.WPF;
+using ConvMVVM2.WPF.Behaviors;
+using ConvMVVM2.WPF.Behaviors.Behaviors;
+*/
+
+namespace ConvMVVM2.WPF.Behaviors.Behaviors
 {
     public class MouseEventBehavior : Behavior<UIElement>
     {
@@ -59,21 +67,21 @@ namespace ConvMVVM2.WPF.Behaviors
         #region Event Handler
         private void MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            this.MouseViewModel?.RaiseWheel(e.GetPosition(this.AssociatedObject), e.Delta > 0);
+            MouseViewModel?.RaiseWheel(e.GetPosition(AssociatedObject), e.Delta > 0);
             e.Handled = true;
 
         }
 
         private void MouseLeave(object sender, MouseEventArgs e)
         {
-            this.MouseViewModel?.RaiseLeave(e.GetPosition(this.AssociatedObject));
+            MouseViewModel?.RaiseLeave(e.GetPosition(AssociatedObject));
             e.Handled = true;
 
         }
 
         private void MouseEnter(object sender, MouseEventArgs e)
         {
-            this.MouseViewModel?.RaiseEnter(e.GetPosition(this.AssociatedObject));
+            MouseViewModel?.RaiseEnter(e.GetPosition(AssociatedObject));
             e.Handled = true;
         }
 
@@ -81,21 +89,21 @@ namespace ConvMVVM2.WPF.Behaviors
         {
             if (IsCaptured)
             {
-                foreach (var btn in this.DragButton)
+                foreach (var btn in DragButton)
                 {
 
                     switch (btn)
                     {
                         case MouseButton.Left:
-                            this.MouseViewModel?.RaiseLeftDrag(e.GetPosition(this.AssociatedObject));
+                            MouseViewModel?.RaiseLeftDrag(e.GetPosition(AssociatedObject));
                             break;
 
                         case MouseButton.Right:
-                            this.MouseViewModel?.RaiseRightDrag(e.GetPosition(this.AssociatedObject));
+                            MouseViewModel?.RaiseRightDrag(e.GetPosition(AssociatedObject));
                             break;
 
                         case MouseButton.Middle:
-                            this.MouseViewModel?.RaiseMiddleDrag(e.GetPosition(this.AssociatedObject));
+                            MouseViewModel?.RaiseMiddleDrag(e.GetPosition(AssociatedObject));
                             break;
                     }
 
@@ -104,61 +112,61 @@ namespace ConvMVVM2.WPF.Behaviors
             }
             else
             {
-                this.MouseViewModel.RaiseMove(e.GetPosition(this.AssociatedObject));
+                MouseViewModel.RaiseMove(e.GetPosition(AssociatedObject));
                 e.Handled = true;
             }
         }
 
         private void MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (this.IsCaptured == false)
+            if (IsCaptured == false)
                 return;
 
-            if (this.DragButton.Contains(e.ChangedButton) && this.DragButton.Count == 1)
+            if (DragButton.Contains(e.ChangedButton) && DragButton.Count == 1)
             {
-                this.IsCaptured = false;
+                IsCaptured = false;
                 Mouse.Capture(null);
             }
-            this.DragButton.Remove(e.ChangedButton);
+            DragButton.Remove(e.ChangedButton);
 
 
             switch (e.ChangedButton)
             {
                 case MouseButton.Left:
-                    this.MouseViewModel?.RaiseLeftClick(e.GetPosition(this.AssociatedObject));
+                    MouseViewModel?.RaiseLeftClick(e.GetPosition(AssociatedObject));
                     break;
 
                 case MouseButton.Right:
-                    this.MouseViewModel?.RaiseRightClick(e.GetPosition(this.AssociatedObject));
+                    MouseViewModel?.RaiseRightClick(e.GetPosition(AssociatedObject));
                     break;
 
                 case MouseButton.Middle:
-                    this.MouseViewModel?.RaiseMiddleClick(e.GetPosition(this.AssociatedObject));
+                    MouseViewModel?.RaiseMiddleClick(e.GetPosition(AssociatedObject));
                     break;
             }
         }
 
         private void MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (this.IsCaptured == false)
+            if (IsCaptured == false)
             {
                 Mouse.Capture((IInputElement)sender);
-                this.IsCaptured = true;
+                IsCaptured = true;
             }
             DragButton.Add(e.ChangedButton);
 
             switch (e.ChangedButton)
             {
                 case MouseButton.Left:
-                    this.MouseViewModel?.RaiseLeftDown(e.GetPosition(this.AssociatedObject));
+                    MouseViewModel?.RaiseLeftDown(e.GetPosition(AssociatedObject));
                     break;
 
                 case MouseButton.Right:
-                    this.MouseViewModel?.RaiseRightDown(e.GetPosition(this.AssociatedObject));
+                    MouseViewModel?.RaiseRightDown(e.GetPosition(AssociatedObject));
                     break;
 
                 case MouseButton.Middle:
-                    this.MouseViewModel?.RaiseMiddleDown(e.GetPosition(this.AssociatedObject));
+                    MouseViewModel?.RaiseMiddleDown(e.GetPosition(AssociatedObject));
                     break;
 
             }
