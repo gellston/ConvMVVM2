@@ -19,7 +19,7 @@ using ConvMVVM2.WPF.Behaviors.Behaviors;
 
 namespace ConvMVVM2.WPF.Behaviors.Behaviors
 {
-    public class EventToCommand : Behavior<FrameworkElement>
+    public class EventToCommandBehavior : Behavior<FrameworkElement>
     {
 
         #region Private Property
@@ -27,10 +27,10 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
         #endregion
 
         #region Dependecy Property
-        public static readonly DependencyProperty EventNameProperty = DependencyProperty.Register("EventName", typeof(string), typeof(EventToCommand), new PropertyMetadata("", OnEventNameChanged));
-        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(EventToCommand), new PropertyMetadata(null));
-        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(object), typeof(EventToCommand), new PropertyMetadata(null));
-        public static readonly DependencyProperty InputConverterProperty = DependencyProperty.Register("Converter", typeof(IValueConverter), typeof(EventToCommand), new PropertyMetadata(null));
+        public static readonly DependencyProperty EventNameProperty = DependencyProperty.Register("EventName", typeof(string), typeof(EventToCommandBehavior), new PropertyMetadata("", OnEventNameChanged));
+        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(EventToCommandBehavior), new PropertyMetadata(null));
+        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(object), typeof(EventToCommandBehavior), new PropertyMetadata(null));
+        public static readonly DependencyProperty InputConverterProperty = DependencyProperty.Register("Converter", typeof(IValueConverter), typeof(EventToCommandBehavior), new PropertyMetadata(null));
         #endregion
 
 
@@ -85,7 +85,7 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
 
         private static void OnEventNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var behavior = (EventToCommand)d;
+            var behavior = (EventToCommandBehavior)d;
             if (behavior.AssociatedObject == null)
             {
                 return;
@@ -116,7 +116,7 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
                 throw new ArgumentException("Invalid event name : " + eventName);
             }
 
-            MethodInfo methodInfo = typeof(EventToCommand).GetTypeInfo().GetDeclaredMethod("OnEvent");
+            MethodInfo methodInfo = typeof(EventToCommandBehavior).GetTypeInfo().GetDeclaredMethod("OnEvent");
             eventHandler = methodInfo.CreateDelegate(eventInfo.EventHandlerType, this);
             eventInfo.AddEventHandler(AssociatedObject, eventHandler);
 
