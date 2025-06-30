@@ -18,7 +18,6 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
 
         protected override void OnAttached()
         {
-            base.OnAttached();
 
             CompositionTarget.Rendering -= CompositionTarget_Rendering;
             CompositionTarget.Rendering += CompositionTarget_Rendering;
@@ -29,8 +28,6 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
 
         protected override void OnDetaching()
         {
-            base.OnDetaching();
-
             CompositionTarget.Rendering -= CompositionTarget_Rendering;
         }
         #endregion

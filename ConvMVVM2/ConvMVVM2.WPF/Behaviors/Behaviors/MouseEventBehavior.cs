@@ -29,7 +29,6 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
         #region Protected Functions
         protected override void OnAttached()
         {
-            base.OnAttached();
 
             AssociatedObject.MouseDown += MouseDown;
             AssociatedObject.MouseUp += MouseUp;
@@ -43,7 +42,6 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
 
         protected override void OnDetaching()
         {
-            base.OnDetaching();
 
             AssociatedObject.MouseDown -= MouseDown;
             AssociatedObject.MouseUp -= MouseUp;

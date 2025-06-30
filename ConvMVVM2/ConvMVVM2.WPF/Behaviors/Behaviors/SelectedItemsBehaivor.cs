@@ -36,22 +36,19 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
 
         protected override void OnAttached()
         {
-            base.OnAttached();
-
             if (AssociatedObject != null)
             {
-                AssociatedObject.SelectionChanged += OnSelectionChanged;
 
                 if (AssociatedObject.SelectedItems != null)
                 {
                     SelectedItems = new ArrayList(AssociatedObject.SelectedItems);
                 }
+                AssociatedObject.SelectionChanged += OnSelectionChanged;
             }
         }
 
         protected override void OnDetaching()
         {
-            base.OnDetaching();
 
             if (AssociatedObject != null)
             {

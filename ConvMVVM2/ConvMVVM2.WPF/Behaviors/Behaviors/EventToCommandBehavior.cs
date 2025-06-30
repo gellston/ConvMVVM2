@@ -69,7 +69,6 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
         protected override void OnAttached()
         {
 
-            base.OnAttached();
             RegisterEvent(EventName);
 
         }
@@ -77,9 +76,7 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
 
         protected override void OnDetaching()
         {
-            base.OnDetaching();
             DeregisterEvent(EventName);
-
         }
 
 
