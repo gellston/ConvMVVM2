@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Markup;
 
 namespace ConvMVVM2.WPF.Behaviors.Base
 {
+    [ContentProperty(nameof(Items))]
     public class BehaviorCollection : Collection<object>
     {
         #region Public Property
