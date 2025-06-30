@@ -14,6 +14,13 @@ namespace ConvMVVM2.WPF.Behaviors.Base
         public abstract void Detach();
         #endregion
 
+        #region Protected Functions
+        protected override Freezable CreateInstanceCore()
+        {
+            throw new NotImplementedException($"{GetType().Name} must override CreateInstanceCore.");
+        }
+        #endregion
+
     }
 
     public abstract class Behavior<T> : BehaviorBase where T : DependencyObject
@@ -43,10 +50,7 @@ namespace ConvMVVM2.WPF.Behaviors.Base
         #region Protected Functions
         protected virtual void OnAttached() { }
         protected virtual void OnDetaching() { }
-        protected override Freezable CreateInstanceCore()
-        {
-            return (Freezable)Activator.CreateInstance(GetType());
-        }
+        
         #endregion
     }
 }
