@@ -11,5 +11,9 @@ namespace ConvMVVM2.WPF.Behaviors.Base
 {
     public class BehaviorCollection : FreezableCollection<BehaviorBase>
     {
+        protected override Freezable CreateInstanceCore()
+        {
+            return new BehaviorCollection();
+        }
     }
 }

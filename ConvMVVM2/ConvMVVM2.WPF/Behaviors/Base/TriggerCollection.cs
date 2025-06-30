@@ -9,5 +9,9 @@ namespace ConvMVVM2.WPF.Behaviors.Base
 {
     public class TriggerCollection : FreezableCollection<TriggerBase>
     {
+        protected override Freezable CreateInstanceCore()
+        {
+            return new TriggerCollection();
+        }
     }
 }
