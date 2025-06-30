@@ -9,8 +9,8 @@ using System.Windows.Markup;
 
 namespace ConvMVVM2.WPF.Behaviors.Base
 {
-    [ContentProperty(nameof(Items))]
-    public class BehaviorCollection : Collection<object>
+    
+    public class BehaviorCollection : FreezableCollection<BehaviorBase>
     {
         #region Public Property
         public DependencyObject AssociatedObject { get; private set; }
@@ -21,7 +21,7 @@ namespace ConvMVVM2.WPF.Behaviors.Base
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
-
+            
             foreach (var behavior in this)
             {
                 var method = behavior.GetType().GetMethod("Attach");

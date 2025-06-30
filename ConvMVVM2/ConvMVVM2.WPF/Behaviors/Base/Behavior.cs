@@ -7,22 +7,33 @@ using System.Windows;
 
 namespace ConvMVVM2.WPF.Behaviors.Base
 {
-    public abstract class Behavior<T> : DependencyObject where T : DependencyObject
+    public abstract class BehaviorBase : Freezable
+    {
+        #region Public Functions
+        public abstract void Attach(DependencyObject associatedObject);
+        public abstract void Detach();
+        #endregion
+
+    }
+
+    public abstract class Behavior<T> : BehaviorBase where T : DependencyObject
     {
         #region Public Property
         public T AssociatedObject { get; private set; }
         #endregion
 
-
         #region Public Functions
 
-        public void Attach(T associatedObject)
+        public override void Attach(DependencyObject associatedObject)
         {
-            AssociatedObject = associatedObject;
-            OnAttached();
+            if (associatedObject is T typed)
+            {
+                AssociatedObject = typed;
+                OnAttached();
+            }
         }
 
-        public void Detach()
+        public override void Detach()
         {
             OnDetaching();
             AssociatedObject = null;
@@ -30,9 +41,12 @@ namespace ConvMVVM2.WPF.Behaviors.Base
         #endregion
 
         #region Protected Functions
-
         protected virtual void OnAttached() { }
         protected virtual void OnDetaching() { }
+        protected override Freezable CreateInstanceCore()
+        {
+            return (Freezable)Activator.CreateInstance(GetType());
+        }
         #endregion
     }
 }
