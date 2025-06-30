@@ -20,22 +20,37 @@ namespace ConvMVVM2.WPF.MarkupExtensions
 
         public static BehaviorCollection GetBehaviors(DependencyObject element)
         {
-            var behaviors = (BehaviorCollection)element.GetValue(BehaviorsProperty);
-            if (behaviors == null)
+
+            if (element.GetValue(BehaviorsProperty) is BehaviorCollection collection)
             {
-                behaviors = new BehaviorCollection();
-                SetBehaviors(element, behaviors);
+                return collection;
             }
-            return behaviors;
+
+            collection = new BehaviorCollection();
+            SetBehaviors(element, collection);
+            return collection;
         }
 
         private static void OnBehaviorsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.OldValue is BehaviorCollection oldBehaviors)
-                oldBehaviors.Detach();
-
+            {
+                foreach (var behavior in oldBehaviors)
+                {
+                    behavior.Detach();
+                }
+                
+            }
+                
             if (e.NewValue is BehaviorCollection newBehaviors)
-                newBehaviors.Attach(d);
+            {
+                foreach (var behavior in newBehaviors)
+                {
+                    behavior.Attach(d);
+                }
+
+            }
+              
         }
 
 

@@ -7,7 +7,7 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition("https://github.com/gellston/ConvMVVM2", "ConvMVVM2.WPF.Behaviors.Base")]
 [assembly: XmlnsDefinition("https://github.com/gellston/ConvMVVM2", "ConvMVVM2.WPF.Behaviors.Behaviors")]
 [assembly: XmlnsDefinition("https://github.com/gellston/ConvMVVM2", "ConvMVVM2.WPF.Behaviors.Triggers")]
-[assembly: XmlnsDefinition("https://github.com/gellston/ConvMVVM2", "ConvMVVM2.WPF.Behaviors.Base")]
+[assembly: XmlnsDefinition("https://github.com/gellston/ConvMVVM2", "ConvMVVM2.WPF.Behaviors.Actions")]
 [assembly: XmlnsDefinition("https://github.com/gellston/ConvMVVM2", "ConvMVVM2.WPF.Controls")]
 [assembly: XmlnsDefinition("https://github.com/gellston/ConvMVVM2", "ConvMVVM2.WPF.MarkupExtensions")]
 [assembly: XmlnsDefinition("https://github.com/gellston/ConvMVVM2", "ConvMVVM2.WPF.Converters")]
