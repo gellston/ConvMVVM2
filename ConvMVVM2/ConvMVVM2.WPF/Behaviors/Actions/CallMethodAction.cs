@@ -11,7 +11,7 @@ using TriggerAction = ConvMVVM2.WPF.Behaviors.Base.TriggerAction;
 
 namespace ConvMVVM2.WPF.Behaviors.Actions
 {
-    public class CallMethodAction : TriggerAction
+    public class CallMethodAction : TriggerAction<DependencyObject>
     {
         #region Public Property
         public string MethodName { get; set; }
@@ -29,7 +29,7 @@ namespace ConvMVVM2.WPF.Behaviors.Actions
 
         #region Public Function
 
-        public override void Invoke(object parameter)
+        protected override void Invoke(object parameter)
         {
             if (string.IsNullOrEmpty(MethodName))
                 return;
@@ -47,12 +47,6 @@ namespace ConvMVVM2.WPF.Behaviors.Actions
         }
         #endregion
 
-        #region Protected Function
 
-        protected override Freezable CreateInstanceCore()
-        {
-            return new CallMethodAction();
-        }
-        #endregion
     }
 }

@@ -110,7 +110,7 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
             }
             else
             {
-                MouseViewModel.RaiseMove(e.GetPosition(AssociatedObject));
+                MouseViewModel?.RaiseMove(e.GetPosition(AssociatedObject));
                 e.Handled = true;
             }
         }

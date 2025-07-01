@@ -34,33 +34,48 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
             set => SetValue(SelectedItemsProperty, value);
         }
 
+
         protected override void OnAttached()
         {
+            base.OnAttached();
+
             if (AssociatedObject != null)
             {
-
-                if (AssociatedObject.SelectedItems != null)
-                {
-                    SelectedItems = new ArrayList(AssociatedObject.SelectedItems);
-                }
                 AssociatedObject.SelectionChanged += OnSelectionChanged;
+                UpdateSelectedItems(); // 초기 반영
             }
         }
 
         protected override void OnDetaching()
         {
-
             if (AssociatedObject != null)
             {
                 AssociatedObject.SelectionChanged -= OnSelectionChanged;
             }
+
+            base.OnDetaching();
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (AssociatedObject != null)
+
+            UpdateSelectedItems();
+        }
+
+        private void UpdateSelectedItems()
+        {
+            if (AssociatedObject == null)
+                return;
+
+            try
             {
-                SelectedItems = new ArrayList(AssociatedObject.SelectedItems);
+
+                // 항상 새로운 ArrayList로 대체
+                SetValue(SelectedItemsProperty, new ArrayList(AssociatedObject.SelectedItems));
+            }
+            finally
+            {
+
             }
         }
     }

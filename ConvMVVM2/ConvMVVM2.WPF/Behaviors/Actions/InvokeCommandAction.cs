@@ -11,7 +11,7 @@ using TriggerAction = ConvMVVM2.WPF.Behaviors.Base.TriggerAction;
 
 namespace ConvMVVM2.WPF.Behaviors.Actions
 {
-    public class InvokeCommandAction : TriggerAction
+    public class InvokeCommandAction : TriggerAction<DependencyObject>
     {
         #region Dependency Property
         public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(nameof(Command),typeof(ICommand),typeof(InvokeCommandAction),new PropertyMetadata(null));
@@ -32,7 +32,7 @@ namespace ConvMVVM2.WPF.Behaviors.Actions
         #endregion
 
         #region Public Functions
-        public override void Invoke(object parameter)
+        protected override void Invoke(object parameter)
         {
             var command = Command;
             var param = CommandParameter ?? parameter;
@@ -44,12 +44,5 @@ namespace ConvMVVM2.WPF.Behaviors.Actions
         }
         #endregion
 
-        #region Protected Functions
-
-        protected override Freezable CreateInstanceCore()
-        {
-            return new InvokeCommandAction();
-        }
-        #endregion
     }
 }

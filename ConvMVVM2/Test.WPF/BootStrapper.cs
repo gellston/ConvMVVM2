@@ -15,10 +15,7 @@ namespace Test.WPF
 
         protected override void RegisterServices(IServiceCollection container)
         {
-            container.AddSingleton<AView>();
-            container.AddSingleton<BView>();
-            container.AddSingleton<AViewModel>();
-            container.AddSingleton<BViewModel>();
+
             container.AddInstance<MainWindowView>();
             container.AddInstance<MainWindowViewModel>();
         }
@@ -36,8 +33,7 @@ namespace Test.WPF
 
             this.AddModuleCurrentPath();
 
-            // 모듈 서치할 경로 절대경로 추가 
-            this.AddModulePath("C:\\github\\ConvMVVM2\\ConvMVVM2\\Test.ModuleA\\bin\\Debug\\net8.0-windows");
+
 
             // 프로그램 실행 경로기준 모듈 서치할 경로 상대경로 추가
             //this.AddModuleRelativePath("Modules");
@@ -49,7 +45,7 @@ namespace Test.WPF
 
         protected override void ViewModelMapping(IViewModelMapper viewModelMapper)
         {
-            viewModelMapper.Register<AView, AViewModel>();
+
 
         }
 

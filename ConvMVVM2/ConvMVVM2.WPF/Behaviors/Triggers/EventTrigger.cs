@@ -11,47 +11,53 @@ namespace ConvMVVM2.WPF.Behaviors.Triggers
 {
     public class EventTrigger : TriggerBase<DependencyObject>
     {
-        #region Public Property
+        private Delegate eventHandler;
+        private EventInfo eventInfo;
+
+        /// <summary>
+        /// 이벤트 이름을 지정합니다 (예: "Loaded", "Click" 등)
+        /// </summary>
         public string EventName { get; set; }
-        #endregion
-
-        #region Private Property
-        private EventInfo _eventInfo;
-        private Delegate _handler;
-        #endregion
-
-        #region Protected Functions
 
         protected override void OnAttached()
         {
+            base.OnAttached();
+
             if (AssociatedObject == null || string.IsNullOrEmpty(EventName))
                 return;
 
+            // UIElement 또는 FrameworkElement만 허용
             var type = AssociatedObject.GetType();
-            _eventInfo = type.GetEvent(EventName, BindingFlags.Instance | BindingFlags.Public);
-            if (_eventInfo == null)
-                throw new InvalidOperationException($"Event '{EventName}' not found on {type.Name}.");
+            eventInfo = type.GetEvent(EventName, BindingFlags.Public | BindingFlags.Instance);
 
-            var methodInfo = typeof(EventTrigger).GetMethod(nameof(OnEventRaised), BindingFlags.Instance | BindingFlags.NonPublic);
-            _handler = Delegate.CreateDelegate(_eventInfo.EventHandlerType, this, methodInfo);
-            _eventInfo.AddEventHandler(AssociatedObject, _handler);
+            if (eventInfo == null)
+                throw new InvalidOperationException($"이벤트 '{EventName}' 를 '{type.Name}' 에서 찾을 수 없습니다.");
+
+            // Delegate 생성
+            var handlerType = eventInfo.EventHandlerType;
+            var methodInfo = typeof(EventTrigger).GetMethod(nameof(OnEventRaised), BindingFlags.NonPublic | BindingFlags.Instance);
+
+            eventHandler = Delegate.CreateDelegate(handlerType, this, methodInfo);
+            eventInfo.AddEventHandler(AssociatedObject, eventHandler);
         }
 
         protected override void OnDetaching()
         {
-            if (_eventInfo != null && _handler != null && AssociatedObject != null)
+            base.OnDetaching();
+
+            if (eventInfo != null && eventHandler != null)
             {
-                _eventInfo.RemoveEventHandler(AssociatedObject, _handler);
+                eventInfo.RemoveEventHandler(AssociatedObject, eventHandler);
             }
+
+            eventInfo = null;
+            eventHandler = null;
         }
-        #endregion
 
-        #region Private Functions
-
+        // 이 메서드는 모든 이벤트에서 호출될 수 있도록 설계됨 (EventArgs 무시 가능)
         private void OnEventRaised(object sender, EventArgs e)
         {
             InvokeActions(e);
         }
-        #endregion
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ConvMVVM2.Core.Attributes;
 using ConvMVVM2.Core.MVVM;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,6 +34,9 @@ namespace Test.WPF.ViewModel
 
         public string Test3 { get; set; } = "";
 
+
+        [Property]
+        private IList _ItemsCollection = null;
         #endregion
 
 
@@ -43,7 +47,7 @@ namespace Test.WPF.ViewModel
             try
             {
 
-                this.regionManager.Navigate("AView", "AView");
+
 
             }
             catch (Exception ex)
@@ -68,6 +72,14 @@ namespace Test.WPF.ViewModel
             {
                 System.Diagnostics.Debug.WriteLine(ex);
             }
+        }
+        #endregion
+
+        #region Public Functions
+        public void SelectionChangedCommand(object args)
+        {
+            System.Diagnostics.Debug.WriteLine("test");
+
         }
         #endregion
     }

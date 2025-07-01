@@ -10,7 +10,7 @@ using TriggerAction = ConvMVVM2.WPF.Behaviors.Base.TriggerAction;
 
 namespace ConvMVVM2.WPF.Behaviors.Actions
 {
-    public class GoToStateAction : TriggerAction
+    public class GoToStateAction : TriggerAction<DependencyObject>
     {
         #region Dependency Property
         public static readonly DependencyProperty StateNameProperty = DependencyProperty.Register(nameof(StateName), typeof(string), typeof(GoToStateAction), new PropertyMetadata(null));
@@ -32,7 +32,7 @@ namespace ConvMVVM2.WPF.Behaviors.Actions
 
         #region Public Functions
 
-        public override void Invoke(object parameter)
+        protected override void Invoke(object parameter)
         {
             if (string.IsNullOrWhiteSpace(StateName) || AssociatedObject == null)
                 return;
@@ -67,11 +67,6 @@ namespace ConvMVVM2.WPF.Behaviors.Actions
         }
         #endregion
 
-        #region Protected Functions
-        protected override Freezable CreateInstanceCore()
-        {
-            return new GoToStateAction();
-        }
-        #endregion
+
     }
 }

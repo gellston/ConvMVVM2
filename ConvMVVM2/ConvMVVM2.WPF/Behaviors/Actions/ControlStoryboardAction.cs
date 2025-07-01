@@ -20,7 +20,7 @@ namespace ConvMVVM2.WPF.Behaviors.Actions
     }
 
 
-    public class ControlStoryboardAction : TriggerAction
+    public class ControlStoryboardAction : TriggerAction<DependencyObject>
     {
         #region Dependency Property
         public static readonly DependencyProperty StoryboardProperty = DependencyProperty.Register(nameof(Storyboard), typeof(Storyboard), typeof(ControlStoryboardAction));
@@ -50,7 +50,7 @@ namespace ConvMVVM2.WPF.Behaviors.Actions
 
         #region Public Function
 
-        public override void Invoke(object parameter)
+        protected override void Invoke(object parameter)
         {
             if (Storyboard == null || AssociatedObject == null)
                 return;
@@ -88,12 +88,5 @@ namespace ConvMVVM2.WPF.Behaviors.Actions
         }
         #endregion
 
-        #region Protected Function
-
-        protected override Freezable CreateInstanceCore()
-        {
-            return new ControlStoryboardAction();
-        }
-        #endregion
     }
 }

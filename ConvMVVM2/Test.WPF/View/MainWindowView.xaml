@@ -18,8 +18,24 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
-        <convMVVM2:WPFRegion RegionName="AView"
-                             Grid.Row="0"></convMVVM2:WPFRegion>
+
+
+        <ListView>
+            <convMVVM2:Interaction.Behaviors>
+                <convMVVM2:SelectedItemsBehavior SelectedItems="{Binding ItemsCollection}"></convMVVM2:SelectedItemsBehavior>
+            </convMVVM2:Interaction.Behaviors>
+            
+            <convMVVM2:Interaction.Triggers>
+                <convMVVM2:EventTrigger EventName="SelectionChanged">
+                    <convMVVM2:CallMethodAction TargetObject="{Binding}" MethodName="SelectionChangedCommand"></convMVVM2:CallMethodAction>
+                </convMVVM2:EventTrigger>
+            </convMVVM2:Interaction.Triggers>
+
+            <ListViewItem>test</ListViewItem>
+            <ListViewItem>test</ListViewItem>
+            <ListViewItem>test</ListViewItem>
+        </ListView>
+        
         <Button Grid.Row="1"
                 Command="{Binding BViewCommand}"></Button>
 

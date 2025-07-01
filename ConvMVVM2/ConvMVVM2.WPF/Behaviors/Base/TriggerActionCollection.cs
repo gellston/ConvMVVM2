@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Markup;
 
 namespace ConvMVVM2.WPF.Behaviors.Base
 {
-
-    public sealed class BehaviorCollection : AttachableCollection<Behavior>
+    public class TriggerActionCollection : AttachableCollection<TriggerAction>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BehaviorCollection"/> class.
+        /// Initializes a new instance of the <see cref="TriggerActionCollection"/> class.
         /// </summary>
         /// <remarks>Internal, because this should not be inherited outside this assembly.</remarks>
-        internal BehaviorCollection()
+        internal TriggerActionCollection()
         {
         }
 
@@ -26,9 +23,10 @@ namespace ConvMVVM2.WPF.Behaviors.Base
         /// </summary>
         protected override void OnAttached()
         {
-            foreach (Behavior behavior in this)
+            foreach (TriggerAction action in this)
             {
-                behavior.Attach(this.AssociatedObject);
+                Debug.Assert(action.IsHosted, "Action must be hosted if it is in the collection.");
+                action.Attach(this.AssociatedObject);
             }
         }
 
@@ -37,9 +35,10 @@ namespace ConvMVVM2.WPF.Behaviors.Base
         /// </summary>
         protected override void OnDetaching()
         {
-            foreach (Behavior behavior in this)
+            foreach (TriggerAction action in this)
             {
-                behavior.Detach();
+                Debug.Assert(action.IsHosted, "Action must be hosted if it is in the collection.");
+                action.Detach();
             }
         }
 
@@ -47,33 +46,40 @@ namespace ConvMVVM2.WPF.Behaviors.Base
         /// Called when a new item is added to the collection.
         /// </summary>
         /// <param name="item">The new item.</param>
-        internal override void ItemAdded(Behavior item)
+        internal override void ItemAdded(TriggerAction item)
         {
+            if (item.IsHosted)
+            {
+                throw new InvalidOperationException("Its hosted action");
+            }
             if (this.AssociatedObject != null)
             {
                 item.Attach(this.AssociatedObject);
             }
+            item.IsHosted = true;
         }
 
         /// <summary>
         /// Called when an item is removed from the collection.
         /// </summary>
         /// <param name="item">The removed item.</param>
-        internal override void ItemRemoved(Behavior item)
+        internal override void ItemRemoved(TriggerAction item)
         {
+            Debug.Assert(item.IsHosted, "Item should hosted if it is being removed from a TriggerCollection.");
             if (((IAttachedObject)item).AssociatedObject != null)
             {
                 item.Detach();
             }
+            item.IsHosted = false;
         }
 
         /// <summary>
-        /// Creates a new instance of the BehaviorCollection.
+        /// Creates a new instance of the TriggerActionCollection.
         /// </summary>
         /// <returns>The new instance.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new BehaviorCollection();
+            return new TriggerActionCollection();
         }
     }
 }

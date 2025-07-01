@@ -10,7 +10,7 @@ using TriggerAction = ConvMVVM2.WPF.Behaviors.Base.TriggerAction;
 
 namespace ConvMVVM2.WPF.Behaviors.Actions
 {
-    public class ChangePropertyAction : TriggerAction
+    public class ChangePropertyAction : TriggerAction<DependencyObject>
     {
         #region Dependency Property
         public static readonly DependencyProperty PropertyNameProperty =  DependencyProperty.Register(nameof(PropertyName), typeof(string), typeof(ChangePropertyAction), new PropertyMetadata(null));
@@ -31,7 +31,7 @@ namespace ConvMVVM2.WPF.Behaviors.Actions
         #endregion
 
         #region Public Functions
-        public override void Invoke(object parameter)
+        protected override void Invoke(object parameter)
         {
             if (string.IsNullOrWhiteSpace(PropertyName) || AssociatedObject == null)
                 return;
@@ -54,12 +54,5 @@ namespace ConvMVVM2.WPF.Behaviors.Actions
         }
         #endregion
 
-        #region Protected Functions
-
-        protected override Freezable CreateInstanceCore()
-        {
-            return new ChangePropertyAction();
-        }
-        #endregion
     }
 }
