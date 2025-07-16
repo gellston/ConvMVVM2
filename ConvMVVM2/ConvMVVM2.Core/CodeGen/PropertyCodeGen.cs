@@ -268,7 +268,7 @@ namespace ConvMVVM2.Core.CodeGen
                                     get => {_fieldName};
                                     set{
 
-                                        if (!EqualityComparer<{typeName}?>.Default.Equals({_fieldName}, value))
+                                        if (!EqualityComparer<{typeName}>.Default.Equals({_fieldName}, value))
                                         {
                                             {typeName} oldValue = {_fieldName};
                                             On{fieldName}Changing(value);
