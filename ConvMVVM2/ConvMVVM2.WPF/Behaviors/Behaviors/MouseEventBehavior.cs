@@ -81,7 +81,6 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
         private void PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             MouseViewModel?.RaisePreviewWheel(e.GetPosition(AssociatedObject), e.Delta > 0);
-            e.Handled = true;
 
         }
 
@@ -106,14 +105,11 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
                             MouseViewModel?.RaisePreviewMiddleDrag(e.GetPosition(AssociatedObject));
                             break;
                     }
-
-                    e.Handled = true;
                 }
             }
             else
             {
                 MouseViewModel?.RaisePreviewMove(e.GetPosition(AssociatedObject));
-                e.Handled = true;
             }
         }
 
@@ -170,8 +166,6 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
                     break;
 
             }
-            e.Handled = true;
-
         }
 
         #endregion
