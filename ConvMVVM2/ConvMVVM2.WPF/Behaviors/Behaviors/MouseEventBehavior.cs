@@ -22,8 +22,10 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
     {
 
         #region Private Property
-        private bool IsCaptured = false;
-        private readonly HashSet<MouseButton> DragButton = new HashSet<MouseButton>();
+        private bool IsBubbleCaptured = false;
+        private bool IsTunnelCaptured = false;
+        private readonly HashSet<MouseButton> BubblingDragButton = new HashSet<MouseButton>();
+        private readonly HashSet<MouseButton> TunnlingDragButton = new HashSet<MouseButton>();
         #endregion
 
         #region Protected Functions
@@ -37,6 +39,13 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
             AssociatedObject.MouseEnter += MouseEnter;
             AssociatedObject.MouseLeave += MouseLeave;
             AssociatedObject.MouseWheel += MouseWheel;
+
+
+
+            AssociatedObject.PreviewMouseDown += PreviewMouseDown;
+            AssociatedObject.PreviewMouseUp += PreviewMouseUp;
+            AssociatedObject.PreviewMouseMove += PreviewMouseMove;
+            AssociatedObject.PreviewMouseWheel += PreviewMouseWheel;
         }
 
 
@@ -50,6 +59,12 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
             AssociatedObject.MouseEnter -= MouseEnter;
             AssociatedObject.MouseLeave -= MouseLeave;
             AssociatedObject.MouseWheel -= MouseWheel;
+
+
+            AssociatedObject.PreviewMouseDown -= PreviewMouseDown;
+            AssociatedObject.PreviewMouseUp -= PreviewMouseUp;
+            AssociatedObject.PreviewMouseMove -= PreviewMouseMove;
+            AssociatedObject.PreviewMouseWheel -= PreviewMouseWheel;
         }
         #endregion
 
@@ -62,7 +77,106 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
         }
         #endregion
 
-        #region Event Handler
+        #region Event Handler (Tunneling Event)
+        private void PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            MouseViewModel?.RaisePreviewWheel(e.GetPosition(AssociatedObject), e.Delta > 0);
+            e.Handled = true;
+
+        }
+
+        private void PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (IsTunnelCaptured)
+            {
+                foreach (var btn in TunnlingDragButton)
+                {
+
+                    switch (btn)
+                    {
+                        case MouseButton.Left:
+                            MouseViewModel?.RaisePreviewLeftDrag(e.GetPosition(AssociatedObject));
+                            break;
+
+                        case MouseButton.Right:
+                            MouseViewModel?.RaisePreviewRightDrag(e.GetPosition(AssociatedObject));
+                            break;
+
+                        case MouseButton.Middle:
+                            MouseViewModel?.RaisePreviewMiddleDrag(e.GetPosition(AssociatedObject));
+                            break;
+                    }
+
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                MouseViewModel?.RaisePreviewMove(e.GetPosition(AssociatedObject));
+                e.Handled = true;
+            }
+        }
+
+        private void PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (IsTunnelCaptured == false)
+                return;
+
+            if (TunnlingDragButton.Contains(e.ChangedButton) && TunnlingDragButton.Count == 1)
+            {
+                IsTunnelCaptured = false;
+                Mouse.Capture(null);
+            }
+            TunnlingDragButton.Remove(e.ChangedButton);
+
+
+            switch (e.ChangedButton)
+            {
+                case MouseButton.Left:
+                    MouseViewModel?.RaisePreviewLeftClick(e.GetPosition(AssociatedObject));
+                    break;
+
+                case MouseButton.Right:
+                    MouseViewModel?.RaisePreviewRightClick(e.GetPosition(AssociatedObject));
+                    break;
+
+                case MouseButton.Middle:
+                    MouseViewModel?.RaisePreviewMiddleClick(e.GetPosition(AssociatedObject));
+                    break;
+            }
+        }
+
+        private void PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (IsTunnelCaptured == false)
+            {
+                Mouse.Capture((IInputElement)sender);
+                IsTunnelCaptured = true;
+            }
+            TunnlingDragButton.Add(e.ChangedButton);
+
+            switch (e.ChangedButton)
+            {
+                case MouseButton.Left:
+                    MouseViewModel?.RaisePreviewLeftDown(e.GetPosition(AssociatedObject));
+                    break;
+
+                case MouseButton.Right:
+                    MouseViewModel?.RaisePreviewRightDown(e.GetPosition(AssociatedObject));
+                    break;
+
+                case MouseButton.Middle:
+                    MouseViewModel?.RaisePreviewMiddleDown(e.GetPosition(AssociatedObject));
+                    break;
+
+            }
+            e.Handled = true;
+
+        }
+
+        #endregion
+
+        #region Event Handler (Bublling Event)
         private void MouseWheel(object sender, MouseWheelEventArgs e)
         {
             MouseViewModel?.RaiseWheel(e.GetPosition(AssociatedObject), e.Delta > 0);
@@ -85,9 +199,9 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
 
         private void MouseMove(object sender, MouseEventArgs e)
         {
-            if (IsCaptured)
+            if (IsBubbleCaptured)
             {
-                foreach (var btn in DragButton)
+                foreach (var btn in BubblingDragButton)
                 {
 
                     switch (btn)
@@ -117,15 +231,15 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
 
         private void MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (IsCaptured == false)
+            if (IsBubbleCaptured == false)
                 return;
 
-            if (DragButton.Contains(e.ChangedButton) && DragButton.Count == 1)
+            if (BubblingDragButton.Contains(e.ChangedButton) && BubblingDragButton.Count == 1)
             {
-                IsCaptured = false;
+                IsBubbleCaptured = false;
                 Mouse.Capture(null);
             }
-            DragButton.Remove(e.ChangedButton);
+            BubblingDragButton.Remove(e.ChangedButton);
 
 
             switch (e.ChangedButton)
@@ -146,12 +260,12 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
 
         private void MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (IsCaptured == false)
+            if (IsBubbleCaptured == false)
             {
                 Mouse.Capture((IInputElement)sender);
-                IsCaptured = true;
+                IsBubbleCaptured = true;
             }
-            DragButton.Add(e.ChangedButton);
+            BubblingDragButton.Add(e.ChangedButton);
 
             switch (e.ChangedButton)
             {

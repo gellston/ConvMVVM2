@@ -10,7 +10,7 @@ namespace ConvMVVM2.WPF.ViewModels
     public class MouseViewModel
     {
 
-        #region Event 
+        #region Bubbling Event 
         public event Action<Point> LeftDownEvent = null;
         public event Action<Point> LeftClickEvent = null;
         public event Action<Point> LeftDragEvent = null;
@@ -30,7 +30,43 @@ namespace ConvMVVM2.WPF.ViewModels
         public event Action<Point, bool> WheelEvent = null;
         #endregion
 
-        #region Public Functions
+        #region Tunneling Event
+        public event Action<Point> PreviewLeftDownEvent = null;
+        public event Action<Point> PreviewLeftClickEvent = null;
+        public event Action<Point> PreviewLeftDragEvent = null;
+
+        public event Action<Point> PreviewRightDownEvent = null;
+        public event Action<Point> PreviewRightClickEvent = null;
+        public event Action<Point> PreviewRightDragEvent = null;
+
+        public event Action<Point> PreviewMiddleDownEvent = null;
+        public event Action<Point> PreviewMiddleClickEvent = null;
+        public event Action<Point> PreviewMiddleDragEvent = null;
+
+        public event Action<Point> PreviewMoveEvent = null;
+
+        public event Action<Point, bool> PreviewWheelEvent = null;
+        #endregion
+
+        #region Public Functions (Tunneling Event)
+        public void RaisePreviewLeftDown(Point pt) => this.PreviewLeftDownEvent?.Invoke(pt);
+        public void RaisePreviewLeftClick(Point pt) => this.PreviewLeftClickEvent?.Invoke(pt);
+        public void RaisePreviewLeftDrag(Point pt) => this.PreviewLeftDragEvent?.Invoke(pt);
+
+        public void RaisePreviewRightDown(Point pt) => this.PreviewRightDownEvent?.Invoke(pt);
+        public void RaisePreviewRightClick(Point pt) => this.PreviewRightClickEvent?.Invoke(pt);
+        public void RaisePreviewRightDrag(Point pt) => this.PreviewRightDragEvent?.Invoke(pt);
+
+        public void RaisePreviewMiddleDown(Point pt) => this.PreviewMiddleDownEvent?.Invoke(pt);
+        public void RaisePreviewMiddleClick(Point pt) => this.PreviewMiddleClickEvent?.Invoke(pt);
+        public void RaisePreviewMiddleDrag(Point pt) => this.PreviewMiddleDragEvent?.Invoke(pt);
+
+        public void RaisePreviewMove(Point pt) => this.PreviewMoveEvent?.Invoke(pt);
+
+        public void RaisePreviewWheel(Point pt, bool isUp) => this.PreviewWheelEvent?.Invoke(pt, isUp);
+        #endregion
+
+        #region Public Functions (Bubbling Event)
         public void RaiseLeftDown(Point pt) => this.LeftDownEvent?.Invoke(pt);
         public void RaiseLeftClick(Point pt) => this.LeftClickEvent?.Invoke(pt);
         public void RaiseLeftDrag(Point pt) => this.LeftDragEvent?.Invoke(pt);
