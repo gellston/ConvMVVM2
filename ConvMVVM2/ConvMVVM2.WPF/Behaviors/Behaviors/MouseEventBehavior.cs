@@ -46,6 +46,7 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
             AssociatedObject.PreviewMouseUp += PreviewMouseUp;
             AssociatedObject.PreviewMouseMove += PreviewMouseMove;
             AssociatedObject.PreviewMouseWheel += PreviewMouseWheel;
+
         }
 
 
@@ -144,7 +145,7 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
 
         private void PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (IsTunnelCaptured == false)
+            if (IsTunnelCaptured == false && this.AssociatedObject == e.OriginalSource)
             {
                 Mouse.Capture((IInputElement)sender);
                 IsTunnelCaptured = true;
