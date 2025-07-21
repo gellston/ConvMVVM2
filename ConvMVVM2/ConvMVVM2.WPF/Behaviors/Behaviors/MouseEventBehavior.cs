@@ -175,21 +175,21 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
         private void MouseWheel(object sender, MouseWheelEventArgs e)
         {
             MouseViewModel?.RaiseWheel(e.GetPosition(AssociatedObject), e.Delta > 0);
-            e.Handled = true;
+            ///e.Handled = true;
 
         }
 
         private void MouseLeave(object sender, MouseEventArgs e)
         {
             MouseViewModel?.RaiseLeave(e.GetPosition(AssociatedObject));
-            e.Handled = true;
+            ///e.Handled = true;
 
         }
 
         private void MouseEnter(object sender, MouseEventArgs e)
         {
             MouseViewModel?.RaiseEnter(e.GetPosition(AssociatedObject));
-            e.Handled = true;
+            ///e.Handled = true;
         }
 
         private void MouseMove(object sender, MouseEventArgs e)
@@ -214,13 +214,13 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
                             break;
                     }
 
-                    e.Handled = true;
+                    ///e.Handled = true;
                 }
             }
             else
             {
                 MouseViewModel?.RaiseMove(e.GetPosition(AssociatedObject));
-                e.Handled = true;
+                ///e.Handled = true;
             }
         }
 
@@ -251,7 +251,7 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
                     MouseViewModel?.RaiseMiddleClick(e.GetPosition(AssociatedObject));
                     break;
             }
-            e.Handled = true;
+            ///e.Handled = true;
         }
 
         private void MouseDown(object sender, MouseButtonEventArgs e)
@@ -278,7 +278,7 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
                     break;
 
             }
-            e.Handled = true;
+            ///e.Handled = true;
 
         }
 
