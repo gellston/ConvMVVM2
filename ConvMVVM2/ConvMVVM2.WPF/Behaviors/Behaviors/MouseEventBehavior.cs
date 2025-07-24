@@ -130,14 +130,17 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
             switch (e.ChangedButton)
             {
                 case MouseButton.Left:
+                    MouseViewModel?.RaisePreviewLeftUp(e.GetPosition(AssociatedObject));    
                     MouseViewModel?.RaisePreviewLeftClick(e.GetPosition(AssociatedObject));
                     break;
 
                 case MouseButton.Right:
+                    MouseViewModel?.RaisePreviewRightUp(e.GetPosition (AssociatedObject));
                     MouseViewModel?.RaisePreviewRightClick(e.GetPosition(AssociatedObject));
                     break;
 
                 case MouseButton.Middle:
+                    MouseViewModel?.RaisePreviewMiddleUp(e.GetPosition(AssociatedObject));
                     MouseViewModel?.RaisePreviewMiddleClick(e.GetPosition(AssociatedObject));
                     break;
             }
@@ -240,14 +243,17 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
             switch (e.ChangedButton)
             {
                 case MouseButton.Left:
+                    MouseViewModel?.RaiseLeftUp(e.GetPosition(AssociatedObject));
                     MouseViewModel?.RaiseLeftClick(e.GetPosition(AssociatedObject));
                     break;
 
                 case MouseButton.Right:
+                    MouseViewModel?.RaiseRightUp(e.GetPosition(AssociatedObject));
                     MouseViewModel?.RaiseRightClick(e.GetPosition(AssociatedObject));
                     break;
 
                 case MouseButton.Middle:
+                    MouseViewModel?.RaiseMiddleUp(e.GetPosition(AssociatedObject));
                     MouseViewModel?.RaiseMiddleClick(e.GetPosition(AssociatedObject));
                     break;
             }

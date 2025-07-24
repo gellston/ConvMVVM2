@@ -23,9 +23,6 @@ namespace ConvMVVM2.WPF.ViewModels
 
         #endregion
 
-        #region Event
-        //public event Action<Matrix> UpdateTransform;
-        #endregion
 
         #region Public Property
         public double MaxZoom
