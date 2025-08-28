@@ -125,6 +125,11 @@ namespace ConvMVVM2.WPF.Services
                 {
                     throw new InvalidOperationException("Invalid window type");
                 }
+
+
+
+
+
                 window.Width = width;
                 window.Height = height;
                 window.ResizeMode = (System.Windows.ResizeMode)resizeMode;
@@ -161,11 +166,17 @@ namespace ConvMVVM2.WPF.Services
                     throw new InvalidOperationException("Invalid window type");
                 }
 
+                Window active = Application.Current.Windows
+                                           .OfType<Window>()
+                                           .FirstOrDefault(w => w.IsActive);
+
+
                 window.Width = width;
                 window.Height = height;
                 window.ResizeMode = (System.Windows.ResizeMode)resizeMode;
-                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.WindowStartupLocation = active == null ? WindowStartupLocation.CenterScreen : WindowStartupLocation.CenterOwner;
                 window.Title = title;
+                window.Owner = active;
 
 
                 ResultTYPE dialogResult = default;
@@ -211,11 +222,17 @@ namespace ConvMVVM2.WPF.Services
 
                 var window = new Window();
 
+                Window active = Application.Current.Windows
+                                           .OfType<Window>()
+                                           .FirstOrDefault(w => w.IsActive);
+
+
                 window.Width = width;
                 window.Height = height;
                 window.ResizeMode = (System.Windows.ResizeMode)resizeMode;
-                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.WindowStartupLocation = active == null ? WindowStartupLocation.CenterScreen : WindowStartupLocation.CenterOwner;
                 window.Title = title;
+                window.Owner = active;
 
                 ResultTYPE dialogResult = default;
                 Action<ResultTYPE> closeEventHandler = (arg) =>
@@ -272,11 +289,17 @@ namespace ConvMVVM2.WPF.Services
                     throw new InvalidOperationException("Invalid window type");
                 }
 
+                Window active = Application.Current.Windows
+                                           .OfType<Window>()
+                                           .FirstOrDefault(w => w.IsActive);
+
+
                 window.Width = width;
                 window.Height = height;
                 window.ResizeMode = (System.Windows.ResizeMode)resizeMode;
-                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.WindowStartupLocation = active == null ? WindowStartupLocation.CenterScreen : WindowStartupLocation.CenterOwner;
                 window.Title = title;
+                window.Owner = active;
 
 
                 ResultTYPE dialogResult = default;
@@ -327,11 +350,17 @@ namespace ConvMVVM2.WPF.Services
 
                 var window = new Window();
 
+                Window active = Application.Current.Windows
+                                           .OfType<Window>()
+                                           .FirstOrDefault(w => w.IsActive);
+
+
                 window.Width = width;
                 window.Height = height;
                 window.ResizeMode = (System.Windows.ResizeMode)resizeMode;
-                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.WindowStartupLocation = active == null ? WindowStartupLocation.CenterScreen : WindowStartupLocation.CenterOwner;
                 window.Title = title;
+                window.Owner = active;
 
                 ResultTYPE dialogResult = default;
                 Action<ResultTYPE> closeEventHandler = (arg) =>

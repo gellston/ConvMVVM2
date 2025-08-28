@@ -3,7 +3,7 @@
   <PropertyGroup>
 	<TargetFrameworks>net7.0-windows;net8.0-windows;net48;net481;net6.0-windows;net9.0-windows</TargetFrameworks>
     <UseWPF>true</UseWPF>
-    <Version>1.21.10.19</Version>
+    <Version>1.21.10.20</Version>
     <PackageIcon>convergence.png</PackageIcon>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Platforms>AnyCPU;x64</Platforms>
