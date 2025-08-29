@@ -26,6 +26,8 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
         private bool IsTunnelCaptured = false;
         private readonly HashSet<MouseButton> BubblingDragButton = new HashSet<MouseButton>();
         private readonly HashSet<MouseButton> TunnlingDragButton = new HashSet<MouseButton>();
+
+        private Window _ownerWindow;
         #endregion
 
         #region Protected Functions
@@ -47,7 +49,18 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
             AssociatedObject.PreviewMouseMove += PreviewMouseMove;
             AssociatedObject.PreviewMouseWheel += PreviewMouseWheel;
 
+            AssociatedObject.LostMouseCapture += AssociatedObject_LostMouseCapture;
+
+            _ownerWindow = Window.GetWindow(this.AssociatedObject);
+            if (_ownerWindow != null)
+            {
+                _ownerWindow.Deactivated += _ownerWindow_Deactivated;
+                _ownerWindow.Closed += _ownerWindow_Closed;
+            }
+   
+
         }
+
 
 
         protected override void OnDetaching()
@@ -66,6 +79,43 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
             AssociatedObject.PreviewMouseUp -= PreviewMouseUp;
             AssociatedObject.PreviewMouseMove -= PreviewMouseMove;
             AssociatedObject.PreviewMouseWheel -= PreviewMouseWheel;
+
+            AssociatedObject.LostMouseCapture -= AssociatedObject_LostMouseCapture;
+
+            if (_ownerWindow != null)
+            {
+                _ownerWindow.Deactivated -= _ownerWindow_Deactivated;
+                _ownerWindow.Closed -= _ownerWindow_Closed;
+                _ownerWindow = null;
+            }
+
+            StopCapture();
+        }
+        #endregion
+
+        #region Private Functions
+        private void StartCapture()
+        {
+            if (ReferenceEquals(Mouse.Captured, AssociatedObject)) return;
+            AssociatedObject.CaptureMouse();
+        }
+        
+
+        private void StopCapture()
+        {
+            try
+            {
+                if (ReferenceEquals(Mouse.Captured, AssociatedObject))
+                    AssociatedObject.ReleaseMouseCapture();
+
+            }
+            finally
+            {
+                IsBubbleCaptured = false;
+                IsTunnelCaptured = false;
+                BubblingDragButton.Clear();
+                TunnlingDragButton.Clear();
+            }
         }
         #endregion
 
@@ -75,6 +125,24 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
         {
             get => (MouseViewModel)GetValue(MouseViewModelProperty);
             set => SetValue(MouseViewModelProperty, value);
+        }
+        #endregion
+
+        #region Event Handler (Safety Process)
+        private void AssociatedObject_LostMouseCapture(object sender, MouseEventArgs e)
+        {
+            this.StopCapture();
+
+        }
+
+        private void _ownerWindow_Closed(object sender, EventArgs e)
+        {
+            this.StopCapture();
+        }
+
+        private void _ownerWindow_Deactivated(object sender, EventArgs e)
+        {
+            this.StopCapture();
         }
         #endregion
 
@@ -121,8 +189,7 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
 
             if (TunnlingDragButton.Contains(e.ChangedButton) && TunnlingDragButton.Count == 1)
             {
-                IsTunnelCaptured = false;
-                Mouse.Capture(null);
+                StopCapture();
             }
             TunnlingDragButton.Remove(e.ChangedButton);
 
@@ -150,7 +217,7 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
         {
             if (IsTunnelCaptured == false && this.AssociatedObject == e.OriginalSource)
             {
-                Mouse.Capture((IInputElement)sender);
+                this.StartCapture();
                 IsTunnelCaptured = true;
             }
             TunnlingDragButton.Add(e.ChangedButton);
@@ -175,6 +242,8 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
         #endregion
 
         #region Event Handler (Bublling Event)
+
+
         private void MouseWheel(object sender, MouseWheelEventArgs e)
         {
             MouseViewModel?.RaiseWheel(e.GetPosition(AssociatedObject), e.Delta > 0);
@@ -234,8 +303,7 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
 
             if (BubblingDragButton.Contains(e.ChangedButton) && BubblingDragButton.Count == 1)
             {
-                IsBubbleCaptured = false;
-                Mouse.Capture(null);
+                StopCapture();
             }
             BubblingDragButton.Remove(e.ChangedButton);
 
@@ -264,7 +332,7 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
         {
             if (IsBubbleCaptured == false)
             {
-                Mouse.Capture((IInputElement)sender);
+                this.StartCapture();
                 IsBubbleCaptured = true;
             }
             BubblingDragButton.Add(e.ChangedButton);
