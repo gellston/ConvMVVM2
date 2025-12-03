@@ -41,6 +41,9 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
         {
             if (SizeObserverViewModel == null) return;
 
+            if(this.AssociatedObject.Width == double.NaN) return;
+            if(this.AssociatedObject.Height == double.NaN) return;
+
             SizeObserverViewModel.SizeChanged(new Size(this.AssociatedObject.Width, this.AssociatedObject.Height));
         }
 
@@ -49,6 +52,9 @@ namespace ConvMVVM2.WPF.Behaviors.Behaviors
         {
 
             if (SizeObserverViewModel == null) return;
+
+            if (e.NewSize.Width == double.NaN) return;
+            if (e.NewSize.Height == double.NaN) return;
 
             SizeObserverViewModel.SizeChanged(e.NewSize);
         }
