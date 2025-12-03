@@ -58,7 +58,7 @@ namespace ConvMVVM2.WPF.ViewModels
         public double ZoomStep
         {
             get => _ZoomStep;
-            private set
+            protected set
             {
                 if (value < 0) return;
 
@@ -70,7 +70,7 @@ namespace ConvMVVM2.WPF.ViewModels
         public double Scale
         {
             get => _Scale;
-            private set
+            protected set
             {
                 _Scale = value;
                 this.OnPropertyChanged();
@@ -80,7 +80,7 @@ namespace ConvMVVM2.WPF.ViewModels
         public Matrix TransformMatrix
         {
             get => this._TransformMatrix;
-            private set
+            protected set
             {
                 this._TransformMatrix = value;
                 OnPropertyChanged();
@@ -108,6 +108,25 @@ namespace ConvMVVM2.WPF.ViewModels
 
 
             this.TransformMatrix = newMatrix;
+        }
+
+        public System.Windows.Point ApplyTransform(double x, double y)
+        {
+            Matrix newMatrix = this.TransformMatrix;
+            System.Windows.Point point = new System.Windows.Point(x, y);
+            return newMatrix.Transform(point);
+        }
+
+        public System.Windows.Point ApplyInvTransform(double x, double y)
+        {
+            Matrix newMatrix = this.TransformMatrix;
+            newMatrix.Invert();
+            if (!newMatrix.HasInverse)
+            {
+                throw new InvalidOperationException("Inverse Matrix doesn't exist");
+            }
+            System.Windows.Point point = new System.Windows.Point(x, y);
+            return newMatrix.Transform(point);
         }
 
         public void Zoom(double centerX, double centerY, bool isUp)
