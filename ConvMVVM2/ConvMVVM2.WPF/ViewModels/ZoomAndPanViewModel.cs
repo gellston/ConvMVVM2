@@ -110,14 +110,14 @@ namespace ConvMVVM2.WPF.ViewModels
             this.TransformMatrix = newMatrix;
         }
 
-        public System.Windows.Point ApplyTransform(double x, double y)
+        public System.Windows.Point Transform(double x, double y)
         {
             Matrix newMatrix = this.TransformMatrix;
             System.Windows.Point point = new System.Windows.Point(x, y);
             return newMatrix.Transform(point);
         }
 
-        public System.Windows.Point ApplyInvTransform(double x, double y)
+        public System.Windows.Point InvTransform(double x, double y)
         {
             Matrix newMatrix = this.TransformMatrix;
             newMatrix.Invert();
@@ -126,6 +126,23 @@ namespace ConvMVVM2.WPF.ViewModels
                 throw new InvalidOperationException("Inverse Matrix doesn't exist");
             }
             System.Windows.Point point = new System.Windows.Point(x, y);
+            return newMatrix.Transform(point);
+        }
+
+        public System.Windows.Point Transform(System.Windows.Point point)
+        {
+            Matrix newMatrix = this.TransformMatrix;
+            return newMatrix.Transform(point);
+        }
+
+        public System.Windows.Point InvTransform(System.Windows.Point point)
+        {
+            Matrix newMatrix = this.TransformMatrix;
+            newMatrix.Invert();
+            if (!newMatrix.HasInverse)
+            {
+                throw new InvalidOperationException("Inverse Matrix doesn't exist");
+            }
             return newMatrix.Transform(point);
         }
 
