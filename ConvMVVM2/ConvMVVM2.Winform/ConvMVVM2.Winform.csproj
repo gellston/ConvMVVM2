@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFrameworks>net7.0-windows;net8.0-windows;net48;net481;net6.0-windows;net9.0-windows</TargetFrameworks>
+	<Nullable>disable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>false</ImplicitUsings>
+	<Version>1.22.10.1</Version>
+	<PackageIcon>convergence.png</PackageIcon>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<Platforms>AnyCPU;x64</Platforms>
+	<PackageProjectUrl>https://github.com/gellston/ConvMVVM2</PackageProjectUrl>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageTags>mvvm,wpf,ioc,convmvvm</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+  	<ProjectReference Include="..\ConvMVVM2.Core\ConvMVVM2.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\README.md" Link="README.md">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
+    </None>
+    <None Include="..\Icon\convergence.png" Link="convergence.png">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
+
+</Project>
