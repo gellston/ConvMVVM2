@@ -55,3 +55,10 @@
 /ExampleSolution/ModuleApp/obj
 /ConvMVVM2/Test.WPF/bin/Debug/net8.0-windows7.0
 /ConvMVVM2/Test.WPF/bin/Release/net8.0-windows7.0
+/ConvMVVM2/ConvMVVM2.Winform/bin/Debug
+/ConvMVVM2/ConvMVVM2.Winform/obj
+/ConvMVVM2/ConvMVVM2.Winform/obj/Debug/net48/.NETFramework,Version=v4.8.AssemblyAttributes.cs
+/ConvMVVM2/Test.Winform/bin/Debug
+/ConvMVVM2/Test.Winform/obj/Debug
+/ConvMVVM2/Test.Winform/obj/Release/net8.0-windows
+/ConvMVVM2/Test.Winform/obj
