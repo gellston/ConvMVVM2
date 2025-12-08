@@ -65,3 +65,6 @@
 /ConvMVVM2/ConvMVVM2.Winform/bin/Release/net48
 /ConvMVVM2/ConvMVVM2.Winform/bin/Release/net481
 /ConvMVVM2/ConvMVVM2.Winform/bin/Release
+/ConvMVVM2/packages
+/ConvMVVM2/Test.WinformTest/bin
+/ConvMVVM2/Test.WinformTest/obj
