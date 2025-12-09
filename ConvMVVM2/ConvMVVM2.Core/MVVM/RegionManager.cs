@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConvMVVM2.Core.MVVM
 {
-    public class RegionManager : IRegionManager
+    internal class RegionManager : IRegionManager
     {
         #region Private Property
         private readonly Dictionary<string, IRegion> _regions = new Dictionary<string, IRegion>();

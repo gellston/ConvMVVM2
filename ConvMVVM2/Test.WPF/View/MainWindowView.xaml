@@ -17,39 +17,34 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
 
 
-        <ListView>
-            <convMVVM2:Interaction.Behaviors>
-                <convMVVM2:SelectedItemsBehavior SelectedItems="{Binding ItemsCollection}"></convMVVM2:SelectedItemsBehavior>
-            </convMVVM2:Interaction.Behaviors>
-            
-            <convMVVM2:Interaction.Triggers>
-                <convMVVM2:EventTrigger EventName="SelectionChanged">
-                    <convMVVM2:CallMethodAction TargetObject="{Binding}" MethodName="SelectionChangedCommand"></convMVVM2:CallMethodAction>
-                </convMVVM2:EventTrigger>
-            </convMVVM2:Interaction.Triggers>
+        <ListView ItemsSource="{Binding TestCollection}">
 
-            <ListViewItem>test</ListViewItem>
-            <ListViewItem>test</ListViewItem>
-            <ListViewItem>test</ListViewItem>
+            
+
         </ListView>
         
         <Button Grid.Row="1"
                 Command="{Binding BViewCommand}"></Button>
 
-        <TextBlock Grid.Row="2"
+        <Button Grid.Row="2"
+                Content="Test2"
+                Command="{Binding TestTTCommand}"></Button>
+
+        <TextBlock Grid.Row="3"
                    Text="{Binding Test2}"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"></TextBlock>
 
-        <TextBlock Grid.Row="3"
+        <TextBlock Grid.Row="4"
                    Text="{Binding Test}"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"></TextBlock>
 
-        <TextBlock Grid.Row="4"
+        <TextBlock Grid.Row="5"
                    Text="{Binding Test3, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"></TextBlock>

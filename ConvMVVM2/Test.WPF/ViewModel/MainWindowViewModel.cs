@@ -1,8 +1,10 @@
 ﻿using ConvMVVM2.Core.Attributes;
 using ConvMVVM2.Core.MVVM;
+using ConvMVVM2.WPF.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,12 +15,22 @@ namespace Test.WPF.ViewModel
     {
         #region Private Property
         private readonly IRegionManager regionManager;
+        private readonly IDialogService dialogService;
+        private readonly IUndoService undoService;
         #endregion
 
         #region Constructor
-        public MainWindowViewModel(IRegionManager regionManager) { 
+        public MainWindowViewModel(IRegionManager regionManager,
+                                   IDialogService dialogService,
+                                   IUndoService undoService) { 
         
             this.regionManager = regionManager;
+            this.dialogService = dialogService;
+            this.undoService = undoService;
+
+
+
+            this.IsUndoEnabled = true;
         }
         #endregion
 
@@ -37,6 +49,10 @@ namespace Test.WPF.ViewModel
 
         [Property]
         private IList _ItemsCollection = null;
+
+
+        [Property]
+        private ObservableCollection<string> _TestCollection = new ObservableCollection<string>();
         #endregion
 
 
@@ -63,10 +79,25 @@ namespace Test.WPF.ViewModel
             try
             {
 
-                this._Test2 = "there is no cow level!@#!#@";
-                this.Test3 = "there is no cow level";
-                this.Test = "there is no cow  level";
+                this.TestCollection.AddWithUndo(this.undoService, "test");
+                this.TestCollection.AddWithUndo(this.undoService, "test");
+                this.TestCollection.AddWithUndo(this.undoService, "test");
+                this.TestCollection.AddWithUndo(this.undoService, "test");
+                
 
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
+
+        [RelayCommand]
+        private void TestTT()
+        {
+            try
+            {
+                this.undoService.Undo();
             }
             catch (Exception ex)
             {

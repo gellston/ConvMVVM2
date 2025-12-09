@@ -191,6 +191,9 @@ namespace ConvMVVM2.Core.MVVM
             serviceCollection.AddSingleton<ILocalizeService, LocalizeService>();
             serviceCollection.AddSingleton<IViewModelMapper, ViewModelMapper>();
             serviceCollection.AddSingleton<IEventAggregator, EventAggregator>();
+            serviceCollection.AddSingleton<IUndoService, UndoService>();
+            
+
             serviceCollection.AddSingleton<IServiceContainer>(container);
 
             var regionManager = container.GetService<IRegionManager>();
