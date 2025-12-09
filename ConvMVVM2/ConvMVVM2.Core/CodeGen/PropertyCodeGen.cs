@@ -241,7 +241,6 @@ namespace ConvMVVM2.Core.CodeGen
       
                 var source = """
                 {using}
-                
 
                 namespace {clsNamespace}{
                     partial class {clsName}{

@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,7 +45,9 @@ namespace Test.WPF.ViewModel
         [Property]
         private string _Test2 = "test";
 
-        public string Test3 { get; set; } = "";
+
+        [Property]
+        public string _Test3 = "";
 
 
         [Property]
@@ -79,10 +82,16 @@ namespace Test.WPF.ViewModel
             try
             {
 
-                this.TestCollection.AddWithUndo(this.undoService, "test");
-                this.TestCollection.AddWithUndo(this.undoService, "test");
-                this.TestCollection.AddWithUndo(this.undoService, "test");
-                this.TestCollection.AddWithUndo(this.undoService, "test");
+
+                using (this.undoService.BeginGroup())
+                {
+                    this.Test = "A";
+                    this.Test2 = "B";
+                    this.Test3 = "C";
+                }
+
+
+                
                 
 
             }
@@ -104,7 +113,38 @@ namespace Test.WPF.ViewModel
                 System.Diagnostics.Debug.WriteLine(ex);
             }
         }
+
+        [RelayCommand]
+        private void TestTT2()
+        {
+            try
+            {
+                this.undoService.Redo();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
         #endregion
+
+        #region Event Handler
+        partial void OnTestChanged(string oldValue, string newValue)
+        {
+            this.undoService.Do(PropertyUndoAction<string>.Create(this, oldValue, newValue, "Test"));
+        }
+
+        partial void OnTest2Changed(string oldValue, string newValue)
+        {
+            this.undoService.Do(PropertyUndoAction<string>.Create(this, oldValue, newValue, "Test2"));
+        }
+
+        partial void OnTest3Changed(string oldValue, string newValue)
+        {
+            this.undoService.Do(PropertyUndoAction<string>.Create(this, oldValue, newValue, "Test3"));
+        }
+        #endregion
+
 
         #region Public Functions
         public void SelectionChangedCommand(object args)
@@ -113,5 +153,6 @@ namespace Test.WPF.ViewModel
 
         }
         #endregion
+
     }
 }

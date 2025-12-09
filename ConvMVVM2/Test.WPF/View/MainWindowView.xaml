@@ -18,6 +18,7 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
 
 
@@ -34,17 +35,21 @@
                 Content="Test2"
                 Command="{Binding TestTTCommand}"></Button>
 
-        <TextBlock Grid.Row="3"
+        <Button Grid.Row="3"
+                Content="Test3"
+                Command="{Binding TestTT2Command}"></Button>
+        
+        <TextBlock Grid.Row="4"
                    Text="{Binding Test2}"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"></TextBlock>
 
-        <TextBlock Grid.Row="4"
+        <TextBlock Grid.Row="5"
                    Text="{Binding Test}"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"></TextBlock>
 
-        <TextBlock Grid.Row="5"
+        <TextBlock Grid.Row="6"
                    Text="{Binding Test3, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"></TextBlock>

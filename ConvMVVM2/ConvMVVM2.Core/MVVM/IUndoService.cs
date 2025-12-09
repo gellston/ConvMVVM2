@@ -9,6 +9,8 @@ namespace ConvMVVM2.Core.MVVM
         bool CanUndo { get; }
         bool CanRedo { get; }
 
+        public IDisposable BeginGroup();
+
         void Do(IUndoAction action);
         void Undo();
         void Redo();

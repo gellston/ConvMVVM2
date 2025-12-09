@@ -10,6 +10,7 @@ namespace ConvMVVM2.Core.MVVM
         private readonly Stack<IUndoAction> _undoStack = new Stack<IUndoAction>();
         private readonly Stack<IUndoAction> _redoStack = new Stack<IUndoAction>();
         private GroupUndoAction? _currentGroup;
+        private bool _IsUndoOrRedo = false;
         #endregion
 
         #region Public Property
@@ -43,6 +44,7 @@ namespace ConvMVVM2.Core.MVVM
         private void PushUndo(IUndoAction action)
         {
             if (action == null) throw new ArgumentNullException(nameof(action));
+            if (this._IsUndoOrRedo) return;
 
             if (MaxUndoCount > 0 && _undoStack.Count >= MaxUndoCount)
             {
@@ -84,6 +86,7 @@ namespace ConvMVVM2.Core.MVVM
         public void Do(IUndoAction action)
         {
             if (action == null) throw new ArgumentNullException(nameof(action));
+            if (this._IsUndoOrRedo) return;
 
             _redoStack.Clear();
 
@@ -100,18 +103,22 @@ namespace ConvMVVM2.Core.MVVM
         public void Redo()
         {
             if (!CanRedo) return;
-
+            this._IsUndoOrRedo = true;
             var action = _redoStack.Pop();
             action.Redo();
-            PushUndo(action); // Redo된 것도 다시 Undo 대상으로 들어가야 함
+            this._IsUndoOrRedo = false;
+
+            PushUndo(action);
         }
 
         public void Undo()
         {
             if (!CanUndo) return;
-
+            this._IsUndoOrRedo = true;
             var action = _undoStack.Pop();
             action.Undo();
+            this._IsUndoOrRedo = false;
+
             _redoStack.Push(action);
         }
 

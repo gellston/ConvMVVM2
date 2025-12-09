@@ -97,7 +97,7 @@ namespace ConvMVVM2.Core.MVVM
                 _isInUndoOrRedo = false;
             }
 
-            Do(action);
+            _UndoStack.Push(action);
 
             OnPropertyChanged(nameof(CanUndo));
             OnPropertyChanged(nameof(CanRedo));
