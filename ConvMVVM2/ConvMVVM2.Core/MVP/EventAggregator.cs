@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ConvMVVM2.Core.MVP
 {
-    public class EventAggregator : IEventAggregator
+    internal class EventAggregator : IEventAggregator
     {
 
         #region Private Property

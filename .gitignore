@@ -57,7 +57,15 @@
 /ConvMVVM2/Test.WPF/bin/Release/net8.0-windows7.0
 /ConvMVVM2/ConvMVVM2.Winform/bin/Debug
 /ConvMVVM2/ConvMVVM2.Winform/obj
+/ConvMVVM2/ConvMVVM2.Winform/obj/Debug/net48/.NETFramework,Version=v4.8.AssemblyAttributes.cs
 /ConvMVVM2/Test.Winform/bin/Debug
+/ConvMVVM2/Test.Winform/obj/Debug
+/ConvMVVM2/Test.Winform/obj/Release/net8.0-windows
 /ConvMVVM2/Test.Winform/obj
+/ConvMVVM2/ConvMVVM2.Winform/bin/Release/net48
+/ConvMVVM2/ConvMVVM2.Winform/bin/Release/net481
+/ConvMVVM2/ConvMVVM2.Winform/bin/Release
 /ConvMVVM2/packages
-/ConvMVVM2/Test.WinformTest/obj/x64/Debug
+/ConvMVVM2/Test.WinformTest/bin
+/ConvMVVM2/Test.WinformTest/obj
+/ConvMVVM2/Test.WinformTest.zip

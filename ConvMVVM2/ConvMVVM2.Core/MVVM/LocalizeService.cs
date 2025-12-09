@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ConvMVVM2.Core.MVVM
 {
-    public class LocalizeService : ILocalizeService, INotifyPropertyChanged
+    internal class LocalizeService : ILocalizeService, INotifyPropertyChanged
     {
         #region Private Property
         private ResourceManager _resourceManager = null;

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConvMVVM2.Core.MVVM
 {
-    public class ViewModelMapper : IViewModelMapper
+    internal class ViewModelMapper : IViewModelMapper
     {
         #region Private Property
         private readonly Dictionary<Type, Type> _mappings = new Dictionary<Type, Type>();

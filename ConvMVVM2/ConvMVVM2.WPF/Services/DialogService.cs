@@ -12,7 +12,7 @@ using System.Xml.Linq;
 
 namespace ConvMVVM2.WPF.Services
 {
-    public class DialogService : IDialogService
+    internal class DialogService : IDialogService
     {
         #region Private Property
         private readonly IServiceContainer serviceContainer;

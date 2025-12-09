@@ -275,6 +275,14 @@ namespace ConvMVVM2.Core.CodeGen
                                             On{fieldName}Changing(oldValue, value);
                                             OnPropertyChanging();
                                             {_fieldName} = value;
+
+
+                                            Do(new PropertyUndoAction<{typeName}>(
+                                                    target: this,
+                                                    propertyName: nameof({fieldName}),
+                                                    oldValue: oldValue,
+                                                    newValue: value));
+
                                             On{fieldName}Changed(value);
                                             On{fieldName}Changed(oldValue, value);
                                             OnPropertyChanged();
